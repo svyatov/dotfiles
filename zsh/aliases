@@ -1,0 +1,60 @@
+# vi: set filetype=zsh
+
+alias cdf='cd ~/.dotfiles'
+alias ea='subl ~/.dotfiles/zsh/aliases'
+alias ae='subl ~/.dotfiles/zsh/aliases'
+alias ef='subl ~/.dotfiles/zsh/functions'
+alias fe='subl ~/.dotfiles/zsh/functions'
+alias ez='subl ~/.zshrc'
+alias ze='subl ~/.zshrc'
+alias egc='subl ~/.gitconfig'
+alias gce='subl ~/.gitconfig'
+alias sig='subl .gitignore'
+alias sca='source ~/.dotfiles/zsh/aliases'
+alias scf='source ~/.dotfiles/zsh/functions'
+
+# Pretty print json in shell, example:
+# $ echo '[1, 2, 3, {"6": 7, "4": 5}]' | pj
+#   [
+#       1,
+#       2,
+#       3,
+#       {
+#           "4": 5,
+#           "6": 7
+#       }
+#   ]
+alias pj='python -m json.tool'
+
+# Upgrade all pip packages to the newest available version
+alias pup="pip freeze | grep -v '\-e' | cut -d= -f1 | xargs pip install -U"
+
+alias l='ls -laghG'
+alias h='cd ~'
+alias u='cd ..'
+alias b='cd -'
+alias c='clear'
+alias q='exit'
+alias v='vim'
+alias s='subl'
+alias g='git'
+alias r='rails'
+alias be='bundle exec'
+alias bu='bundle update'
+alias bi='bundle install'
+alias bake='bundle exec rake'
+alias rbp='rails_best_practices'
+alias capdp='cap deploy'
+alias capdpm='cap deploy:migrations'
+alias gpdp='git push && cap deploy'
+alias gpdpm='git push && cap deploy:migrations'
+
+# Autocomplete for shortcuts
+compdef g=git
+compdef v=vim
+
+# Current projects related stuff
+MY_PROJECTS_ALIASES='~/.dotfiles/zsh/projects'
+if [[ -f $MY_PROJECTS_ALIASES ]]; then
+    source $MY_PROJECTS_ALIASES
+fi
