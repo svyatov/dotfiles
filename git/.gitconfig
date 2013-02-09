@@ -1,0 +1,41 @@
+[user]
+    name = Leonid Svyatov
+    email = leonid@svyatov.ru
+[color]
+    ui = true
+[core]
+    editor = subl --wait --new-window
+    excludesfile = ~/.dotfiles/git/.gitignore_global
+    autocrlf = input
+[alias]
+    l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    la = !git l --all
+    st = status --short --branch --untracked-files=all
+    co = checkout
+    br = branch
+    ci = commit
+    ps = push
+    pl = pull
+    md = merge develop
+    mm = merge master
+[difftool "Kaleidoscope"]
+    cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[diff]
+    tool = Kaleidoscope
+[difftool]
+    prompt = false
+[mergetool "Kaleidoscope"]
+    cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+    trustExitCode = true
+[mergetool]
+    prompt = false
+[merge]
+    tool = Kaleidoscope
+[difftool "sourcetree"]
+    cmd = /Applications/Kaleidoscope.app/Contents/MacOS/ksdiff -w \"$LOCAL\" \"$REMOTE\"
+    path =
+[mergetool "sourcetree"]
+    cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+    trustExitCode = true
+[push]
+    default = current
