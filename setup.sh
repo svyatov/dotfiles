@@ -2,7 +2,7 @@
 
 set -e
 
-CURRENT_DIR=`/bin/pwd`
+CURRENT_DIR="${HOME}/.dotfiles"
 # Git
 GIT_CONFIG_FILE="${HOME}/.gitconfig"
 # Ruby
