@@ -8,20 +8,32 @@
     excludesfile = ~/.dotfiles/git/.gitignore_global
     autocrlf = input
 [alias]
+    a = 'add'
+    # Log for current branch
     l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    # Log for all branches
     la = !git l --all
     st = status --short --branch --untracked-files=all
     co = checkout
     br = branch
-    ci = commit
+    ci = commit --verbose
+    ca = commit --verbose --amend
     ps = push
     pl = pull
     md = merge develop
     mm = merge master
+    dt = difftool
+    df = diff
+    dtc = difftool --cached
+    dfc = diff --cached
 [difftool "Kaleidoscope"]
     cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [diff]
     tool = Kaleidoscope
+    # Allow git diff to do basic rename and copy detection
+    renames = copies
+    # Tell git diff to use mnemonic prefixes (index, work tree, commit, object) instead of the standard a and b notation
+    mnemonicprefix = true
 [difftool]
     prompt = false
 [mergetool "Kaleidoscope"]
