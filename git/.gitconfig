@@ -26,6 +26,8 @@
     df = diff
     dtc = difftool --cached
     dfc = diff --cached
+    cod = checkout develop
+    com = checkout master
 [difftool "Kaleidoscope"]
     cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [diff]
