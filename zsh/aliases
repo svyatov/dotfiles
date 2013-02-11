@@ -54,7 +54,7 @@ compdef g=git
 compdef v=vim
 
 # Current projects related stuff
-MY_PROJECTS_ALIASES='~/.dotfiles/zsh/projects'
+MY_PROJECTS_ALIASES="${HOME}/.dotfiles/zsh/projects"
 if [[ -f $MY_PROJECTS_ALIASES ]]; then
     source $MY_PROJECTS_ALIASES
 fi
