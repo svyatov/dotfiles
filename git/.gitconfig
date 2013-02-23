@@ -13,6 +13,8 @@
     l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     # Log for all branches
     la = !git l --all
+    # Log with inline patches
+    lp = !git l --patch --word-diff
     st = status --short --branch --untracked-files=all
     co = checkout
     br = branch
