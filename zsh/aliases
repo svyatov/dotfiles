@@ -13,6 +13,9 @@ alias sig='subl .gitignore'
 alias sca='source ~/.dotfiles/zsh/aliases'
 alias scf='source ~/.dotfiles/zsh/functions'
 
+# Copy public ssh key
+alias cpssh='cat ~/.ssh/id_rsa.pub | pbcopy && echo "Public ssh key copied to clipboard!"'
+
 # Pretty print json in shell, example:
 # $ echo '[1, 2, 3, {"6": 7, "4": 5}]' | pj
 #   [
