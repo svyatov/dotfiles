@@ -47,10 +47,10 @@ alias bu='bundle update'
 alias bi='bundle install'
 alias bake='bundle exec rake'
 alias rbp='rails_best_practices'
-alias capdp='cap deploy'
-alias capdpm='cap deploy:migrations'
-alias gpdp='git push && cap deploy'
-alias gpdpm='git push && cap deploy:migrations'
+alias capd='cap deploy'
+alias capdm='cap deploy:migrations'
+alias gpcd='git push && cap deploy'
+alias gpcdm='git push && cap deploy:migrations'
 
 # Autocomplete for shortcuts
 compdef g=git
