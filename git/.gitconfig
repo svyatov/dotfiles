@@ -18,10 +18,13 @@
     br = branch
     ci = commit --verbose
     ca = commit --verbose --amend
+    cp = cherry-pick
     ps = push
-    pl = pull
+    pl = pull --rebase
+    rb = rebase -i
     md = merge develop
     mm = merge master
+    mf = merge --no-ff
     dt = difftool
     df = diff
     dtc = difftool --cached
