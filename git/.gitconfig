@@ -23,7 +23,7 @@
     cp = cherry-pick
     ps = push
     pl = pull --rebase
-    rb = rebase -i
+    rb = rebase --interactive
     md = merge develop
     mm = merge master
     mf = merge --no-ff
