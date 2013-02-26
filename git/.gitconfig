@@ -23,6 +23,7 @@
     ca = commit --verbose --amend
     cp = cherry-pick
     ps = push
+    psa = push --all
     pl = pull --rebase
     rb = rebase --interactive
     md = merge develop
