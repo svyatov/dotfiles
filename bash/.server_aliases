@@ -19,6 +19,11 @@ function mkcd() {
     mkdir $1 && cd $1
 }
 
+function sa_update() {
+    curl -o "~/.server_aliases" "https://raw.github.com/Svyatov/dotfiles/master/bash/.server_aliases" \
+    && ssa && echo ".server_aliases has been updated successfully"
+}
+
 # Wraps a completion function
 # make-completion-wrapper <actual completion function> <name of new func.>
 #                         <command name> <list supplied arguments>

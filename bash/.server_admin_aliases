@@ -23,3 +23,10 @@ alias lr='cd /etc/logrotate.d'
 alias ms='cd /etc/mysql'
 alias mdb='cd /var/lib/mysql'
 alias lg='cd /var/log'
+
+### Functions
+function saa_update() {
+    curl -o "~/.server_aliases" "https://raw.github.com/Svyatov/dotfiles/master/bash/.server_aliases" \
+    && curl -o "~/.server_admin_aliases" "https://raw.github.com/Svyatov/dotfiles/master/bash/.server_admin_aliases" \
+    && ssaa && echo ".server_aliases & .server_admin_aliases have been updated successfully"
+}
