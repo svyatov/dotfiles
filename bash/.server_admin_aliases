@@ -1,0 +1,25 @@
+source ~/.server_aliases
+
+### Aliases
+alias vsaa='vim +"let b:is_bash=1" +"setf sh" ~/.server_admin_aliases'
+alias ssaa='source ~/.server_admin_aliases'
+alias r='sudo su -'
+alias agi='sudo apt-get install -y'
+make-completion-wrapper _apt_get _agi apt-get install
+complete -F _agi agi
+alias agu='sudo apt-get update'
+alias agg='sudo apt-get upgrade -uV'
+alias agdu='sudo apt-get dist-upgrade'
+alias aguu='agu && agg'
+alias addrepo='sudo add-apt-repository'
+alias sv='sudo vim'
+alias ssr='sudo service'
+make-completion-wrapper _service _ssr_service service
+complete -F _ssr_service ssr
+alias ng='cd /etc/nginx'
+alias pf='cd /etc/php5/fpm'
+alias ap='cd /etc/apache2'
+alias lr='cd /etc/logrotate.d'
+alias ms='cd /etc/mysql'
+alias mdb='cd /var/lib/mysql'
+alias lg='cd /var/log'
