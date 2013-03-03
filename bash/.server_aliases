@@ -20,7 +20,7 @@ function mkcd() {
 }
 
 function sa_update() {
-    curl -o "~/.server_aliases" "https://raw.github.com/Svyatov/dotfiles/master/bash/.server_aliases" \
+    curl -o ~/.server_aliases "https://raw.github.com/Svyatov/dotfiles/master/bash/.server_aliases" \
     && ssa && echo ".server_aliases has been updated successfully"
 }
 
