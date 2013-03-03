@@ -1,5 +1,3 @@
-# vi: set filetype=zsh
-
 alias cdf='cd ~/.dotfiles'
 alias edf='sn ~/.dotfiles'
 alias dfe='edf'
