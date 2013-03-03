@@ -25,7 +25,9 @@
     ps = push
     psa = push --all
     pl = pull --rebase
-    rb = rebase --interactive
+    rb = rebase
+    ri = rebase --interactive
+    rc = rebase --continue
     md = merge develop
     mm = merge master
     mf = merge --no-ff
@@ -36,6 +38,8 @@
     cod = checkout develop
     com = checkout master
     cob = checkout -b
+    rbm = rebase master
+    rbd = rebase develop
 [difftool "Kaleidoscope"]
     cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [diff]
