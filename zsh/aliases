@@ -1,6 +1,8 @@
 # vi: set filetype=zsh
 
 alias cdf='cd ~/.dotfiles'
+alias edf='sn ~/.dotfiles'
+alias dfe='edf'
 alias ea='sn ~/.dotfiles/zsh/aliases'
 alias ae='ea'
 alias ef='sn ~/.dotfiles/zsh/functions'
