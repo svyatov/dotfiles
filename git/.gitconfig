@@ -28,6 +28,7 @@
     rb = rebase
     ri = rebase --interactive
     rc = rebase --continue
+    m = merge
     md = merge develop
     mm = merge master
     mf = merge --no-ff
