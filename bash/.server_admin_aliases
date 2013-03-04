@@ -1,7 +1,7 @@
 source ~/.server_aliases
 
 ### Aliases
-alias vsaa='vim +"let b:is_bash=1" +"setf sh" ~/.server_admin_aliases'
+alias vsaa='vim +"let b:is_bash=1" +"set ft=sh et ts=4 sw=4" ~/.server_admin_aliases'
 alias ssaa='source ~/.server_admin_aliases'
 alias r='sudo su -'
 alias agi='sudo apt-get install -y'
