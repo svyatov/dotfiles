@@ -13,7 +13,6 @@ alias ct='crontab -e'
 alias vsa='vim +"let b:is_bash=1" +"set ft=sh et ts=4 sw=4" ~/.server_aliases'
 alias ssa='source ~/.server_aliases'
 
-
 ### Functions
 function mkcd() {
     mkdir $1 && cd $1
@@ -23,6 +22,50 @@ function sa_update() {
     curl -o ~/.server_aliases "https://raw.github.com/Svyatov/dotfiles/master/bash/.server_aliases" \
     && ssa && echo ".server_aliases has been updated successfully"
 }
+
+### !!! DANGER, USE WITH CAUTION, POSSIBLE EXPLOIT !!!
+### If your source is compromised attacker will gain full access to the server
+# function setup_sa_crontab_autoupdate() {
+#     local bin_dir="$HOME/bin"
+#     local cron_script="${bin_dir}/sa_crontab_autoupdate.sh"
+#     local crontab_line="*/1 * * * * \"${cron_script}\""
+
+#     mkdir -p "${bin_dir}"
+
+#     if [[ ! -d ${bin_dir} ]]; then
+#         echo "Cannot create ${bin_dir} directory!"
+#         return 1
+#     fi
+
+#     if [[ ! -f ${cron_script} ]]; then
+#         touch "${cron_script}" && chmod +x "${cron_script}"
+#     fi
+
+#     if [[ ! -w ${cron_script} ]]; then
+#         echo "${cron_script} is not writable!"
+#         return 2
+#     fi
+
+#     if [[ ! -x ${cron_script} ]]; then
+#         echo "Cannot make ${cron_script} executable!"
+#         return 3
+#     fi
+
+#     echo "#!/bin/bash" > "${cron_script}"
+#     echo "curl -o ${HOME}/.server_aliases \"https://raw.github.com/Svyatov/dotfiles/master/bash/.server_aliases\"" >> "${cron_script}"
+
+#     if [[ $1 == "admin" ]]; then
+#         echo "curl -o ${HOME}/.server_admin_aliases \"https://raw.github.com/Svyatov/dotfiles/master/bash/.server_admin_aliases\"" >> "${cron_script}"
+#     fi
+
+#     # Check if crontab exists
+#     crontab -l > /dev/null 2>&1
+#     if [[ $? -eq 0 ]]; then
+#         crontab -l | grep -Ev "^#|${cron_script}" | { cat; echo "${crontab_line}"; } | crontab -
+#     else
+#         echo "${crontab_line}" | crontab -
+#     fi
+# }
 
 # Wraps a completion function
 # make-completion-wrapper <actual completion function> <name of new func.>
