@@ -41,6 +41,7 @@
     cob = checkout -b
     rbm = rebase master
     rbd = rebase develop
+    rmb = branch -d
 [difftool "Kaleidoscope"]
     cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [diff]
