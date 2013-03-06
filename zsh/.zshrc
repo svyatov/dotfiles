@@ -32,7 +32,7 @@ plugins=(brew capistrano gem vagrant) #(git brew gem vagrant knife)
 stty start undef
 stty stop undef
 
-export RUBYMINE_HOME=/Applications/RubyMine\ EAP.app
+export RUBYMINE_HOME=/Applications/RubyMine.app
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.dotfiles/zsh/aliases
