@@ -52,6 +52,7 @@ alias capd='cap deploy'
 alias capdm='cap deploy:migrations'
 alias gpcd='git push && cap deploy'
 alias gpcdm='git push && cap deploy:migrations'
+alias clean-assets='bake assets:clean_expired' # turbo-sprockets
 
 # Autocomplete for shortcuts
 compdef g=git
