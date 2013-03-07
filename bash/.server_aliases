@@ -18,6 +18,14 @@ function mkcd() {
     mkdir $1 && cd $1
 }
 
+function lt() {
+    ls -ltrsa "$@" | tail
+}
+
+function psgrep() {
+    ps axuf | grep -v grep | grep "$@" -i --color=auto
+}
+
 function sa_update() {
     curl -o ~/.server_aliases "https://raw.github.com/Svyatov/dotfiles/master/bash/.server_aliases" \
     && ssa && echo ".server_aliases has been updated successfully"
