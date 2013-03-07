@@ -13,10 +13,20 @@ alias agdu='sudo apt-get dist-upgrade'
 alias aguu='agu && agg'
 alias addrepo='sudo add-apt-repository'
 alias acs='sudo apt-cache search'
+make-completion-wrapper _apt_cache _acs apt-cache search
+complete -F _acs acs
 alias aci='sudo apt-cache show'
+make-completion-wrapper _apt_cache _aci apt-cache show
+complete -F _aci aci
 alias agr='sudo apt-get remove'
+make-completion-wrapper _apt_get _agr apt-get remove
+complete -F _agr agr
 alias agp='sudo apt-get purge'
+make-completion-wrapper _apt_get _agp apt-get purge
+complete -F _agp agp
 alias agcl='sudo apt-get changelog'
+make-completion-wrapper _apt_get _agcl apt-get changelog
+complete -F _agcl agcl
 alias agc='sudo apt-get clean'
 alias agar='sudo apt-get autoremove'
 alias sv='sudo vim'
