@@ -23,7 +23,7 @@ function lt() {
 }
 
 function psgrep() {
-    ps axuf | grep -v grep | grep "$@" -i --color=auto
+    ps axuf | grep -v grep | grep "$@" -i
 }
 
 function sa_update() {
