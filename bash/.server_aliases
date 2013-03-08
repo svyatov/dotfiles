@@ -26,6 +26,10 @@ function psgrep() {
     ps axuf | grep -v grep | grep "$@" -i
 }
 
+function hgrep() {
+    history | grep -v grep | grep "$@" -i
+}
+
 function sa_update() {
     curl -o ~/.server_aliases "https://raw.github.com/Svyatov/dotfiles/master/bash/.server_aliases" \
     && ssa && echo ".server_aliases has been updated successfully"
