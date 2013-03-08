@@ -37,3 +37,7 @@ export RUBYMINE_HOME=/Applications/RubyMine.app
 source $ZSH/oh-my-zsh.sh
 source $HOME/.dotfiles/zsh/aliases
 source $HOME/.dotfiles/zsh/functions
+
+cd $HOME/ansible && source ./hacking/env-setup -q && cd
+alias an='ansible -i ./hosts.ini'
+alias ap='ansible-playbook -i ./hosts.ini'
