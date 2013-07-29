@@ -40,6 +40,11 @@
     ca = commit --verbose --amend
     # Cherry-picking
     cp = cherry-pick
+    cpc = cherry-pick --continue
+    cpa = cherry-pick --abort
+    cpe = cherry-pick --edit
+    cpx = cherry-pick -x
+    cpnc = cherry-pick --no-commit
     # Pushing
     ps = push
     psa = push --all
