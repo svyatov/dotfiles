@@ -2,7 +2,7 @@
 
 set -e
 
-CURRENT_DIR="${HOME}/.dotfiles"
+DOTFILES_DIR="${HOME}/.dotfiles"
 # Git
 GIT_CONFIG_FILE="${HOME}/.gitconfig"
 # Ruby
@@ -33,7 +33,7 @@ function symlink_from_dotfiles() {
     # s - symlink
     # h - do not follow symlink if exists
     # f - overwrite symlink if exists
-    /bin/ln -shf "${CURRENT_DIR}/${1}" "${2}"
+    /bin/ln -shf "${DOTFILES_DIR}/${1}" "${2}"
 }
 
 ### Setting up git
