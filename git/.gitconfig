@@ -8,40 +8,61 @@
     excludesfile = ~/.dotfiles/git/.gitignore_global
     autocrlf = input
 [alias]
-    a = 'add'
     h = 'help'
-    # Log for current branch
+    # Adding
+    a = 'add'
+    aa = 'add .'
+    # Logging
     l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-    # Log for all branches
     la = !git l --all
-    # Log with inline patches
     lp = !git l --patch --word-diff
+    # Status
     st = status --short --branch --untracked-files=all
+    # Stashing
+    s = stash
+    sa = stash apply
+    ski = stash --keep-index
+    su = stash --include-untracked
+    suki = stash --include-untracked --keep-index
+    # Tags
+    t = tag
+    ta = tag --annotate
+    # Checkout
     co = checkout
+    cod = checkout develop
+    com = checkout master
+    cob = checkout -b
+    # Branching
     br = branch
-    ci = commit --verbose
+    brd = branch --delete
+    # Commiting
+    c = commit --verbose
     ca = commit --verbose --amend
+    # Cherry-picking
     cp = cherry-pick
+    # Pushing
     ps = push
     psa = push --all
-    pl = pull --rebase
+    pst = push --tags
+    # Pulling
+    pl = pull
+    plr = pull --rebase
+    # Rebasing
     rb = rebase
-    ri = rebase --interactive
-    rc = rebase --continue
+    rbi = rebase --interactive
+    rbc = rebase --continue
+    rbm = rebase master
+    rbd = rebase develop
+    # Merging
     m = merge
     md = merge develop
     mm = merge master
     mf = merge --no-ff
+    # Diffs
     dt = difftool
     df = diff --word-diff=color --minimal
     dtc = difftool --cached
     dfc = diff --cached --word-diff=color --minimal
-    cod = checkout develop
-    com = checkout master
-    cob = checkout -b
-    rbm = rebase master
-    rbd = rebase develop
-    rmb = branch -d
 [difftool "Kaleidoscope"]
     cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [diff]
@@ -67,3 +88,5 @@
     trustExitCode = true
 [push]
     default = current
+[credential]
+	helper = osxkeychain
