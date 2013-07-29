@@ -8,10 +8,10 @@
     excludesfile = ~/.dotfiles/git/.gitignore_global
     autocrlf = input
 [alias]
-    h = 'help'
+    h = help
     # Adding
-    a = 'add'
-    aa = 'add .'
+    a = add
+    aa = add .
     # Logging
     l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     la = !git l --all
