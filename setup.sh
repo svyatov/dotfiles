@@ -16,6 +16,8 @@ ZSH_PROFILE_FILE="${HOME}/.zprofile"
 OH_MY_ZSH_DIR="${HOME}/.oh-my-zsh"
 # Others
 TMUX_CONFIG_FILE="${HOME}/.tmux.conf"
+VIM_CONFIG_FILE="${HOME}/.vimrc"
+VIM_VUNDLE_DIR="${HOME}/.vim/bundle/vundle"
 
 ### Helpers
 ############
@@ -59,6 +61,15 @@ backup_file "${IRB_CONFIG_FILE}"
 symlink_from_dotfiles "ruby/.irbrc" "${IRB_CONFIG_FILE}"
 backup_file "${RAILS_CONFIG_FILE}"
 symlink_from_dotfiles "ruby/.railsrc" "${RAILS_CONFIG_FILE}"
+
+### Setting up vim
+##################
+backup_file "${VIM_CONFIG_FILE}"
+symlink_from_dotfiles "other/.vimrc" "${VIM_CONFIG_FILE}"
+if [[ ! -d ${VIM_VUNDLE_DIR} ]]; then
+    /usr/bin/env git clone "https://github.com/gmarik/vundle.git" "${VIM_VUNDLE_DIR}"
+    /usr/bin/env vim +BundleInstall +qall
+fi
 
 ### Setting up others
 ######################
