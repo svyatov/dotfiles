@@ -12,6 +12,9 @@
     # Adding
     a = add
     aa = add .
+    # Adding and commiting
+    aac = !git add . && git commit --verbose
+    aaca = !git add . && git commit --verbose --amend
     # Logging
     l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     la = !git l --all
