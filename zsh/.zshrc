@@ -46,3 +46,5 @@ source $HOME/.dotfiles/zsh/functions
 unalias run-help
 autoload run-help
 HELPDIR=/usr/local/share/zsh/helpfiles
+
+unsetopt extended_glob # Fixing problem with git reset HEAD^ not found and many others
