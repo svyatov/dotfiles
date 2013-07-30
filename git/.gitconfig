@@ -67,6 +67,9 @@
     md = merge develop
     mm = merge master
     mf = merge --no-ff
+    # Reseting
+    rs = reset --soft
+    rh = reset --hard
     # Diffs
     dt = difftool
     df = diff --word-diff=color --minimal
