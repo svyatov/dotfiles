@@ -1,3 +1,14 @@
 mkcd() { mkdir $1 && cd $1 }
 rncd() { rails new $1 && cd $1 }
 
+# git clone & cd (accepts only ssh url format: git@github.com:Svyatov/dotfiles.git)
+glcd() {
+    local repo=${1##*/}
+    local dirname=${repo%\.git}
+
+    if [[ -n $2 ]]; then
+        dirname=$2
+    fi
+
+    git clone $1 $dirname && cd $dirname
+}
