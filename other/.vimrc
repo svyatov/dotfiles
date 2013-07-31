@@ -20,9 +20,9 @@ Bundle 'ervandew/supertab'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
 Bundle 'tomtom/tcomment_vim'
-Bundle 'wincent/Command-T'
 Bundle 'bling/vim-airline'
 Bundle 't9md/vim-ruby-xmpfilter'
+Bundle 'kien/ctrlp.vim'
 
 " Тема
 Bundle "tomasr/molokai"
@@ -209,7 +209,22 @@ map <leader>cd lcd %:p:h
 map <c-t> :tabnew<cr>
 map <c-x> :tabclose<cr>
 map <c-n> :tabnext<cr>
-map <c-p> :tabprev<cr>
+" map <c-p> :tabprev<cr>
+
+if executable('ag')
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
+endif
+
+let g:ctrlp_clear_cache_on_exit = 1
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_prompt_mappings = {
+  \ 'AcceptSelection("e")': ['<c-e>'],
+  \ 'AcceptSelection("t")': ['<cr>'],
+  \ }
 
 " Quicker window movement
 nnoremap <C-j> <C-w>j
