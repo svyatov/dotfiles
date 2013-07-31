@@ -104,10 +104,10 @@ set shiftround
 
 " Автоотступы для новых строк
 set autoindent
-set nosmartindent
+set smartindent
 
 " Fixing problem with autoindent while pasting something
-set pastetoggle=
+set pastetoggle=<F10>
 
 " Show line numbers
 set number
@@ -201,6 +201,9 @@ imap <buffer> <F5> <Plug>(xmpfilter-run)
 nmap <buffer> <F4> <Plug>(xmpfilter-mark)
 xmap <buffer> <F4> <Plug>(xmpfilter-mark)
 imap <buffer> <F4> <Plug>(xmpfilter-mark)
+
+" Remove highlight
+map <leader>s :let @/ = ""<cr>
 
 " Change working directory to currently open file (useful for Command-T)
 map <leader>cd lcd %:p:h
