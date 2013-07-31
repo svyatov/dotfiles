@@ -226,8 +226,8 @@ vmap <c-c> "+y
 " imap <C-v> <esc>"+P$a
 
 " Мапим быструю правку конфига vim'а
-nmap <leader>s :source $MYVIMRC<cr>
-nmap <leader>v :e $MYVIMRC<cr>
+nmap <leader>vs :source $MYVIMRC<cr>
+nmap <leader>ve :e $MYVIMRC<cr>
 
 " Выход из редактора по двойному Esc
 " map <esc><esc> <esc>:q!<cr>
