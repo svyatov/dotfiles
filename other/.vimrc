@@ -211,6 +211,12 @@ map <c-x> :tabclose<cr>
 map <c-n> :tabnext<cr>
 map <c-p> :tabprev<cr>
 
+" Quicker window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
 " Emacs-like beginning and end of line.
 imap <c-e> <c-o>$
 imap <c-a> <c-o>^
