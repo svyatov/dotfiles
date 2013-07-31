@@ -68,6 +68,4 @@ compdef v=vim
 
 # Current projects related stuff
 MY_PROJECTS_ALIASES="${HOME}/.dotfiles/zsh/projects"
-if [[ -f $MY_PROJECTS_ALIASES ]]; then
-    source $MY_PROJECTS_ALIASES
-fi
+[[ -f $MY_PROJECTS_ALIASES ]] && source $MY_PROJECTS_ALIASES
