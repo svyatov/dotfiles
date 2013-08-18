@@ -1,5 +1,27 @@
-mkcd() { mkdir $1 && cd $1 }
-rncd() { rails new $1 && cd $1 }
+_directories_list() { find $1 -type d -maxdepth 1 -not -name '.' -not -name '..' -exec basename {} + }
+
+u() {
+    if [[ -n $1 ]]; then
+        cd ../$1
+    else
+        cd ..
+    fi
+}
+_u() { reply=("${(@f)$(_directories_list ..)}") }
+compctl -M 'm:{a-z}={A-Z}' -K _u u
+
+uu() {
+    if [[ -n $1 ]]; then
+        cd ../../$1
+    else
+        cd ../..
+    fi
+}
+_uu() { reply=("${(@f)$(_directories_list ../..)}") }
+compctl -M 'm:{a-z}={A-Z}' -K _uu uu
+
+mkcd() { mkdir -p "$1" && cd "$1" }
+rncd() { rails new "$1" && cd "$1" }
 
 # git clone & cd (accepts only ssh url format: git@github.com:Svyatov/dotfiles.git)
 glcd() {
@@ -10,7 +32,8 @@ glcd() {
         dirname=$2
     fi
 
-    git clone $1 $dirname && cd $dirname
+    git clone "$1" "$dirname" && cd "$dirname"
+}
 
 # Marks
 export MARKS_PATH=$HOME/.marks

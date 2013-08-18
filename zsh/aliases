@@ -1,3 +1,14 @@
+# Common
+alias l='ls -lahG'
+alias lm='l *.mp4'
+alias h='cd ~'
+alias b='cd -'
+alias c='clear'
+alias q='exit'
+alias v='vim'
+alias s='subl'
+alias sn='subl --new-window'
+alias g='git'
 alias cdf='cd ~/.dotfiles'
 alias edf='sn ~/.dotfiles'
 alias dfe='edf'
@@ -13,7 +24,6 @@ alias sig='sn .gitignore'
 alias sca='source ~/.dotfiles/zsh/aliases'
 alias scf='source ~/.dotfiles/zsh/functions'
 alias shrl='exec $SHELL -l' # shell reload
-alias ytd='youtube-dl --ignore-errors --continue'
 
 # Copy public ssh key
 alias cpssh='cat ~/.ssh/id_rsa.pub | pbcopy && echo "Public ssh key copied to clipboard!"'
@@ -34,17 +44,21 @@ alias pj='python -m json.tool'
 # Upgrade all pip packages to the newest available version
 alias pup="pip freeze | grep -v '\-e' | cut -d= -f1 | xargs pip install -U"
 
-alias l='ls -laghG'
-alias lm='l *.mp4'
-alias h='cd ~'
-alias u='cd ..'
-alias b='cd -'
-alias c='clear'
-alias q='exit'
-alias v='vim'
-alias s='subl'
-alias sn='subl --new-window'
-alias g='git'
+# Global aliases
+alias -g G='| grep'
+alias -g L='| wc -l'
+
+# Marks
+alias j='jump'
+alias m='mark'
+alias um='unmark'
+alias ms='marks'
+
+# Exercism
+alias exf='cd ~/Projects/GitHub/exercism && exercism fetch'
+alias exs='exercism submit'
+
+# Ruby and Rails
 alias r='rails'
 alias t='bin/rspec --color'
 alias be='bundle exec'
@@ -52,19 +66,20 @@ alias bu='bundle update'
 alias bi='bundle install'
 alias bp='bundle package'
 alias bpa='bundle package --all'
-alias bake='bundle exec rake'
+alias bk='bundle exec rake'
+alias rk='rake'
 alias rbp='rails_best_practices'
-alias rdbm='bake db:migrate db:test:prepare'
+alias bkm='bk db:migrate db:test:prepare'
 alias capd='cap deploy'
 alias capdm='cap deploy:migrations'
 alias gpcd='git push && cap deploy'
 alias gpcdm='git push && cap deploy:migrations'
 alias clean-assets='bake assets:clean_expired' # turbo-sprockets
-alias memc='/usr/local/opt/memcached/bin/memcached -l 127.0.0.1'
 
-# Autocomplete for shortcuts
-compdef g=git
-compdef v=vim
+# Other
+alias jn='jasmine-node'
+alias memc='/usr/local/opt/memcached/bin/memcached -l 127.0.0.1'
+alias ytd='youtube-dl --ignore-errors --continue'
 
 # Current projects related stuff
 MY_PROJECTS_ALIASES="${HOME}/.dotfiles/zsh/projects"
