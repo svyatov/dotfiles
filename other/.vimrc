@@ -23,6 +23,7 @@ Bundle 'tomtom/tcomment_vim'
 Bundle 'bling/vim-airline'
 Bundle 't9md/vim-ruby-xmpfilter'
 Bundle 'kien/ctrlp.vim'
+Bundle 'elixir-lang/vim-elixir'
 
 " Тема
 Bundle "tomasr/molokai"
