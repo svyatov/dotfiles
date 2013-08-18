@@ -28,16 +28,12 @@ ZSH_THEME="crunch"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(brew capistrano gem vagrant) #(git brew gem vagrant knife)
 
-# Disable flow control commands (keeps C-s from freezing everything)
-stty start undef
-stty stop undef
-
 export EDITOR=vim
 export RUBYMINE_HOME=/Applications/RubyMine.app
 
 source $ZSH/oh-my-zsh.sh
-source $HOME/.dotfiles/zsh/aliases
 source $HOME/.dotfiles/zsh/functions
+source $HOME/.dotfiles/zsh/aliases
 
 # cd $HOME/ansible && source ./hacking/env-setup -q && cd
 # alias an='ansible -i ./hosts.ini'
@@ -47,4 +43,4 @@ unalias run-help
 autoload run-help
 HELPDIR=/usr/local/share/zsh/helpfiles
 
-unsetopt extended_glob # Fixing problem with git reset HEAD^ not found and many others
+unsetopt EXTENDED_GLOB # Fixing problem with git reset HEAD^ not found and many others
