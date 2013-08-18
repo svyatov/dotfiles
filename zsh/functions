@@ -11,4 +11,34 @@ glcd() {
     fi
 
     git clone $1 $dirname && cd $dirname
+
+# Marks
+export MARKS_PATH=$HOME/.marks
+jump() {
+    cd -P $MARKS_PATH/$1 2> /dev/null || echo "No such mark: $1"
 }
+mark() {
+    if [[ ! -d $MARKS_PATH ]]; then
+        mkdir -p $MARKS_PATH;
+    fi
+    ln -s "$(pwd)" $MARKS_PATH/$1
+}
+unmark() {
+    if [[ -L $MARKS_PATH/$1 ]]; then
+        rm $MARKS_PATH/$1
+    else
+        echo "No such mark: $1"
+    fi
+}
+marks() {
+    \ls -l $MARKS_PATH | tail -n +2 | sed 's/  / /g' | cut -d' ' -f9- | awk -F ' -> ' '{printf "%-10s -> %s\n", $1, $2}'
+}
+_marks() {
+    if [[ -d $MARKS_PATH ]]; then
+        reply=($(\ls $MARKS_PATH))
+    else
+        reply=()
+    fi
+}
+compctl -K _marks jump
+compctl -K _marks unmark
