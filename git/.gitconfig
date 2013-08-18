@@ -11,7 +11,7 @@
     h = help
     # Adding
     a = add
-    aa = add .
+    aa = add --all .
     # Adding and commiting
     aac = !git add . && git commit --verbose
     aaca = !git add . && git commit --verbose --amend
@@ -37,7 +37,10 @@
     cob = checkout -b
     # Branching
     br = branch
+    bra = branch --all
+    brr = branch --remote
     brd = branch --delete
+    brrd = branch --remote --delete
     # Commiting
     c = commit --verbose
     ca = commit --verbose --amend
@@ -52,9 +55,14 @@
     ps = push
     psa = push --all
     pst = push --tags
+    # Fetching
+    fu = fetch upstream
     # Pulling
     pl = pull
     plr = pull --rebase
+    # Remote
+    rau = remote add upstream
+    rpo = remote prune origin
     # Rebasing
     rb = rebase
     rbi = rebase --interactive
@@ -67,6 +75,7 @@
     md = merge develop
     mm = merge master
     mf = merge --no-ff
+    mum = merge upstream/master
     # Reseting
     rs = reset --soft
     rh = reset --hard
@@ -75,6 +84,8 @@
     df = diff --word-diff=color --minimal
     dtc = difftool --cached
     dfc = diff --cached --word-diff=color --minimal
+    # Syncing
+    sync = "!f() { git fetch upstream && git merge upstream/$(git rev-parse --abbrev-ref HEAD) && git push; }; f"
 [difftool "Kaleidoscope"]
     cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [diff]
