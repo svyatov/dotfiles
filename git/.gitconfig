@@ -13,8 +13,8 @@
     a = add
     aa = add --all .
     # Adding and commiting
-    aac = !git add . && git commit --verbose
-    aaca = !git add . && git commit --verbose --amend
+    aac = !git add --all . && git commit --verbose
+    aaca = !git add --all . && git commit --verbose --amend
     # Logging
     l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     la = !git l --all
@@ -57,6 +57,7 @@
     pst = push --tags
     # Fetching
     fu = fetch upstream
+    fo = fetch origin
     # Pulling
     pl = pull
     plr = pull --rebase
