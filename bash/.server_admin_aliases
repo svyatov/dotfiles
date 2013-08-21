@@ -40,6 +40,7 @@ alias lr='cd /etc/logrotate.d'
 alias ms='cd /etc/mysql'
 alias mdb='cd /var/lib/mysql'
 alias lg='cd /var/log'
+alias remove-old-kernels='sudo apt-get purge $(dpkg -l linux-{image,headers}-"[0-9]*" | awk '"'"'/ii/{print $2}'"'"' | grep -ve "$(uname -r | sed -r '"'"'s/-[a-z]+//'"'"')")'
 
 ### Functions
 function saa_update() {
