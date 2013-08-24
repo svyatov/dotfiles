@@ -48,9 +48,9 @@ alias -g G='| grep'
 alias -g L='| wc -l'
 
 # Marks
-alias j='jump'
-alias m='mark'
-alias um='unmark'
+alias j='nocorrect jump'
+alias m='nocorrect mark'
+alias um='nocorrect unmark'
 alias ms='marks'
 
 # Exercism
