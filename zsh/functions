@@ -37,16 +37,26 @@ glcd() {
 
 # Marks
 export MARKS_PATH=$HOME/.marks
+_makrs_usage_help() {
+    echo "You can use following commands:"
+    echo "  jump [mark_name] - change directory to the specified mark"
+    echo "  mark [mark_name] - create a mark for the current directory with a specified name"
+    echo "unmark [mark_name] - remove the specified mark"
+    echo " marks             - list all available marks"
+}
 jump() {
+    if [[ -z $1 ]]; then _makrs_usage_help; return 1; fi
     cd -P $MARKS_PATH/$1 2> /dev/null || echo "No such mark: $1"
 }
 mark() {
+    if [[ -z $1 ]]; then _makrs_usage_help; return 1; fi
     if [[ ! -d $MARKS_PATH ]]; then
         mkdir -p $MARKS_PATH;
     fi
     ln -s "$(pwd)" $MARKS_PATH/$1
 }
 unmark() {
+    if [[ -z $1 ]]; then _makrs_usage_help; return 1; fi
     if [[ -L $MARKS_PATH/$1 ]]; then
         rm $MARKS_PATH/$1
     else
