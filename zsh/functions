@@ -68,16 +68,16 @@ compctl -K _marks unmark
 
 _bin_first() {
     if [[ -x ./bin/$1 ]]; then
-        ./bin/$1 $2
+        ./bin/$1 ${@:2} # means "skip first element in array"
     else
-        $1 $2
+        $(rvm gemdir)/bin/$1 ${@:2}
     fi
 }
 
-rails()  { _bin_first rails  "$@" }
-rake()   { _bin_first rake   "$@" }
-cap()    { _bin_first cap    "$@" }
-# bundle() { _bin_first bundle "$@" }
+rails()  { _bin_first rails  $@ }
+rake()   { _bin_first rake   $@ }
+cap()    { _bin_first cap    $@ }
+bundle() { _bin_first bundle $@ }
 
 _rake_does_task_list_need_generating () {
   if [ ! -f .rake_tasks ]; then return 0;
