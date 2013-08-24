@@ -36,7 +36,7 @@ let g:airline_theme = 'simple'
 " Отключение совместимости настроек с Vi
 set nocompatible
 
-" Отключить перерисовку экрана во время выполнения макросов и других рутинных операций 
+" Отключить перерисовку экрана во время выполнения макросов и других рутинных операций
 " set lazyredraw
 
 " Опции сессий
@@ -95,7 +95,7 @@ set undolevels=2048
 set undofile
 set undodir=~/.vim/undo/
 
-" Табы и отступы 
+" Табы и отступы
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
@@ -137,7 +137,7 @@ set imsearch=0
 " Отслеживать изменения файлов
 set autoread
 
-" Поиск и подсветка результатов 
+" Поиск и подсветка результатов
 set hlsearch
 set incsearch
 set ignorecase
@@ -148,7 +148,7 @@ set scrolloff=3
 set sidescrolloff=7
 set sidescroll=1
 
-" Враппинг  
+" Враппинг
 set nowrap
 set textwidth=0
 
@@ -270,10 +270,10 @@ map  <F3> :NERDTreeToggle<cr>
 vmap <F3> <esc>:NERDTreeToggle<cr>v
 imap <F3> <esc>:NERDTreeToggle<cr>i
 
-" Устанавливаем 256 цветов 
+" Устанавливаем 256 цветов
 set t_Co=256
 
-" Меняем курсор для режима вставки 
+" Меняем курсор для режима вставки
 " if exists('$TMUX')
 "     let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
 "     let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
@@ -300,7 +300,7 @@ endfunction
 map <leader>n :call RenameFile()<cr>
 
 
-" Автоопределение типов файлов 
+" Автоопределение типов файлов
 augroup filetypedetect
     au BufNewFile,BufRead */etc/apache{,2}/*.conf setf apache
     au BufNewFile,BufRead */etc/mysql/*.cnf setf dosini
