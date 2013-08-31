@@ -88,7 +88,12 @@ _bin_first() {
     if [[ -x ./bin/$1 ]]; then
         ./bin/$1 ${@:2} # means "skip first element in array"
     else
-        $(rvm gemdir)/bin/$1 ${@:2}
+        # bundler and rake are installed in global gemset
+        if [[ -x $GEM_HOME@global/bin/$1 ]]; then
+            $GEM_HOME@global/bin/$1 ${@:2}
+        else
+            $GEM_HOME/bin/$1 ${@:2}
+        fi
     fi
 }
 
