@@ -1,3 +1,11 @@
+z() {
+    if [[ -n $1 ]]; then
+        zeus $@
+    else
+        zeus start
+    fi
+}
+
 _directories_list() { find $1 -type d -maxdepth 1 -not -name '.' -not -name '..' -exec basename {} + }
 
 u() {
