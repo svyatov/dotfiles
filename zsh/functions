@@ -1,3 +1,12 @@
+ORIGINAL_GIT_PATH=$(which git)
+git() {
+    if [[ -n $1 ]]; then
+        $ORIGINAL_GIT_PATH $@
+    else
+        $ORIGINAL_GIT_PATH st
+    fi
+}
+
 z() {
     if [[ -n $1 ]]; then
         zeus $@
