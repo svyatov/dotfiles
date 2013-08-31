@@ -29,7 +29,12 @@ ZSH_THEME="crunch"
 plugins=(brew capistrano gem vagrant) #(git brew gem vagrant knife)
 
 export EDITOR=vim
-export RUBYMINE_HOME=/Applications/RubyMine.app
+
+if [[ -d /Applications/RubyMine\ EAP.app ]]; then
+	export RUBYMINE_HOME=/Applications/RubyMine\ EAP.app
+else
+	export RUBYMINE_HOME=/Applications/RubyMine.app
+fi
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.dotfiles/zsh/functions
