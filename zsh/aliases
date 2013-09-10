@@ -1,14 +1,24 @@
 # Common
 alias l='ls -lahG'
+alias д=l
 alias lm='l *.mp4'
+alias дь=lm
 alias h='cd ~'
+alias р=h
 alias b='cd -'
+alias и=b
 alias c='clear'
+alias с=c
 alias q='exit'
+alias й=q
 alias v='vim'
+alias м=v
 alias s='subl'
+alias ы=s
 alias sn='subl --new-window'
+alias ыт=sn
 alias g='git'
+alias п=g
 alias edf='sn ~/.dotfiles'
 alias dfe='edf'
 alias ea='sn ~/.dotfiles/zsh/aliases'
