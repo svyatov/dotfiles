@@ -52,46 +52,46 @@ glcd() {
     git clone "$1" "$dirname" && cd "$dirname"
 }
 
-# Marks
-export MARKS_PATH=$HOME/.marks
-_makrs_usage_help() {
+# Jumps
+export JUMPS_PATH=$HOME/.jump_shortcuts
+_jumps_usage_help() {
     echo "You can use following commands:"
-    echo "  jump [mark_name] - change directory to the specified mark"
-    echo "  mark [mark_name] - create a mark for the current directory with a specified name"
-    echo "unmark [mark_name] - remove the specified mark"
-    echo " marks             - list all available marks"
+    echo "     jump [shortcut] - change directory to the specified shortcut"
+    echo " jump-add [shortcut] - create a shortcut for the current directory"
+    echo " jump-del [shortcut] - remove the specified shortcut"
+    echo "jump-list            - list all available jump shortcuts"
 }
 jump() {
-    if [[ -z $1 ]]; then _makrs_usage_help; return 1; fi
-    cd -P $MARKS_PATH/$1 2> /dev/null || echo "No such mark: $1"
+    if [[ -z $1 ]]; then _jumps_usage_help; return 1; fi
+    cd -P $JUMPS_PATH/$1 2> /dev/null || echo "No such jump shortcut: $1"
 }
-mark() {
-    if [[ -z $1 ]]; then _makrs_usage_help; return 1; fi
-    if [[ ! -d $MARKS_PATH ]]; then
-        mkdir -p $MARKS_PATH;
+jump-add() {
+    if [[ -z $1 ]]; then _jumps_usage_help; return 1; fi
+    if [[ ! -d $JUMPS_PATH ]]; then
+        mkdir -p $JUMPS_PATH;
     fi
-    ln -s "$(pwd)" $MARKS_PATH/$1
+    ln -s "$(pwd)" $JUMPS_PATH/$1
 }
-unmark() {
-    if [[ -z $1 ]]; then _makrs_usage_help; return 1; fi
-    if [[ -L $MARKS_PATH/$1 ]]; then
-        rm $MARKS_PATH/$1
+jump-del() {
+    if [[ -z $1 ]]; then _jumps_usage_help; return 1; fi
+    if [[ -L $JUMPS_PATH/$1 ]]; then
+        rm $JUMPS_PATH/$1
     else
-        echo "No such mark: $1"
+        echo "No such jump shortcut: $1"
     fi
 }
-marks() {
-    \ls -l $MARKS_PATH | tail -n +2 | sed 's/  / /g' | cut -d' ' -f9- | awk -F ' -> ' '{printf "%-10s -> %s\n", $1, $2}'
+jump-list() {
+    \ls -l $JUMPS_PATH | tail -n +2 | sed 's/  / /g' | cut -d' ' -f9- | awk -F ' -> ' '{printf "%-10s -> %s\n", $1, $2}'
 }
-_marks() {
-    if [[ -d $MARKS_PATH ]]; then
-        reply=($(\ls $MARKS_PATH))
+_jump-list() {
+    if [[ -d $JUMPS_PATH ]]; then
+        reply=($(\ls $JUMPS_PATH))
     else
         reply=()
     fi
 }
-compctl -K _marks jump
-compctl -K _marks unmark
+compctl -K _jump-list jump
+compctl -K _jump-list jump-del
 
 _bin_first() {
     if [[ -x ./bin/$1 ]]; then

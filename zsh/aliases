@@ -57,11 +57,11 @@ alias pup="pip freeze | grep -v '\-e' | cut -d= -f1 | xargs pip install -U"
 alias -g G='| grep'
 alias -g L='| wc -l'
 
-# Marks
+# Jumps
 alias j='nocorrect jump'
-alias m='nocorrect mark'
-alias um='nocorrect unmark'
-alias ms='marks'
+alias ja='nocorrect jump-add'
+alias jd='nocorrect jump-del'
+alias jl='jump-list'
 
 # Exercism
 alias exf='cd ~/Projects/Playground/exercism && exercism fetch'
