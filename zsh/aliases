@@ -64,7 +64,7 @@ alias um='nocorrect unmark'
 alias ms='marks'
 
 # Exercism
-alias exf='cd ~/Projects/GitHub/exercism && exercism fetch'
+alias exf='cd ~/Projects/Playground/exercism && exercism fetch'
 alias exs='exercism submit'
 
 # Ruby and Rails
@@ -84,7 +84,3 @@ alias capdm='cap deploy:migrations'
 alias jn='jasmine-node'
 alias memc='/usr/local/opt/memcached/bin/memcached -l 127.0.0.1'
 alias ytd='youtube-dl --ignore-errors --continue'
-
-# Current projects related stuff
-MY_PROJECTS_ALIASES="${HOME}/.dotfiles/zsh/projects"
-[[ -f $MY_PROJECTS_ALIASES ]] && source $MY_PROJECTS_ALIASES
