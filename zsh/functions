@@ -79,7 +79,12 @@ jump-add() {
     if [[ ! -d $JUMPS_PATH ]]; then
         mkdir -p $JUMPS_PATH;
     fi
-    ln -s "$(pwd)" $JUMPS_PATH/$1
+    if [[ -L $JUMPS_PATH/$1 ]]; then
+        local jump_destination=$(readlink $JUMPS_PATH/$1)
+        echo "Shortcut \"${1}\" already exists and points to: ${jump_destination}"
+    else
+        ln -s "$(pwd)" $JUMPS_PATH/$1
+    fi
 }
 jump-del() {
     if [[ -z $1 ]]; then _jumps_usage_help; return 1; fi
