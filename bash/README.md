@@ -5,7 +5,7 @@
 ### Setup for simple user
 
 1. `$ curl -o ~/.server_aliases "https://raw.github.com/Svyatov/dotfiles/master/bash/.server_aliases"`
-2. `$ echo ". ~/.server_aliases" >> "~/.bashrc"`
+2. `$ echo ". ~/.server_aliases" >> ~/.bashrc`
 3. `$ source ~/.bashrc`
 
 -- or by one command --
