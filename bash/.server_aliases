@@ -8,11 +8,13 @@ alias u='cd ..'
 alias b='cd -'
 alias q='exit'
 alias c='clear'
+alias cl='clear && ls -la'
 alias vb='vim ~/.bashrc'
 alias sb='. ~/.bashrc && echo .bashrc sourced'
 alias ct='crontab -e'
 alias vsa='vim +"let b:is_bash=1" +"set ft=sh et ts=4 sw=4" ~/.server_aliases'
 alias ssa='. ~/.server_aliases && echo .server_aliases sourced'
+alias shrl='exec $SHELL -l' # shell reload
 
 ### Functions
 function mkcd() {
