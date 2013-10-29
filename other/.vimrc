@@ -257,10 +257,6 @@ nmap <leader>ve :e $MYVIMRC<cr>
 " Выход из редактора по двойному Esc
 " map <esc><esc> <esc>:q!<cr>
 
-" Сохранение файла
-map <c-s> <esc>:w<cr>
-imap <c-s> <esc>:w<cr>
-
 " При отступах не снимать выделение
 vnoremap < <gv
 vnoremap > >gv
