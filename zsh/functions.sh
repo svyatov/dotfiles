@@ -1,6 +1,8 @@
 source $HOME/.dotfiles/zsh/functions_jumps.sh
 source $HOME/.dotfiles/zsh/functions_ruby.sh
 
+mkcd() { mkdir -p "$1" && cd "$1" }
+
 # Shows most often used shell commands
 cmdtop() {
     local list_limit=10 # show top 10 commands by default
@@ -61,5 +63,3 @@ uu() {
 }
 _uu() { reply=("${(@f)$(_directories_list ../..)}") }
 compctl -M 'm:{a-z}={A-Z}' -K _uu uu
-
-mkcd() { mkdir -p "$1" && cd "$1" }
