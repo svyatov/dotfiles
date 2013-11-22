@@ -40,8 +40,8 @@ else
 fi
 
 source $ZSH/oh-my-zsh.sh
-source $HOME/.dotfiles/zsh/functions
-source $HOME/.dotfiles/zsh/aliases
+source $HOME/.dotfiles/zsh/functions.sh
+source $HOME/.dotfiles/zsh/aliases.sh
 
 # cd $HOME/ansible && source ./hacking/env-setup -q && cd
 # alias an='ansible -i ./hosts.ini'

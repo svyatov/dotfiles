@@ -19,25 +19,24 @@ alias s='subl'
 alias ы=s
 alias sn='subl --new-window'
 alias ыт=sn
-alias g='git'
 alias п=g
 alias edf='sn ~/.dotfiles'
 alias dfe='edf'
-alias ea='sn ~/.dotfiles/zsh/aliases'
+alias ea='sn ~/.dotfiles/zsh/aliases.sh'
 alias ae='ea'
-alias ef='sn ~/.dotfiles/zsh/functions'
+alias ef='sn ~/.dotfiles/zsh/functions.sh'
 alias fe='ef'
 alias ez='sn ~/.zshrc'
 alias ze='ez'
 alias egc='sn ~/.gitconfig'
 alias gce='egc'
 alias sig='sn .gitignore'
-alias sca='source ~/.dotfiles/zsh/aliases'
-alias scf='source ~/.dotfiles/zsh/functions'
+alias sca='source ~/.dotfiles/zsh/aliases.sh'
+alias scf='source ~/.dotfiles/zsh/functions.sh'
 alias shrl='exec $SHELL -l' # shell reload
 
 # Copy public ssh key
-alias cpssh='cat ~/.ssh/id_rsa.pub | pbcopy && echo "Public ssh key copied to clipboard!"'
+alias cpubkey='cat ~/.ssh/id_rsa.pub | pbcopy && echo "Public ssh key copied to clipboard!"'
 
 # Pretty print json in shell, example:
 # $ echo '[1, 2, 3, {"6": 7, "4": 5}]' | pj
