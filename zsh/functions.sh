@@ -22,6 +22,18 @@ uwpp() {
     fi
 }
 
+speedup-skype() {
+    if [[ -n $1 ]]; then
+        if [[ -d "${HOME}/Library/Application Support/Skype/${1}" ]]; then
+            sqlite3 "${HOME}/Library/Application Support/Skype/${1}/main.db" "vacuum; reindex;"
+        else
+            echo "There is no data for username '${1}' in Skype folder."
+        fi
+    else
+        echo 'Please, provide Skype username to speed up.'
+    fi
+}
+
 g() {
     if [[ -n $1 ]]; then
         git $@
