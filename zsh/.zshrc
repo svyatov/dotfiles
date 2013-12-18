@@ -28,27 +28,14 @@ ZSH_THEME="crunch"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(brew capistrano gem vagrant) #(git brew gem vagrant knife)
 
-export EDITOR=vim
-export LANG=en_US.UTF-8
-export LC_CTYPE=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-
-if [[ -d /Applications/RubyMine\ EAP.app ]]; then
-	export RUBYMINE_HOME=/Applications/RubyMine\ EAP.app
-else
-	export RUBYMINE_HOME=/Applications/RubyMine.app
-fi
-
 source $ZSH/oh-my-zsh.sh
 source $HOME/.dotfiles/zsh/functions.sh
 source $HOME/.dotfiles/zsh/aliases.sh
 
-# cd $HOME/ansible && source ./hacking/env-setup -q && cd
-# alias an='ansible -i ./hosts.ini'
-# alias ap='ansible-playbook -i ./hosts.ini'
-#
 unalias run-help
 autoload run-help
 HELPDIR=/usr/local/share/zsh/helpfiles
 
 unsetopt EXTENDED_GLOB # Fixing problem with git reset HEAD^ not found and many others
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

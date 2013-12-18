@@ -50,8 +50,7 @@ backup_file "${ZSH_RC_FILE}"
 symlink_from_dotfiles "zsh/.zshrc" "${ZSH_RC_FILE}"
 backup_file "${ZSH_ENV_FILE}"
 symlink_from_dotfiles "zsh/.zshenv" "${ZSH_ENV_FILE}"
-backup_file "${ZSH_PROFILE_FILE}"
-symlink_from_dotfiles "zsh/.zprofile" "${ZSH_PROFILE_FILE}"
+backup_file "${ZSH_PROFILE_FILE}" # just "remove" .zprofile because it's useless
 
 ### Setting up ruby: rails, irb, gem
 #####################################
