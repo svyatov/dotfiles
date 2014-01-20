@@ -36,7 +36,7 @@ alias scf='source ~/.dotfiles/zsh/functions.sh'
 alias shrl='exec $SHELL -l' # shell reload
 
 # Copy public ssh key
-alias cpubkey='cat ~/.ssh/id_rsa.pub | pbcopy && echo "Public ssh key copied to clipboard!"'
+alias cpk='cat ~/.ssh/id_rsa.pub | pbcopy && echo "Public ssh key copied to clipboard!"'
 
 # Pretty print json in shell, example:
 # $ echo '[1, 2, 3, {"6": 7, "4": 5}]' | pj
