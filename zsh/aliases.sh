@@ -97,6 +97,15 @@ alias vsus='vagrant suspend'
 alias voff='vagrant halt'
 alias vdel='vagrant destroy'
 
+# Brew
+alias ew='brew'
+alias уц=ew
+alias ewu='brew update'
+alias ewi='brew install'
+alias ewd='brew doctor'
+alias ewo='brew outdated'
+alias ewuu='brew upgrade'
+
 # Other
 alias jn='jasmine-node'
 alias memc='/usr/local/opt/memcached/bin/memcached -l 127.0.0.1'
