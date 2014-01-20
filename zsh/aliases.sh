@@ -85,6 +85,18 @@ alias rbp='rails_best_practices'
 alias capd='cap deploy'
 alias capdm='cap deploy:migrations'
 
+# Vagrant
+alias va='vagrant'
+alias мф=va
+alias vu='vagrant up'
+alias мг=vu
+alias vs='vagrant ssh'
+alias мы=vs
+alias vst='vagrant status'
+alias vsus='vagrant suspend'
+alias voff='vagrant halt'
+alias vdel='vagrant destroy'
+
 # Other
 alias jn='jasmine-node'
 alias memc='/usr/local/opt/memcached/bin/memcached -l 127.0.0.1'
