@@ -2,13 +2,14 @@
 PS1="\[$(tput sgr0)\]\[$(tput bold)\]\[$(tput setaf 6)\]\t\[$(tput setaf 7)\]|\[$(tput setaf 3)\]\!\[$(tput setaf 7)\]|\[$(tput setaf 3)\]\j\[$(tput setaf 7)\]|\[$(tput setaf 2)\]\u\[$(tput setaf 0)\]@\[$(tput setaf 1)\]\h \[$(tput setaf 4)\]\w \[$(tput setaf 7)\]\\$ \[$(tput sgr0)\]"
 
 ### Aliases
+alias l='ls -laGh'
 alias v='vim'
 alias h='cd ~'
 alias u='cd ..'
 alias b='cd -'
 alias q='exit'
 alias c='clear'
-alias cl='clear && ls -la'
+alias cl='clear && l'
 alias vb='vim ~/.bashrc'
 alias sb='. ~/.bashrc && echo .bashrc sourced'
 alias ct='crontab -e'
