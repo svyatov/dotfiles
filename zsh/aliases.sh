@@ -69,6 +69,10 @@ alias exf='cd ~/Projects/Playground/exercism && exercism fetch'
 alias exs='exercism submit'
 
 # Ruby and Rails
+alias gm='gem'
+alias gmi='gem install'
+alias gmu='gem update'
+alias gmus='gem update --system'
 alias r='rails'
 alias rk='rake'
 alias rkm='rake db:migrate'
