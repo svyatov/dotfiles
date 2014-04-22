@@ -1,5 +1,6 @@
 source $HOME/.dotfiles/zsh/functions_jumps.sh
 source $HOME/.dotfiles/zsh/functions_ruby.sh
+source $HOME/.dotfiles/zsh/functions_php.sh
 
 mkcd() { mkdir -p "$1" && cd "$1" }
 
@@ -75,3 +76,14 @@ uu() {
 }
 _uu() { reply=("${(@f)$(_directories_list ../..)}") }
 compctl -M 'm:{a-z}={A-Z}' -K _uu uu
+
+resolve_apache_file_permissions() {
+    if [[ -n $1 ]]; then
+        # allow apache to access user's files
+        sudo chmod -R +a 'group:_www allow read,write,delete,add_file,add_subdirectory,file_inherit,directory_inherit' $1
+        # allow user to access files created by apache
+        sudo chmod -R +a 'group:staff allow read,write,delete,add_file,add_subdirectory,file_inherit,directory_inherit' $1
+    else
+        echo 'You forget to specify directory!'
+    fi
+}

@@ -26,7 +26,7 @@ ZSH_THEME="crunch"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(brew capistrano gem vagrant) #(git brew gem vagrant knife)
+plugins=() #(git brew gem vagrant knife)
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.dotfiles/zsh/functions.sh
@@ -38,4 +38,5 @@ HELPDIR=/usr/local/share/zsh/helpfiles
 
 unsetopt EXTENDED_GLOB # Fixing problem with git reset HEAD^ not found and many others
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

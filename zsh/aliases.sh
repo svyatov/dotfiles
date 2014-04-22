@@ -68,6 +68,9 @@ alias jl='jump-list'
 alias exf='cd ~/Projects/Playground/exercism && exercism fetch'
 alias exs='exercism submit'
 
+# PHP
+alias cm='php composer.phar'
+
 # Ruby and Rails
 alias gm='gem'
 alias gmi='gem install'

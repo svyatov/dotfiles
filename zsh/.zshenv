@@ -11,6 +11,10 @@ fi
 
 export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
+if [[ -d "/usr/local/php5/bin" ]]; then
+    export PATH=/usr/local/php5/bin:$PATH
+fi
+
 if [[ -d "/usr/local/share/npm/bin" ]]; then
     export PATH=$PATH:/usr/local/share/npm/bin
 fi
