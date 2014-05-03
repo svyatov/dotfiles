@@ -1,5 +1,5 @@
 # Common
-alias l='ls -lahG'
+alias l='ls -lhAG'
 alias д=l
 alias lm='l *.mp4'
 alias дь=lm
@@ -9,8 +9,8 @@ alias b='cd -'
 alias и=b
 alias c='clear'
 alias с=c
-alias cl='c && l'
-alias сд=cl
+alias ll='c && l'
+alias дд=ll
 alias q='exit'
 alias й=q
 alias v='vim'
@@ -20,6 +20,8 @@ alias ы=s
 alias sn='subl --new-window'
 alias ыт=sn
 alias п=g
+alias o='open'
+alias щ=o
 alias edf='sn ~/.dotfiles'
 alias dfe='edf'
 alias ea='sn ~/.dotfiles/zsh/aliases.sh'
@@ -58,18 +60,16 @@ alias pup="pip freeze | grep -v '\-e' | cut -d= -f1 | xargs pip install -U"
 alias -g G='| grep'
 alias -g L='| wc -l'
 
-# Jumps
-alias j='nocorrect jump'
-alias ja='nocorrect jump-add'
-alias jd='nocorrect jump-del'
-alias jl='jump-list'
-
 # Exercism
 alias exf='cd ~/Projects/Playground/exercism && exercism fetch'
 alias exs='exercism submit'
 
 # PHP
 alias cm='php composer.phar'
+alias sf='php app/console'
+alias sfcl='php app/console cache:clear'
+alias sfroute='php app/console router:debug'
+alias sfgb='php app/console generate:bundle'
 
 # Ruby and Rails
 alias gm='gem'
@@ -105,11 +105,14 @@ alias ew='brew'
 alias уц=ew
 alias ewu='brew update'
 alias ewi='brew install'
+alias ewf='brew info'
 alias ewd='brew doctor'
 alias ewo='brew outdated'
+alias ewuo='brew update && brew outdated'
 alias ewuu='brew upgrade'
 
 # Other
 alias jn='jasmine-node'
 alias memc='/usr/local/opt/memcached/bin/memcached -l 127.0.0.1'
 alias ytd='youtube-dl --ignore-errors --continue'
+alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
