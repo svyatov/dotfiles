@@ -35,14 +35,6 @@ speedup-skype() {
     fi
 }
 
-g() {
-    if [[ -n $1 ]]; then
-        git $@
-    else
-        git st
-    fi
-}
-
 # git clone & cd (accepts only ssh url format: git@github.com:svyatov/dotfiles.git)
 gclcd() {
     local repo=${1##*/}

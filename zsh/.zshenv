@@ -9,18 +9,12 @@ else
 	export RUBYMINE_HOME=/Applications/RubyMine.app
 fi
 
-export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
+# PHP from Liip
+export PATH=/usr/local/php5/bin:$PATH
 
-if [[ -d "/usr/local/php5/bin" ]]; then
-    export PATH=/usr/local/php5/bin:$PATH
-fi
+# Other paths
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
 if [[ -d "/usr/local/share/npm/bin" ]]; then
     export PATH=$PATH:/usr/local/share/npm/bin
 fi
-
-if [[ -d "/Applications/Postgres.app/Contents/MacOS/bin" ]]; then
-    export PATH="/Applications/Postgres.app/Contents/MacOS/bin:$PATH"
-fi
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

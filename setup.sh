@@ -13,7 +13,10 @@ RAILS_CONFIG_FILE="${HOME}/.railsrc"
 ZSH_RC_FILE="${HOME}/.zshrc"
 ZSH_ENV_FILE="${HOME}/.zshenv"
 ZSH_PROFILE_FILE="${HOME}/.zprofile"
-OH_MY_ZSH_DIR="${HOME}/.oh-my-zsh"
+ZSH_LOGIN_FILE="${HOME}/.zlogin"
+# Zsh Prezto
+ZPREZTO_DIR="${HOME}/.zprezto"
+ZPREZTO_RC_FILE="${HOME}/.zpreztorc"
 # Others
 TMUX_CONFIG_FILE="${HOME}/.tmux.conf"
 VIM_CONFIG_FILE="${HOME}/.vimrc"
@@ -43,13 +46,18 @@ symlink_from_dotfiles "git/.gitconfig" "${GIT_CONFIG_FILE}"
 
 ### Setting up zsh
 ###################
-if [[ ! -d ${OH_MY_ZSH_DIR} ]]; then
-    /usr/bin/env git clone "git://github.com/robbyrussell/oh-my-zsh.git" "${OH_MY_ZSH_DIR}"
+if [[ ! -d ${ZPREZTO_DIR} ]]; then
+    /usr/bin/env git clone --recursive "https://github.com/sorin-ionescu/prezto.git" "${ZPREZTO_DIR}"
 fi
 backup_file "${ZSH_RC_FILE}"
 symlink_from_dotfiles "zsh/.zshrc" "${ZSH_RC_FILE}"
 backup_file "${ZSH_ENV_FILE}"
 symlink_from_dotfiles "zsh/.zshenv" "${ZSH_ENV_FILE}"
+backup_file "${ZSH_LOGIN_FILE}"
+symlink_from_dotfiles "zsh/.zlogin" "${ZSH_LOGIN_FILE}"
+backup_file "${ZPREZTO_RC_FILE}"
+symlink_from_dotfiles "zsh/.zpreztorc" "${ZPREZTO_RC_FILE}"
+symlink_from_dotfiles "zsh/prompt_svyatov_setup" "${ZPREZTO_DIR}/modules/prompt/functions/prompt_svyatov_setup"
 backup_file "${ZSH_PROFILE_FILE}" # just "remove" .zprofile because it's useless
 
 ### Setting up ruby: rails, irb, gem
