@@ -72,7 +72,7 @@ function prompt_svyatov_setup {
 
   # Define prompts.
   PROMPT='%F{yellow}%T%f %F{cyan}${_prompt_svyatov_pwd}%f${git_info:+${(e)git_info[prompt]}}%(!. %B%F{red}#%f%b.)${editor_info[keymap]} '
-  RPROMPT='${editor_info[overwrite]}%(?:: %F{red}⏎%f)${VIM:+" %B%F{green}V%f%b"}${git_info[rprompt]} [%F{magenta}$(rvm-prompt v g)%f]'
+  RPROMPT='${editor_info[overwrite]}%(?:: %F{red}⏎%f)${VIM:+" %B%F{green}V%f%b"}${git_info[rprompt]} [%F{magenta}$(rvm-prompt v g)%f] %D{%d.%m.%y}'
   SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 }
 
