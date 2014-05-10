@@ -9,6 +9,7 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+source $HOME/.dotfiles/zsh/unalias_prezto.sh
 source $HOME/.dotfiles/zsh/functions.sh
 source $HOME/.dotfiles/zsh/aliases.sh
 
