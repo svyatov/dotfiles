@@ -23,6 +23,7 @@ unalias lc
 unalias lu
 unalias sl
 unalias o
+unalias rake
 
 # Git
 unalias g
