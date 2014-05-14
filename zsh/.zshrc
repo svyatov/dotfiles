@@ -17,3 +17,4 @@ source $HOME/.dotfiles/zsh/aliases.sh
 # unsetopt AUTO_NAME_DIRS # Auto adding variable-stored paths to ~ list conflicts with RVM
 
 [[ -d "$HOME/.rvm/bin" ]] && export PATH=$HOME/.rvm/bin:$PATH
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
