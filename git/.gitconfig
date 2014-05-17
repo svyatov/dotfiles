@@ -19,6 +19,7 @@
     l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     la = !git l --all
     lp = !git l --patch --word-diff
+    ls = !git l --stat
     # Status
     st = status --short --branch --untracked-files=all
     # Stashing
