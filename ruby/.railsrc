@@ -1,2 +1,2 @@
 --skip-bundle    # skips bundle install on generating a new rails app
-#--skip-test-unit # skips making the test unit folders (I use rspec)
+--skip-test-unit # skips making the test unit folders (because RSpec!)
