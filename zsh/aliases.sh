@@ -99,6 +99,7 @@ alias vst='vagrant status'
 alias vsus='vagrant suspend'
 alias voff='vagrant halt'
 alias vdel='vagrant destroy'
+alias vp='vagrant provision'
 
 # Brew
 alias ew='brew'
