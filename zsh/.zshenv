@@ -3,6 +3,8 @@ export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
+export no_proxy="localhost,127.0.0.0/8,*.local"
+
 if [[ -d /Applications/RubyMine\ EAP.app ]]; then
 	export RUBYMINE_HOME=/Applications/RubyMine\ EAP.app
 else

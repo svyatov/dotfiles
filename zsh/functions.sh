@@ -4,6 +4,18 @@ source $HOME/.dotfiles/zsh/functions_php.sh
 
 mkcd() { mkdir -p "$1" && cd "$1" }
 
+proxysh() {
+    if [[ $1 == 'off' ]]; then
+        export http_proxy=
+        export https_proxy=
+        echo 'Shell proxies disabled.'
+    else
+        export http_proxy=127.0.0.1:8123
+        export https_proxy=127.0.0.1:8123
+        echo 'Shell proxies enabled!'
+    fi
+}
+
 # Shows most often used shell commands
 cmdtop() {
     local list_limit=10 # show top 10 commands by default
