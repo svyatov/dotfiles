@@ -1,120 +1,122 @@
 [user]
-    name = Leonid Svyatov
-    email = leonid@svyatov.ru
+  name = Leonid Svyatov
+  email = leonid@svyatov.ru
 [color]
-    ui = true
+  ui = true
 [core]
-    editor = vim
-    excludesfile = ~/.dotfiles/git/.gitignore_global
-    autocrlf = input
+  editor = vim
+  excludesfile = ~/.dotfiles/git/.gitignore_global
+  autocrlf = input
 [alias]
-    h = help
-    # Adding
-    a = add
-    aa = add --all .
-    # Adding and commiting
-    aac = !git add --all . && git commit --verbose
-    aaca = !git add --all . && git commit --verbose --amend
-    # Logging
-    l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-    la = !git l --all
-    lp = !git l --patch --word-diff
-    ls = !git l --stat
-    # Status
-    st = status --short --branch --untracked-files=all
-    # Stashing
-    s = stash
-    sa = stash apply
-    ski = stash --keep-index
-    su = stash --include-untracked
-    suki = stash --include-untracked --keep-index
-    # Tags
-    t = tag
-    ta = tag --annotate
-    # Checkout
-    co = checkout
-    cod = checkout develop
-    com = checkout master
-    cob = checkout -b
-    # Branching
-    br = branch
-    bra = branch --all
-    brr = branch --remote
-    brd = branch --delete
-    brrd = branch --remote --delete
-    # Commiting
-    c = commit --verbose
-    ca = commit --verbose --amend
-    # Cherry-picking
-    cp = cherry-pick
-    cpc = cherry-pick --continue
-    cpa = cherry-pick --abort
-    cpe = cherry-pick --edit
-    cpx = cherry-pick -x
-    cpnc = cherry-pick --no-commit
-    # Pushing
-    ps = push
-    psa = push --all
-    pst = push --tags
-    # Fetching
-    fu = fetch upstream
-    fo = fetch origin
-    # Pulling
-    pl = pull
-    plr = pull --rebase
-    # Remote
-    rau = remote add upstream
-    rpo = remote prune origin
-    # Rebasing
-    rb = rebase
-    rbi = rebase --interactive
-    rbc = rebase --continue
-    rba = rebase --abort
-    rbm = rebase master
-    rbd = rebase develop
-    # Merging
-    m = merge
-    md = merge develop
-    mm = merge master
-    mf = merge --no-ff
-    mum = merge upstream/master
-    # Reseting
-    rs = reset --soft
-    rh = reset --hard
-    # Diffs
-    dt = difftool
-    df = diff --word-diff=color --minimal
-    dtc = difftool --cached
-    dfc = diff --cached --word-diff=color --minimal
-    # Syncing
-    sync = "!f() { git fetch upstream && git merge upstream/$(git rev-parse --abbrev-ref HEAD) && git push; }; f"
+  h = help
+  # Adding
+  a = add
+  aa = add --all .
+  # Commiting
+  c = commit --verbose
+  ca = commit --verbose --amend
+  # Adding and commiting
+  aac = !git add --all . && git commit --verbose
+  aaca = !git add --all . && git commit --verbose --amend
+  # Total commits count
+  cc = rev-list --no-merges --count HEAD
+  # Logging
+  l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  la = !git l --all
+  lp = !git l --patch --word-diff
+  ls = !git l --stat
+  # Status
+  st = status --short --branch --untracked-files=all
+  # Stashing
+  s = stash
+  sa = stash apply
+  ski = stash --keep-index
+  su = stash --include-untracked
+  suki = stash --include-untracked --keep-index
+  # Tags
+  t = tag
+  ta = tag --annotate
+  # Checkout
+  co = checkout
+  cod = checkout develop
+  com = checkout master
+  cob = checkout -b
+  # Branching
+  br = branch
+  bra = branch --all
+  brr = branch --remote
+  brd = branch --delete
+  brrd = branch --remote --delete
+  # Cherry-picking
+  cp = cherry-pick
+  cpc = cherry-pick --continue
+  cpa = cherry-pick --abort
+  cpe = cherry-pick --edit
+  cpx = cherry-pick -x
+  cpnc = cherry-pick --no-commit
+  # Pushing
+  ps = push
+  psa = push --all
+  pst = push --tags
+  # Fetching
+  fu = fetch upstream
+  fo = fetch origin
+  # Pulling
+  pl = pull
+  plr = pull --rebase
+  # Remote
+  rau = remote add upstream
+  rpo = remote prune origin
+  # Rebasing
+  rb = rebase
+  rbi = rebase --interactive
+  rbc = rebase --continue
+  rba = rebase --abort
+  rbm = rebase master
+  rbd = rebase develop
+  # Merging
+  m = merge
+  md = merge develop
+  mm = merge master
+  mf = merge --no-ff
+  mum = merge upstream/master
+  # Reseting
+  rs = reset --soft
+  rh = reset --hard
+  # Diffs
+  dt = difftool
+  df = diff --word-diff=color --minimal
+  dtc = difftool --cached
+  dfc = diff --cached --word-diff=color --minimal
+  # Syncing
+  sync = "!f() { git fetch upstream && git merge upstream/$(git rev-parse --abbrev-ref HEAD) && git push; }; f"
 [difftool "Kaleidoscope"]
-    cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+  cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [diff]
-    tool = Kaleidoscope
-    # Allow git diff to do basic rename and copy detection
-    renames = copies
-    # Tell git diff to use mnemonic prefixes (index, work tree, commit, object) instead of the standard a and b notation
-    mnemonicprefix = true
+  tool = Kaleidoscope
+  # Allow git diff to do basic rename and copy detection
+  renames = copies
+  # Tell git diff to use mnemonic prefixes (index, work tree, commit, object) instead of the standard a and b notation
+  mnemonicprefix = true
 [difftool]
-    prompt = false
+  prompt = false
 [mergetool "Kaleidoscope"]
-    cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-    trustExitCode = true
+  cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+  trustExitCode = true
 [mergetool]
-    prompt = false
+  prompt = false
 [merge]
-    tool = Kaleidoscope
+  tool = Kaleidoscope
 [difftool "sourcetree"]
-    cmd = /Applications/Kaleidoscope.app/Contents/MacOS/ksdiff -w \"$LOCAL\" \"$REMOTE\"
-    path =
+  cmd = /Applications/Kaleidoscope.app/Contents/MacOS/ksdiff -w \"$LOCAL\" \"$REMOTE\"
+  path =
 [mergetool "sourcetree"]
-    cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-    trustExitCode = true
+  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
 [push]
-    default = current
+  default = current
 [credential]
-	helper = osxkeychain
+  helper = osxkeychain
 [filter "media"]
 	clean = git-media-clean %f
 	smudge = git-media-smudge %f
