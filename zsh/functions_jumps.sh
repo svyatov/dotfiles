@@ -14,11 +14,11 @@ _jumps_usage_help() {
 }
 
 _jumps_no_such_shortcut() {
-    print -P -- "${FX[reset]}${FG[196]}No such jump shortcut: ${FX[reset]}${FG[009]}${1}"
+    echo "${FX[none]}${FG[196]}No such jump shortcut: ${FX[none]}${FG[9]}${1}"
 }
 
 _jumps_no_shortcuts() {
-    print -P -- "${FX[reset]}${FG[196]}There are no shortcuts, yet. You should add some first!${FX[reset]}"
+    echo "${FX[none]}${FG[196]}There are no shortcuts, yet. You should add some first!${FX[none]}"
 }
 
 jump() {
@@ -38,10 +38,10 @@ jump-add() {
     fi
     if [[ -L $JUMPS_PATH/$1 ]]; then
         local jump_destination=$(readlink $JUMPS_PATH/$1)
-        print -P -- "${FX[reset]}${FG[196]}Shortcut \"${FX[reset]}${FG[009]}${1}${FX[reset]}${FG[196]}\" already exists and points to: ${FX[reset]}${FG[009]}${jump_destination}${FX[reset]}"
+        echo "${FX[none]}${FG[196]}Shortcut \"${FX[none]}${FG[9]}${1}${FX[none]}${FG[196]}\" already exists and points to: ${FX[none]}${FG[9]}${jump_destination}${FX[none]}"
     else
         ln -s "$(pwd)" $JUMPS_PATH/$1 && \
-            print -P -- "${FX[reset]}${FG[076]}Shortcut \"${FX[reset]}${FG[014]}${1}${FX[reset]}${FG[076]}\" pointing to ${FX[reset]}${FG[014]}$(pwd)${FX[reset]}${FG[076]} successfully added${FX[reset]}"
+            echo "${FX[none]}${FG[76]}Shortcut \"${FX[none]}${FG[14]}${1}${FX[none]}${FG[76]}\" pointing to ${FX[none]}${FG[14]}$(pwd)${FX[none]}${FG[76]} successfully added${FX[none]}"
     fi
 }
 
@@ -49,7 +49,7 @@ jump-del() {
     if [[ -z $1 ]]; then _jumps_usage_help; return 1; fi
     if [[ -L $JUMPS_PATH/$1 ]]; then
         rm $JUMPS_PATH/$1 && \
-            print -P -- "${FX[reset]}${FG[076]}Shortcut \"${FX[reset]}${FG[014]}${1}${FX[reset]}${FG[076]}\" successfully deleted"
+            echo "${FX[none]}${FG[76]}Shortcut \"${FX[none]}${FG[14]}${1}${FX[none]}${FG[76]}\" successfully deleted"
     else
         _jumps_no_such_shortcut $1
     fi
@@ -79,14 +79,14 @@ jump-list() {
         _jumps_no_shortcuts && return 1;
     fi
 
-    max_shortcut_length=$(($max_shortcut_length + 16)) # adding 16 for color codes
+    max_shortcut_length=$(($max_shortcut_length + 18)) # adding spaces for color codes
 
-    local delimiter="${FX[reset]}-->"
+    local delimiter="${FX[none]}-->"
 
     for shortcut in $shortcuts; do
-        shortcut_basename="${FX[reset]}${FG[014]}${shortcut:t}"
-        shortcut_link="${FX[reset]}${FG[242]}$(readlink $shortcut)"
-        print -P -f "  %-${max_shortcut_length}s %s %s\n" $shortcut_basename $delimiter $shortcut_link
+        shortcut_basename="${FX[none]}${FG[14]}${shortcut:t}"
+        shortcut_link="${FX[none]}${FG[242]}$(readlink $shortcut)${FX[none]}"
+        echo "$(printf "  %-${max_shortcut_length}s %s  %s\n" $shortcut_basename $delimiter $shortcut_link)"
     done
 }
 
