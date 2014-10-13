@@ -22,7 +22,7 @@ cmdtop() {
     if [[ -n $1 ]]; then
         local list_limit=$1
     fi
-    history | awk '{print $2}' | awk 'BEGIN {FS="|"} {print $1}' | sort | uniq -c | sort -r | head -n $list_limit
+    history 1 | awk '{print $2}' | awk 'BEGIN {FS="|"} {print $1}' | sort | uniq -c | sort -r | head -n $list_limit
 }
 
 # Function for updating Wordpress plugins
