@@ -5,4 +5,3 @@ Icon?
 .rake_tasks
 *.log
 *.tmp
-database.yml
