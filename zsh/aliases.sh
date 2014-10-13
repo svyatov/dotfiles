@@ -88,12 +88,18 @@ alias bpa='bundle package --all'
 alias rbp='rails_best_practices'
 alias capd='cap deploy'
 alias capdm='cap deploy:migrations'
+alias caps='bundle exec cap staging'
+alias capsd='caps deploy'
+alias capsdm='caps deploy:migrations'
+alias cappr='bundle exec cap production'
+alias capprd='cappr deploy'
+alias capprdm='cappr deploy:migrations'
 
 # Vagrant
-alias va='vagrant'
-alias мф=va
-alias vu='vagrant up'
-alias мг=vu
+alias vg='vagrant'
+alias мф=vg
+alias vup='vagrant up'
+alias мг=vup
 alias vs='vagrant ssh'
 alias мы=vs
 alias vst='vagrant status'
@@ -110,6 +116,7 @@ alias ewi='brew install'
 alias ewf='brew info'
 alias ewd='brew doctor'
 alias ewo='brew outdated'
+alias ewc='brew cleanup'
 alias ewuo='brew update && brew outdated'
 alias ewuu='brew upgrade'
 
