@@ -1,10 +1,10 @@
 export JUMPS_PATH=$HOME/.jump_shortcuts
 
-alias j='nocorrect jump'
-alias ja='nocorrect jump-add'
-alias jd='nocorrect jump-del'
-alias jl='jump-list'
-alias jb='jump-back'
+safe_alias j 'nocorrect jump'
+safe_alias ja 'nocorrect jump-add'
+safe_alias jd 'nocorrect jump-del'
+safe_alias jl 'jump-list'
+safe_alias jb 'jump-back'
 
 _jumps_usage_help() {
     echo "You can use following commands:"
