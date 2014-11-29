@@ -4,6 +4,7 @@ alias j='nocorrect jump'
 alias ja='nocorrect jump-add'
 alias jd='nocorrect jump-del'
 alias jl='jump-list'
+alias jb='jump-back'
 
 _jumps_usage_help() {
     echo "You can use following commands:"
@@ -11,6 +12,7 @@ _jumps_usage_help() {
     echo "ja [shortcut] - add shortcut for current directory"
     echo "jd [shortcut] - delete shortcut"
     echo "jl            - list all available jump shortcuts"
+    echo "jb            - return to previous directory (before the last jump)"
 }
 
 _jumps_no_such_shortcut() {
@@ -25,9 +27,18 @@ jump() {
     if [[ -z $1 ]]; then _jumps_usage_help; return 1; fi
     if [[ -L $JUMPS_PATH/$1 ]]; then
         clear
+        JUMPS_BACK=$(pwd)
         cd -P $JUMPS_PATH/$1 2> /dev/null && ls -lhAG
     else
         _jumps_no_such_shortcut $1
+    fi
+}
+
+jump-back() {
+    if [[ -d $JUMPS_BACK ]]; then
+        clear
+        cd $JUMPS_BACK 2> /dev/null
+        JUMPS_BACK=''
     fi
 }
 
