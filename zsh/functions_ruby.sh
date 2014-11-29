@@ -18,7 +18,7 @@ rake()   { _bin_first rake   $@ }
 cap()    { _bin_first cap    $@ }
 bundle() { _bin_first bundle $@ }
 
-_rake_does_task_list_need_generating () {
+_Rakefile_changed() {
   if [ ! -f .rake_tasks ]; then return 0;
   else
     accurate=$(stat -f%m .rake_tasks)
@@ -28,7 +28,7 @@ _rake_does_task_list_need_generating () {
 }
 _rake () {
   if [ -f Rakefile ]; then
-    if _rake_does_task_list_need_generating; then
+    if _Rakefile_changed; then
       rake --tasks --quiet | cut -d " " -f 2 > .rake_tasks
     fi
     compadd `cat .rake_tasks`
@@ -36,11 +36,3 @@ _rake () {
 }
 compdef _rake rake
 
-# Zeus shortcut
-z() {
-    if [[ -n $1 ]]; then
-        zeus $@
-    else
-        zeus start
-    fi
-}
