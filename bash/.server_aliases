@@ -1,25 +1,36 @@
 ### Prompt
 PS1="\[$(tput sgr0)\]\[$(tput bold)\]\[$(tput setaf 6)\]\t\[$(tput setaf 7)\]|\[$(tput setaf 3)\]\!\[$(tput setaf 7)\]|\[$(tput setaf 3)\]\j\[$(tput setaf 7)\]|\[$(tput setaf 2)\]\u\[$(tput setaf 0)\]@\[$(tput setaf 1)\]\h \[$(tput setaf 4)\]\w \[$(tput setaf 7)\]\\$ \[$(tput sgr0)\]"
 
+# Safe alias
+function safe_alias() {
+    if [[ $3 == 'override' ]]; then
+        alias "$1"="$2"
+    elif ! type "$1" &> /dev/null; then
+        alias "$1"="$2"
+    else
+        echo "Unable to create alias: $(type "$1")"
+    fi
+}
+
 ### Aliases
-alias l='ls -laGh'
-alias v='vim'
-alias h='cd ~'
-alias u='cd ..'
-alias b='cd -'
-alias q='exit'
-alias c='clear'
-alias cl='clear && l'
-alias vb='vim ~/.bashrc'
-alias sb='. ~/.bashrc && echo .bashrc sourced'
-alias ct='crontab -e'
-alias vsa='vim +"let b:is_bash=1" +"set ft=sh et ts=4 sw=4" ~/.server_aliases'
-alias ssa='. ~/.server_aliases && echo .server_aliases sourced'
-alias shrl='exec $SHELL -l' # shell reload
+safe_alias l 'ls -laGh'
+safe_alias v 'vim'
+safe_alias h 'cd ~'
+safe_alias u 'cd ..'
+safe_alias b 'cd -'
+safe_alias q 'exit'
+safe_alias c 'clear'
+safe_alias cl 'clear && l'
+safe_alias vb 'vim ~/.bashrc'
+safe_alias sb '. ~/.bashrc && echo .bashrc sourced'
+safe_alias ct 'crontab -e'
+safe_alias vsa 'vim +"let b:is_bash=1" +"set ft=sh et ts=4 sw=4" ~/.server_aliases'
+safe_alias ssa '. ~/.server_aliases && echo .server_aliases sourced'
+safe_alias shrl 'exec $SHELL -l' # shell reload
 
 ### Functions
 function mkcd() {
-    mkdir $1 && cd $1
+    mkdir "$1" && cd "$1"
 }
 
 function lt() {
@@ -38,50 +49,6 @@ function sa_update() {
     curl -o ~/.server_aliases "https://raw.githubusercontent.com/Svyatov/dotfiles/master/bash/.server_aliases" \
     && ssa && echo ".server_aliases has been updated successfully"
 }
-
-### !!! DANGER, USE WITH CAUTION, POSSIBLE EXPLOIT !!!
-### If your source is compromised attacker will gain full access to the server
-# function setup_sa_crontab_autoupdate() {
-#     local bin_dir="$HOME/bin"
-#     local cron_script="${bin_dir}/sa_crontab_autoupdate.sh"
-#     local crontab_line="*/1 * * * * \"${cron_script}\""
-
-#     mkdir -p "${bin_dir}"
-
-#     if [[ ! -d ${bin_dir} ]]; then
-#         echo "Cannot create ${bin_dir} directory!"
-#         return 1
-#     fi
-
-#     if [[ ! -f ${cron_script} ]]; then
-#         touch "${cron_script}" && chmod +x "${cron_script}"
-#     fi
-
-#     if [[ ! -w ${cron_script} ]]; then
-#         echo "${cron_script} is not writable!"
-#         return 2
-#     fi
-
-#     if [[ ! -x ${cron_script} ]]; then
-#         echo "Cannot make ${cron_script} executable!"
-#         return 3
-#     fi
-
-#     echo "#!/bin/bash" > "${cron_script}"
-#     echo "curl -o ${HOME}/.server_aliases \"https://raw.githubusercontent.com/Svyatov/dotfiles/master/bash/.server_aliases\"" >> "${cron_script}"
-
-#     if [[ $1 == "admin" ]]; then
-#         echo "curl -o ${HOME}/.server_admin_aliases \"https://raw.githubusercontent.com/Svyatov/dotfiles/master/bash/.server_admin_aliases\"" >> "${cron_script}"
-#     fi
-
-#     # Check if crontab exists
-#     crontab -l > /dev/null 2>&1
-#     if [[ $? -eq 0 ]]; then
-#         crontab -l | grep -Ev "^#|${cron_script}" | { cat; echo "${crontab_line}"; } | crontab -
-#     else
-#         echo "${crontab_line}" | crontab -
-#     fi
-# }
 
 # Wraps a completion function
 # make-completion-wrapper <actual completion function> <name of new func.>
@@ -105,3 +72,116 @@ function $function_name {
 }"
         eval "$function"
 }
+
+export JUMPS_PATH=$HOME/.jump_shortcuts
+
+safe_alias j 'jump'
+safe_alias ja 'jump-add'
+safe_alias jd 'jump-del'
+safe_alias jl 'jump-list'
+safe_alias jb 'jump-back'
+
+_jumps_usage_help() {
+    echo "You can use following commands:"
+    echo " j [shortcut] - jump to shortcutted directory"
+    echo "ja [shortcut] - add shortcut for current directory"
+    echo "jd [shortcut] - delete shortcut"
+    echo "jl            - list all available jump shortcuts"
+    echo "jb            - return to previous directory (before the last jump)"
+}
+
+_jumps_no_such_shortcut() {
+    echo "No such jump shortcut: ${1}"
+}
+
+_jumps_no_shortcuts() {
+    echo "There are no shortcuts, yet. You should add some first!"
+}
+
+jump() {
+    if [[ -z $1 ]]; then _jumps_usage_help; return 1; fi
+    if [[ -L $JUMPS_PATH/$1 ]]; then
+        clear
+        JUMPS_BACK=$(pwd)
+        cd -P $JUMPS_PATH/$1 2> /dev/null && ls -laGh
+    else
+        _jumps_no_such_shortcut $1
+    fi
+}
+
+jump-back() {
+    if [[ -d $JUMPS_BACK ]]; then
+        clear
+        cd $JUMPS_BACK 2> /dev/null
+        JUMPS_BACK=''
+    fi
+}
+
+jump-add() {
+    if [[ -z $1 ]]; then _jumps_usage_help; return 1; fi
+    if [[ ! -d $JUMPS_PATH ]]; then
+        mkdir -p $JUMPS_PATH;
+    fi
+    if [[ -L $JUMPS_PATH/$1 ]]; then
+        local jump_destination=$(readlink $JUMPS_PATH/$1)
+        echo "Shortcut \"${1}\" already exists and points to: ${jump_destination}"
+    else
+        ln -s "$(pwd)" $JUMPS_PATH/$1 && \
+            echo "Shortcut \"${1}\" pointing to $(pwd) successfully added"
+    fi
+}
+
+jump-del() {
+    if [[ -z $1 ]]; then _jumps_usage_help; return 1; fi
+    if [[ -L $JUMPS_PATH/$1 ]]; then
+        rm $JUMPS_PATH/$1 && \
+            echo "Shortcut \"${1}\" successfully deleted"
+    else
+        _jumps_no_such_shortcut $1
+    fi
+}
+
+jump-list() {
+    if [[ ! -d $JUMPS_PATH ]]; then
+        _jumps_no_shortcuts && return 1;
+    fi
+
+    local shortcuts
+    local shortcut_link
+    local shortcut_length
+    local shortcut_basename
+    local max_shortcut_length=0
+
+    shortcuts=("$(find $JUMPS_PATH -type l)")
+
+    for shortcut in $shortcuts; do
+        shortcut_basename=${shortcut##*/}
+        shortcut_length=${#shortcut_basename}
+        if [[ $shortcut_length -gt $max_shortcut_length ]]; then
+            max_shortcut_length=$shortcut_length
+        fi
+    done
+
+    if [[ $max_shortcut_length -eq 0 ]]; then
+        _jumps_no_shortcuts && return 1;
+    fi
+
+    local delimiter="-->"
+
+    for shortcut in $shortcuts; do
+        shortcut_basename="${shortcut##*/}"
+        shortcut_link="$(readlink $shortcut)"
+        echo "$(printf "  %-${max_shortcut_length}s %s  %s\n" $shortcut_basename $delimiter $shortcut_link)"
+    done
+}
+
+_jump-list() {
+    COMPREPLY=()
+    if [[ -d $JUMPS_PATH ]]; then
+        COMPREPLY=($(compgen -W "$(\ls $JUMPS_PATH)" -- "${COMP_WORDS[COMP_CWORD]}"))
+    fi
+}
+complete -F _jump-list jump
+complete -F _jump-list jump-del
+complete -F _jump-list j
+complete -F _jump-list jd

@@ -10,50 +10,50 @@ function autosudo() {
 }
 
 ### Aliases
-alias vsaa='vim +"let b:is_bash=1" +"set ft=sh et ts=4 sw=4" ~/.server_admin_aliases'
-alias ssaa='source ~/.server_admin_aliases'
-alias s='autosudo'
-alias r='s su -'
-alias n='s netstat -tulpen'
-alias ne="n | awk '\$4 !~ /(127\.0\.0\.1:|::1:)/ {print \$0}'" # show external IPs only
-alias i='s iptables -L -v -n'
-alias t='tmux attach || tmux new'
-alias agi='s apt-get install -y'
+safe_alias vsaa 'vim +"let b:is_bash=1" +"set ft=sh et ts=4 sw=4" ~/.server_admin_aliases'
+safe_alias ssaa 'source ~/.server_admin_aliases'
+safe_alias s 'autosudo'
+safe_alias r 's su -'
+safe_alias n 's netstat -tulpen'
+safe_alias ne "n | awk '\$4 !~ /(127\.0\.0\.1:|::1:)/ {print \$0}'" # show external IPs only
+safe_alias i 's iptables -L -v -n'
+safe_alias t 'tmux attach || tmux new'
+safe_alias agi 's apt-get install -y'
 make-completion-wrapper _apt_get _agi apt-get install
 complete -F _agi agi
-alias agu='s apt-get update'
-alias agg='s apt-get upgrade -uV'
-alias agdu='s apt-get dist-upgrade'
-alias aguu='agu && agg'
-alias addrepo='s add-apt-repository'
-alias acf='s apt-cache search'
+safe_alias agu 's apt-get update'
+safe_alias agg 's apt-get upgrade -uV'
+safe_alias agdu 's apt-get dist-upgrade'
+safe_alias aguu 'agu && agg'
+safe_alias addrepo 's add-apt-repository'
+safe_alias acf 's apt-cache search'
 make-completion-wrapper _apt_cache _acs apt-cache search
 complete -F _acs acs
-alias acs='s apt-cache show'
+safe_alias acs 's apt-cache show'
 make-completion-wrapper _apt_cache _aci apt-cache show
 complete -F _aci aci
-alias agr='s apt-get remove'
+safe_alias agr 's apt-get remove'
 make-completion-wrapper _apt_get _agr apt-get remove
 complete -F _agr agr
-alias agp='s apt-get purge'
+safe_alias agp 's apt-get purge'
 make-completion-wrapper _apt_get _agp apt-get purge
 complete -F _agp agp
-alias agcl='s apt-get changelog'
+safe_alias agcl 's apt-get changelog'
 make-completion-wrapper _apt_get _agcl apt-get changelog
 complete -F _agcl agcl
-alias agc='s apt-get clean'
-alias agar='s apt-get autoremove'
-alias sv='s vim'
-alias ssr='s service'
+safe_alias agc 's apt-get clean'
+safe_alias agar 's apt-get autoremove'
+safe_alias sv 's vim'
+safe_alias ssr 's service'
 make-completion-wrapper _service _ssr_service service
 complete -F _ssr_service ssr
-alias ngx='cd /etc/nginx'
-alias pfpm='cd /etc/php5/fpm'
-alias apch='cd /etc/apache2'
-alias lgrt='cd /etc/logrotate.d'
-alias msql='cd /etc/mysql'
-alias logs='cd /var/log'
-alias remove-old-kernels='s apt-get purge $(dpkg -l linux-{image,headers}-"[0-9]*" | awk '"'"'/ii/{print $2}'"'"' | grep -ve "$(uname -r | sed -r '"'"'s/-[a-z]+//'"'"')")'
+safe_alias ngx 'cd /etc/nginx'
+safe_alias pfpm 'cd /etc/php5/fpm'
+safe_alias apch 'cd /etc/apache2'
+safe_alias lgrt 'cd /etc/logrotate.d'
+safe_alias msql 'cd /etc/mysql'
+safe_alias logs 'cd /var/log'
+safe_alias remove-old-kernels 's apt-get purge $(dpkg -l linux-{image,headers}-"[0-9]*" | awk '"'"'/ii/{print $2}'"'"' | grep -ve "$(uname -r | sed -r '"'"'s/-[a-z]+//'"'"')")'
 
 ### Functions
 function saa_update() {
@@ -61,7 +61,3 @@ function saa_update() {
     && curl -o ~/.server_admin_aliases "https://raw.githubusercontent.com/Svyatov/dotfiles/master/bash/.server_admin_aliases" \
     && ssaa && echo ".server_aliases & .server_admin_aliases have been updated successfully"
 }
-
-# function setup_saa_crontab_autoupdate() {
-#     setup_sa_crontab_autoupdate admin
-# }
