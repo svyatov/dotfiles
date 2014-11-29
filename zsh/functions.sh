@@ -1,14 +1,48 @@
+# Safe alias
+function safe_alias() {
+    if [[ $3 == 'override' ]]; then
+        alias "$1"="$2"
+    elif ! type "$1" &> /dev/null; then
+        alias "$1"="$2"
+    else
+        echo "Unable to create alias: $(type "$1")"
+    fi
+}
+
 source $HOME/.dotfiles/zsh/functions_jumps.sh
 source $HOME/.dotfiles/zsh/functions_ruby.sh
 source $HOME/.dotfiles/zsh/functions_php.sh
+source $HOME/.dotfiles/zsh/functions_git.sh
 
 mkcd() { mkdir -p "$1" && cd "$1" }
 
-alias ff="noglob _f f"
-alias fd="noglob _f d"
+safe_alias ff "noglob _f f"
+safe_alias fd "noglob _f d"
 _f() {
     noglob find . -type $1 -iname "$2"
 }
+
+_directories_list() { find $1 -type d -maxdepth 1 -not -name '.' -not -name '..' -exec basename {} + }
+
+u() {
+    if [[ -n $1 ]]; then
+        cd ../$1
+    else
+        cd ..
+    fi
+}
+_u() { reply=("${(@f)$(_directories_list ..)}") }
+compctl -M 'm:{a-z}={A-Z}' -K _u u
+
+uu() {
+    if [[ -n $1 ]]; then
+        cd ../../$1
+    else
+        cd ../..
+    fi
+}
+_uu() { reply=("${(@f)$(_directories_list ../..)}") }
+compctl -M 'm:{a-z}={A-Z}' -K _uu uu
 
 proxysh() {
     if [[ $1 == 'off' ]]; then
@@ -52,48 +86,6 @@ speedup-skype() {
         echo 'Please, provide Skype username to speed up.'
     fi
 }
-
-g() {
-    if [[ -n $1 ]]; then
-        git $@
-    else
-        git st
-    fi
-}
-
-# git clone & cd (accepts only ssh url format: git@github.com:svyatov/dotfiles.git)
-gclcd() {
-    local repo=${1##*/}
-    local dirname=${repo%\.git}
-
-    if [[ -n $2 ]]; then
-        dirname=$2
-    fi
-
-    git clone "$1" "$dirname" && cd "$dirname"
-}
-
-_directories_list() { find $1 -type d -maxdepth 1 -not -name '.' -not -name '..' -exec basename {} + }
-
-u() {
-    if [[ -n $1 ]]; then
-        cd ../$1
-    else
-        cd ..
-    fi
-}
-_u() { reply=("${(@f)$(_directories_list ..)}") }
-compctl -M 'm:{a-z}={A-Z}' -K _u u
-
-uu() {
-    if [[ -n $1 ]]; then
-        cd ../../$1
-    else
-        cd ../..
-    fi
-}
-_uu() { reply=("${(@f)$(_directories_list ../..)}") }
-compctl -M 'm:{a-z}={A-Z}' -K _uu uu
 
 resolve_apache_file_permissions() {
     if [[ -n $1 ]]; then
