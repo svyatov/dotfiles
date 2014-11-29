@@ -4,6 +4,8 @@
 # 3 - .profile
 # 4 - .zlogin
 
+$HOME/.vim/bundle/gruvbox/gruvbox_256palette_osx.sh
+
 # Source Prezto
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
