@@ -4,6 +4,12 @@ source $HOME/.dotfiles/zsh/functions_php.sh
 
 mkcd() { mkdir -p "$1" && cd "$1" }
 
+alias ff="noglob _f f"
+alias fd="noglob _f d"
+_f() {
+    noglob find . -type $1 -iname "$2"
+}
+
 proxysh() {
     if [[ $1 == 'off' ]]; then
         export http_proxy=
