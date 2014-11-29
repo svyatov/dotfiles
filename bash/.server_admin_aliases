@@ -27,11 +27,11 @@ safe_alias agdu 's apt-get dist-upgrade'
 safe_alias aguu 'agu && agg'
 safe_alias addrepo 's add-apt-repository'
 safe_alias acf 's apt-cache search'
-make-completion-wrapper _apt_cache _acs apt-cache search
-complete -F _acs acs
+make-completion-wrapper _apt_cache _acf apt-cache search
+complete -F _acf acf
 safe_alias acs 's apt-cache show'
-make-completion-wrapper _apt_cache _aci apt-cache show
-complete -F _aci aci
+make-completion-wrapper _apt_cache _acs apt-cache show
+complete -F _acs acs
 safe_alias agr 's apt-get remove'
 make-completion-wrapper _apt_get _agr apt-get remove
 complete -F _agr agr
