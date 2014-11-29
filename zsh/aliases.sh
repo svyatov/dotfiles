@@ -1,41 +1,33 @@
 # Common
 alias l='ls -lhAG'
-alias д=l
 alias lm='l *.mp4'
-alias дь=lm
 alias h='cd ~'
-alias р=h
 alias b='cd -'
-alias и=b
 alias c='clear'
-alias с=c
 alias ll='c && l'
-alias дд=ll
 alias q='exit'
-alias й=q
 alias v='vim'
-alias м=v
 alias s='subl'
-alias ы=s
 alias sn='subl --new-window'
-alias ыт=sn
-alias п=g
 alias o='open'
-alias щ=o
-alias edf='sn ~/.dotfiles'
+alias tm='tmux new -A -s local'
+alias edf='v ~/.dotfiles'
 alias dfe='edf'
-alias ea='sn ~/.dotfiles/zsh/aliases.sh'
+alias ea='v ~/.dotfiles/zsh/aliases.sh'
 alias ae='ea'
-alias ef='sn ~/.dotfiles/zsh/functions.sh'
+alias ef='v ~/.dotfiles/zsh/functions.sh'
 alias fe='ef'
-alias ez='sn ~/.zshrc'
+alias ez='v ~/.zshrc'
 alias ze='ez'
-alias egc='sn ~/.gitconfig'
+alias egc='v ~/.gitconfig'
 alias gce='egc'
-alias sig='sn .gitignore'
+alias sig='v .gitignore'
 alias sca='source ~/.dotfiles/zsh/aliases.sh'
 alias scf='source ~/.dotfiles/zsh/functions.sh'
 alias shrl='exec $SHELL -l' # shell reload
+
+# Update ZPrezto
+alias zpu='pushd ~/.zprezto && git pull && git submodule update --init --recursive && popd'
 
 # Copy public ssh key
 alias cpk='cat ~/.ssh/id_rsa.pub | pbcopy && echo "Public ssh key copied to clipboard!"'
@@ -64,6 +56,15 @@ alias -g L='| wc -l'
 alias exf='cd ~/Projects/Playground/exercism && exercism fetch'
 alias exs='exercism submit'
 
+# Git extras (https://github.com/tj/git-extras)
+alias ginf='git info'        # Show information about the repo
+alias gsum='git summary'     # Outputs a repo summary
+alias gch='git changelog'    # Populate a file whose name matches change|history -i_ with commits since the previous tag
+alias gc='git count'         # Output commit count
+alias gu='git undo'          # Remove the latest commit
+alias gset='git setup'       # Set up a git repository (if one doesn't exist), add all files, and make an initial commit
+alias gobl='git obliterate'  # Completely remove a file from the repository, including past commits and tags
+
 # PHP
 alias cm='php composer.phar'
 alias sf='php app/console'
@@ -91,17 +92,14 @@ alias capdm='cap deploy:migrations'
 alias caps='bundle exec cap staging'
 alias capsd='caps deploy'
 alias capsdm='caps deploy:migrations'
-alias cappr='bundle exec cap production'
-alias capprd='cappr deploy'
-alias capprdm='cappr deploy:migrations'
+alias capr='bundle exec cap production'
+alias caprd='capr deploy'
+alias caprdm='capr deploy:migrations'
 
 # Vagrant
 alias vg='vagrant'
-alias мф=vg
-alias vup='vagrant up'
-alias мг=vup
+alias vu='vagrant up'
 alias vs='vagrant ssh'
-alias мы=vs
 alias vst='vagrant status'
 alias vsus='vagrant suspend'
 alias voff='vagrant halt'
@@ -110,7 +108,6 @@ alias vp='vagrant provision'
 
 # Brew
 alias ew='brew'
-alias уц=ew
 alias ewu='brew update'
 alias ewi='brew install'
 alias ewf='brew info'
