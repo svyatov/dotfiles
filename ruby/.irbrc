@@ -13,3 +13,5 @@ class Object
     (obj.methods - obj.class.superclass.instance_methods).sort
   end
 end
+
+AwesomePrint.irb! if require 'awesome_print'
