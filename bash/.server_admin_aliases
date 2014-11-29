@@ -1,46 +1,57 @@
 source ~/.server_aliases
 
+### Functions
+function autosudo() {
+    if [[ $EUID -ne 0 ]]; then
+        sudo "$@"
+    else
+        "$@"
+    fi
+}
+
 ### Aliases
 alias vsaa='vim +"let b:is_bash=1" +"set ft=sh et ts=4 sw=4" ~/.server_admin_aliases'
 alias ssaa='source ~/.server_admin_aliases'
-alias r='sudo su -'
-alias agi='sudo apt-get install -y'
+alias s='autosudo'
+alias r='s su -'
+alias n='s netstat -tulpen'
+alias i='s iptables -L -v -n'
+alias agi='s apt-get install -y'
 make-completion-wrapper _apt_get _agi apt-get install
 complete -F _agi agi
-alias agu='sudo apt-get update'
-alias agg='sudo apt-get upgrade -uV'
-alias agdu='sudo apt-get dist-upgrade'
+alias agu='s apt-get update'
+alias agg='s apt-get upgrade -uV'
+alias agdu='s apt-get dist-upgrade'
 alias aguu='agu && agg'
-alias addrepo='sudo add-apt-repository'
-alias acs='sudo apt-cache search'
+alias addrepo='s add-apt-repository'
+alias acf='s apt-cache search'
 make-completion-wrapper _apt_cache _acs apt-cache search
 complete -F _acs acs
-alias aci='sudo apt-cache show'
+alias acs='s apt-cache show'
 make-completion-wrapper _apt_cache _aci apt-cache show
 complete -F _aci aci
-alias agr='sudo apt-get remove'
+alias agr='s apt-get remove'
 make-completion-wrapper _apt_get _agr apt-get remove
 complete -F _agr agr
-alias agp='sudo apt-get purge'
+alias agp='s apt-get purge'
 make-completion-wrapper _apt_get _agp apt-get purge
 complete -F _agp agp
-alias agcl='sudo apt-get changelog'
+alias agcl='s apt-get changelog'
 make-completion-wrapper _apt_get _agcl apt-get changelog
 complete -F _agcl agcl
-alias agc='sudo apt-get clean'
-alias agar='sudo apt-get autoremove'
-alias sv='sudo vim'
-alias ssr='sudo service'
+alias agc='s apt-get clean'
+alias agar='s apt-get autoremove'
+alias sv='s vim'
+alias ssr='s service'
 make-completion-wrapper _service _ssr_service service
 complete -F _ssr_service ssr
-alias ng='cd /etc/nginx'
-alias pf='cd /etc/php5/fpm'
-alias ap='cd /etc/apache2'
-alias lr='cd /etc/logrotate.d'
-alias ms='cd /etc/mysql'
-alias mdb='cd /var/lib/mysql'
-alias lg='cd /var/log'
-alias remove-old-kernels='sudo apt-get purge $(dpkg -l linux-{image,headers}-"[0-9]*" | awk '"'"'/ii/{print $2}'"'"' | grep -ve "$(uname -r | sed -r '"'"'s/-[a-z]+//'"'"')")'
+alias ngx='cd /etc/nginx'
+alias pfpm='cd /etc/php5/fpm'
+alias apch='cd /etc/apache2'
+alias lgrt='cd /etc/logrotate.d'
+alias msql='cd /etc/mysql'
+alias logs='cd /var/log'
+alias remove-old-kernels='s apt-get purge $(dpkg -l linux-{image,headers}-"[0-9]*" | awk '"'"'/ii/{print $2}'"'"' | grep -ve "$(uname -r | sed -r '"'"'s/-[a-z]+//'"'"')")'
 
 ### Functions
 function saa_update() {
