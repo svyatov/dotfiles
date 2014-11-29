@@ -15,6 +15,7 @@ alias ssaa='source ~/.server_admin_aliases'
 alias s='autosudo'
 alias r='s su -'
 alias n='s netstat -tulpen'
+alias ne="n | awk '$4 !~ /(127\.0\.0\.1:|::1:)/ {print $0}'" # show external IPs only
 alias i='s iptables -L -v -n'
 alias agi='s apt-get install -y'
 make-completion-wrapper _apt_get _agi apt-get install
