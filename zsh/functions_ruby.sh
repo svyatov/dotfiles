@@ -26,6 +26,7 @@ _Rakefile_changed() {
     return $(expr $accurate '>=' $changed)
   fi
 }
+
 _rake () {
   if [ -f Rakefile ]; then
     if _Rakefile_changed; then
