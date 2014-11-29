@@ -35,7 +35,7 @@ function hgrep() {
 }
 
 function sa_update() {
-    curl -o ~/.server_aliases "https://raw.github.com/Svyatov/dotfiles/master/bash/.server_aliases" \
+    curl -o ~/.server_aliases "https://raw.githubusercontent.com/Svyatov/dotfiles/master/bash/.server_aliases" \
     && ssa && echo ".server_aliases has been updated successfully"
 }
 
@@ -68,10 +68,10 @@ function sa_update() {
 #     fi
 
 #     echo "#!/bin/bash" > "${cron_script}"
-#     echo "curl -o ${HOME}/.server_aliases \"https://raw.github.com/Svyatov/dotfiles/master/bash/.server_aliases\"" >> "${cron_script}"
+#     echo "curl -o ${HOME}/.server_aliases \"https://raw.githubusercontent.com/Svyatov/dotfiles/master/bash/.server_aliases\"" >> "${cron_script}"
 
 #     if [[ $1 == "admin" ]]; then
-#         echo "curl -o ${HOME}/.server_admin_aliases \"https://raw.github.com/Svyatov/dotfiles/master/bash/.server_admin_aliases\"" >> "${cron_script}"
+#         echo "curl -o ${HOME}/.server_admin_aliases \"https://raw.githubusercontent.com/Svyatov/dotfiles/master/bash/.server_admin_aliases\"" >> "${cron_script}"
 #     fi
 
 #     # Check if crontab exists
