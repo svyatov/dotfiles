@@ -4,4 +4,8 @@ Icon?
 .idea
 .rake_tasks
 *.log
+*.log.gz
 *.tmp
+tags
+!tags/
+.vagrant
