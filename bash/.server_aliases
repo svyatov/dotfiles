@@ -1,8 +1,10 @@
 ### Prompt
-if [[ $EUID -ne 0 ]]; then
-    PS1="\[$(tput sgr0)\]\[$(tput bold)\]\[$(tput setaf 6)\]\t\[$(tput setaf 7)\]|\[$(tput setaf 3)\]\!\[$(tput setaf 7)\]|\[$(tput setaf 3)\]\j\[$(tput setaf 7)\]|\[$(tput setaf 2)\]\u\[$(tput setaf 0)\]@\[$(tput setaf 5)\]\h \[$(tput setaf 4)\]\w \[$(tput setaf 2)\]\\$ \[$(tput sgr0)\]"
-else # root
-    PS1="\[$(tput sgr0)\]\[$(tput bold)\]\[$(tput setaf 6)\]\t\[$(tput setaf 7)\]|\[$(tput setaf 3)\]\!\[$(tput setaf 7)\]|\[$(tput setaf 3)\]\j\[$(tput setaf 7)\]|\[$(tput setaf 1)\]\u\[$(tput setaf 0)\]@\[$(tput setaf 5)\]\h \[$(tput setaf 4)\]\w \[$(tput setaf 1)\]\\$ \[$(tput sgr0)\]"
+if [[ $EUID -eq 0 ]]; then # root
+    PS1="\[$(tput sgr0)\]\[$(tput bold)\]\[$(tput setaf 0)\]\j\[$(tput sgr0)\]\[$(tput setaf 7)\]|\[$(tput setaf 6)\]\A\[$(tput setaf 7)\]|\[$(tput bold)\]\[$(tput setaf 1)\]\u\[$(tput setaf 0)\]@\[$(tput setaf 5)\]\h \[$(tput setaf 4)\]\w \[$(tput setaf 1)\]\\$ \[$(tput sgr0)\]"
+elif sudo -l -n &> /dev/null; then # can sudo without password
+    PS1="\[$(tput sgr0)\]\[$(tput bold)\]\[$(tput setaf 0)\]\j\[$(tput sgr0)\]\[$(tput setaf 7)\]|\[$(tput setaf 6)\]\A\[$(tput setaf 7)\]|\[$(tput bold)\]\[$(tput setaf 3)\]\u\[$(tput setaf 0)\]@\[$(tput setaf 5)\]\h \[$(tput setaf 4)\]\w \[$(tput setaf 3)\]\\$ \[$(tput sgr0)\]"
+else # simple user
+    PS1="\[$(tput sgr0)\]\[$(tput bold)\]\[$(tput setaf 0)\]\j\[$(tput sgr0)\]\[$(tput setaf 7)\]|\[$(tput setaf 6)\]\A\[$(tput setaf 7)\]|\[$(tput bold)\]\[$(tput setaf 2)\]\u\[$(tput setaf 0)\]@\[$(tput setaf 5)\]\h \[$(tput setaf 4)\]\w \[$(tput setaf 2)\]\\$ \[$(tput sgr0)\]"
 fi
 
 # Safe alias
