@@ -54,6 +54,9 @@ safe_alias lgrt 'cd /etc/logrotate.d'
 safe_alias msql 'cd /etc/mysql'
 safe_alias logs 'cd /var/log'
 safe_alias remove-old-kernels 's apt-get purge $(dpkg -l linux-{image,headers}-"[0-9]*" | awk '"'"'/ii/{print $2}'"'"' | grep -ve "$(uname -r | sed -r '"'"'s/-[a-z]+//'"'"')")'
+safe_alias change-default-editor 's update-alternatives --config editor'
+safe_alias au 's adduser'
+safe_alias auwop 's adduser -disabled-password'
 
 ### Functions
 function saa_update() {
