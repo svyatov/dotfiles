@@ -69,7 +69,7 @@ cmdtop() {
 uwpp() {
     if [[ -n $1 ]]; then
         local archive=${1##*/}
-        wget $1 && unzip -quo $archive && rm $archive && echo 'Done.'
+        wget $1 && rm -r ${archive%%.*} && unzip -quo $archive && rm $archive && echo 'Done.'
     else
         echo 'Please, provide url for plugin archive.'
     fi
