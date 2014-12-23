@@ -4,7 +4,7 @@
 [color]
     ui = true
 [core]
-    editor = vim
+    editor = /Applications/MacVim.app/Contents/MacOS/Vim
     excludesfile = /Users/leonid/.dotfiles/git/.gitignore_global
     autocrlf = input
 [alias]
@@ -108,11 +108,11 @@
 [merge]
     tool = Kaleidoscope
 [difftool "sourcetree"]
-    cmd = /usr/local/bin/ksdiff -w \"$LOCAL\" \"$REMOTE\"
-    path = 
+	cmd = /usr/local/bin/ksdiff -w \"$LOCAL\" \"$REMOTE\"
+	path = 
 [mergetool "sourcetree"]
-    cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-    trustExitCode = true
+	cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	trustExitCode = true
 [push]
     default = current
 [credential]
