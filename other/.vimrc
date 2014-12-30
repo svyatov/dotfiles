@@ -109,41 +109,45 @@ iabbrev ls@ leonid@svyatov.ru
 
 " Leader key
 let mapleader=","
-let localleader="\\"
+noremap \ ,
 
 " Remapings
 " Fast vimrc editing and sourcing
-nnoremap <leader>ve :e $MYVIMRC<CR>
-nnoremap <leader>vs :so $MYVIMRC<CR>
+map <leader>ve :e $MYVIMRC<CR>
+map <leader>vs :so $MYVIMRC<CR>
 " Fast jump to tag
-nnoremap <leader>f <C-]>
+map <leader>f <C-]>
 " Use ,F to jump to tag in a vertical split
-nnoremap <leader>F :let word=expand("<cword>")<CR>:vsp<CR>:wincmd w<CR>:exec("tag ". word)<CR>
+map <leader>F :let word=expand("<cword>")<CR>:vsp<CR>:wincmd w<CR>:exec("tag ". word)<CR>
 " Paste from system clipboard on the next line
-nnoremap <leader>p :pu +<CR>
+map <leader>p :pu +<CR>
 " Paste from system clipboard on the previous line
-nnoremap <leader>P :pu! +<CR>
+map <leader>P :pu! +<CR>
 " Copy selection to the system clipboard
-vnoremap <leader>y "+y
+vmap <leader>y "+y
 " Close buffer
-noremap <leader>q :bd<CR>
+map <leader>q :bd<CR>
+" Close window
+map <leader>Q :q<CR>
 " Emacs-like beginning and end of line
-inoremap <C-e> <End>
 inoremap <C-a> <Home>
+inoremap <C-e> <End>
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
 " Ctrl-C the same as ESC in insert mode
 inoremap <C-c> <Esc>
 " w!! to write a file as sudo
-cnoremap w!! w !sudo tee % >/dev/null
-inoremap <C-w> <Esc>:w<CR>
-nnoremap <leader>w :w<CR>
-nnoremap <leader><Space> i<Space><Esc>
+cmap w!! w !sudo tee % >/dev/null
+imap <C-w> <Esc>:w<CR>
+map <leader>w :w<CR>
+nmap <leader><Space> i<Space><Esc>
 " Index ctags from any project, including those outside Rails
-noremap <leader>ct :!ctags -R --exclude=.git --exclude=logs --exclude=doc .<CR>
+map <leader>ct :!ctags -R --exclude=.git --exclude=logs --exclude=doc .<CR>
 " Space to toggle folds.
 nnoremap <Space> za
 vnoremap <Space> za
 " 'Refocus' folds
-nnoremap ,z zMzvzz
+nmap <leader>z zMzvzz
 " Make zO recursively open whatever top level fold we're in, no matter where the cursor happens to be.
 nnoremap zO zCzO
 " Front and center
@@ -181,10 +185,10 @@ noremap H ^
 noremap L $
 vnoremap L g_
 " Workaround wrapped lines
-noremap j gj
-noremap k gk
-noremap gj j
-noremap gk k
+nnoremap j gj
+nnoremap k gk
+nnoremap gj j
+nnoremap gk k
 " List navigation
 nnoremap <left>  :cprev<cr>zvzz
 nnoremap <right> :cnext<cr>zvzz
@@ -208,10 +212,11 @@ set termencoding=utf8
 set fileencodings=utf8,cp1251
 set ffs=unix,mac,dos
 set fileformat=unix
+set langmap=ёйцукенгшщзхъфывапролджэячсмитьбюЁЙЦУКЕHГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ;`qwertyuiop[]asdfghjkl\\;'zxcvbnm\\,.~QWERTYUIOP{}ASDFGHJKL:\\"ZXCVBNM<>
 
 " Presentation
 set numberwidth=5       " number of culumns for line numbers
-set textwidth=140
+set textwidth=0
 set nowrap              " Do not wrap words (view)
 set showcmd             " Show (partial) command in status line.
 set showmatch           " Show matching brackets.
@@ -340,8 +345,8 @@ let NERDTreeShowHidden = 1
 let NERDTreeWinSize    = 35
 let NERDTreeIgnore     = ['^\.DS_Store$', '^\.rake_tasks$', '^tags$', '\~$', '.bundle[[dir]]', '.idea[[dir]]', '.capistrano[[dir]]', '.vagrant[[dir]]', '.git[[dir]]']
 let NERDTreeHighlightCursorline = 1
-nnoremap <silent><F3> :NERDTreeToggle<CR>
-inoremap <silent><F3> <Esc>:NERDTreeToggle<CR>
+nnoremap <silent> <F3> :NERDTreeToggle<CR>
+inoremap <silent> <F3> <Esc>:NERDTreeToggle<CR>
 
 " CtrlP
 if executable('ag')
@@ -352,46 +357,46 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 let g:ctrlp_by_filename = 1
-nnoremap <silent><leader><leader> :CtrlPBuffer<CR>
-nnoremap <silent><leader>. :CtrlPTag<CR>
+nmap <silent> <leader><leader> :CtrlPBuffer<CR>
+nmap <silent> <leader>. :CtrlPTag<CR>
 
 " Surround
-nnoremap <silent><leader>ds cs"'
-nnoremap <silent><leader>sd cs'"
+nmap <silent> <leader>ds cs"'
+nmap <silent> <leader>sd cs'"
 
 " Airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
-nnoremap <leader>1 <Plug>AirlineSelectTab1
-nnoremap <leader>2 <Plug>AirlineSelectTab2
-nnoremap <leader>3 <Plug>AirlineSelectTab3
-nnoremap <leader>4 <Plug>AirlineSelectTab4
-nnoremap <leader>5 <Plug>AirlineSelectTab5
-nnoremap <leader>6 <Plug>AirlineSelectTab6
-nnoremap <leader>7 <Plug>AirlineSelectTab7
-nnoremap <leader>8 <Plug>AirlineSelectTab8
-nnoremap <leader>9 <Plug>AirlineSelectTab9
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
 
 " Tabularize
-noremap <silent><leader>b= :Tabularize /=<CR>
-noremap <silent><leader>b: :Tabularize /:\zs<CR>
+map <silent> <leader>b= :Tabularize /=<CR>
+map <silent> <leader>b: :Tabularize /:\zs<CR>
 
 " RSpec mappings
 let g:rspec_command = 'call Send_to_Tmux("bin/rspec --no-profile --format progress {spec}\n")'
-noremap <leader>sc :call RunCurrentSpecFile()<CR>
-noremap <leader>sn :call RunNearestSpec()<CR>
-noremap <leader>sl :call RunLastSpec()<CR>
-noremap <leader>sa :call RunAllSpecs()<CR>
+map <leader>sc :call RunCurrentSpecFile()<CR>
+map <leader>sn :call RunNearestSpec()<CR>
+map <leader>sl :call RunLastSpec()<CR>
+map <leader>sa :call RunAllSpecs()<CR>
 
 " Rails
-noremap <leader>a :A<CR>
-noremap <leader>r :R<CR>
+map <leader>a :A<CR>
+map <leader>r :R<CR>
 
 " Rubocop
-noremap <localleader>r :call Send_to_Tmux("rubocop\n")<CR>
-noremap <localleader>ra :call Send_to_Tmux("rubocop -a\n")<CR>
+map <leader>er :call Send_to_Tmux("rubocop\n")<CR>
+map <leader>era :call Send_to_Tmux("rubocop -a\n")<CR>
 
 " Git
-noremap <leader>gs :Gstatus<CR>
-noremap <leader>gd :Gdiff<CR>
+map <leader>gs :Gstatus<CR>
+map <leader>gd :Gdiff<CR>
