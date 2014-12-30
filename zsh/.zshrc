@@ -1,9 +1,6 @@
-# Environment files loading order:
-# 1 - .zshenv
-# 2 - .zshrc
-# 3 - .profile
-# 4 - .zlogin
+# Environment files loading order: .zshenv => .zshrc => .profile => .zlogin
 
+# Colors pallete for VIM gruvbox theme
 $HOME/.vim/bundle/gruvbox/gruvbox_256palette_osx.sh
 
 # Source Prezto
