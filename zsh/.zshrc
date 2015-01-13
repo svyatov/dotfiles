@@ -17,6 +17,7 @@ source $HOME/.dotfiles/zsh/aliases.sh
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 export GOPATH=$HOME/Projects/Go
+export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOPATH/bin
 
 # unsetopt EXTENDED_GLOB # Fixing problem with git reset HEAD^ not found and many others
