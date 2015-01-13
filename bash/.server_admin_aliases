@@ -9,6 +9,18 @@ function autosudo() {
     fi
 }
 
+### Completions
+BASH_COMPLETIONS_PATH='/usr/share/bash-completion/completions'
+if [[ -z `type -t _apt_get` && -f ${BASH_COMPLETIONS_PATH}/apt-get ]]; then
+    source ${BASH_COMPLETIONS_PATH}/apt-get
+fi
+if [[ -z `type -t _apt_cache` && -f ${BASH_COMPLETIONS_PATH}/apt-cache ]]; then
+    source ${BASH_COMPLETIONS_PATH}/apt-cache
+fi
+if [[ -z `type -t _service` && -f ${BASH_COMPLETIONS_PATH}/service ]]; then
+    source ${BASH_COMPLETIONS_PATH}/service
+fi
+
 ### Aliases
 safe_alias vsaa 'vim +"let b:is_bash=1" +"set ft=sh et ts=4 sw=4" ~/.server_admin_aliases'
 safe_alias ssaa 'source ~/.server_admin_aliases'
