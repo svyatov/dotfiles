@@ -4,8 +4,8 @@
 [color]
     ui = true
 [core]
-    editor = /Applications/MacVim.app/Contents/MacOS/Vim
-    excludesfile = /Users/leonid/.dotfiles/git/.gitignore_global
+    editor = vim
+    excludesfile = ~/.dotfiles/git/.gitignore_global
     autocrlf = input
 [alias]
     h = help
