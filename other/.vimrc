@@ -170,7 +170,7 @@ nnoremap vv ^vg_
 " Toggle [i]nvisible characters
 nnoremap <leader>i :set list!<CR>
 " Clear highlights
-noremap <silent> <leader>h :let @/ = ""<CR>:call clearmatches()<CR>
+noremap <silent> <leader>m :let @/ = ""<CR>:call clearmatches()<CR>
 " Don't move on *
 nnoremap * *<C-o>
 " Keep search matches in the middle of the window.
