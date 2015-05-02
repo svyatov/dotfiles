@@ -58,6 +58,10 @@ safe_alias gu 'git undo'          # Remove the latest commit
 safe_alias gset 'git setup'       # Set up a git repository (if one doesn't exist), add all files, and make an initial commit
 safe_alias gobl 'git obliterate'  # Completely remove a file from the repository, including past commits and tags
 
+# Heroku
+safe_alias he 'heroku'
+safe_alias hel 'heroku logs --tail'
+
 # PHP
 safe_alias cm 'php composer.phar'
 safe_alias sf 'php app/console'
@@ -112,12 +116,13 @@ safe_alias vp 'vagrant provision'
 safe_alias ew 'brew'
 safe_alias ewu 'brew update'
 safe_alias ewi 'brew install'
-safe_alias ewf 'brew info'
+safe_alias ews 'brew info'
 safe_alias ewd 'brew doctor'
 safe_alias ewo 'brew outdated'
 safe_alias ewc 'brew cleanup'
 safe_alias ewuo 'brew update && brew outdated'
-safe_alias ewuu 'brew upgrade'
+safe_alias ewup 'brew upgrade'
+safe_alias ewuu 'brew upgrade --all'
 
 # Other
 safe_alias jn 'jasmine-node'
