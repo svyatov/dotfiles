@@ -19,6 +19,7 @@ source $HOME/.dotfiles/zsh/aliases.sh
 export GOPATH=$HOME/Projects/Go
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:/usr/local/heroku/bin
 
 # unsetopt EXTENDED_GLOB # Fixing problem with git reset HEAD^ not found and many others
 # unsetopt AUTO_NAME_DIRS # Auto adding variable-stored paths to ~ list conflicts with RVM
