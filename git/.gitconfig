@@ -8,7 +8,6 @@
     excludesfile = ~/.dotfiles/git/.gitignore_global
     autocrlf = input
 [alias]
-    h = help
     # Adding
     a = add
     aa = add --all .
@@ -38,8 +37,9 @@
     ta = tag --annotate
     # Checkout
     co = checkout
-    cod = checkout develop
     com = checkout master
+    cod = checkout develop
+    cos = checkout staging
     cob = checkout -b
     # Branching
     br = branch
@@ -58,6 +58,8 @@
     ps = push
     psa = push --all
     pst = push --tags
+    psh = push heroku
+    pshm = push heroku master
     # Fetching
     fu = fetch upstream
     fo = fetch origin
@@ -90,6 +92,21 @@
     dfc = diff --cached --word-diff=color --minimal
     # Syncing
     sync = "!f() { git fetch upstream && git merge upstream/$(git rev-parse --abbrev-ref HEAD) && git push; }; f"
+    # HubFlow: https://github.com/datasift/gitflow
+    hi = hf init
+    hf = hf feature
+    hfs = hf feature start
+    hfco = hf feature checkout
+    hff = hf feature finish
+    hps = hf push
+    hpl = hf pull
+    hu = hf update
+    hr = hf release
+    hrs = hf release start
+    hrf = hf release finish
+    hh = hf hotfix
+    hhs = hf hotfix start
+    hhf = hf hotfix finish
 [difftool "Kaleidoscope"]
     cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [diff]
@@ -121,3 +138,7 @@
     required = true
 	clean = git media clean %f
 	smudge = git media smudge %f
+[filter "lfs"]
+	clean = git lfs clean %f
+	smudge = git lfs smudge %f
+	required = true
