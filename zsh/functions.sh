@@ -1,5 +1,5 @@
 # Safe alias
-function safe_alias() {
+safe_alias() {
     if [[ $3 == 'override' ]]; then
         alias "$1"="$2"
     elif ! type "$1" &> /dev/null; then
@@ -13,6 +13,7 @@ source $HOME/.dotfiles/zsh/functions_jumps.sh
 source $HOME/.dotfiles/zsh/functions_ruby.sh
 source $HOME/.dotfiles/zsh/functions_php.sh
 source $HOME/.dotfiles/zsh/functions_git.sh
+source $HOME/.dotfiles/zsh/functions_tmux.sh
 
 mkcd() { mkdir -p "$1" && cd "$1" }
 
@@ -75,25 +76,13 @@ uwpp() {
     fi
 }
 
-speedup-skype() {
-    if [[ -n $1 ]]; then
-        if [[ -d "${HOME}/Library/Application Support/Skype/${1}" ]]; then
-            sqlite3 "${HOME}/Library/Application Support/Skype/${1}/main.db" "vacuum; reindex;"
-        else
-            echo "There is no data for username '${1}' in Skype folder."
-        fi
-    else
-        echo 'Please, provide Skype username to speed up.'
-    fi
-}
-
 resolve_apache_file_permissions() {
     if [[ -n $1 ]]; then
-        # allow apache to access user's files
-        sudo chmod -R +a 'group:_www allow read,write,delete,add_file,add_subdirectory,file_inherit,directory_inherit' $1
-        # allow user to access files created by apache
-        sudo chmod -R +a 'group:staff allow read,write,delete,add_file,add_subdirectory,file_inherit,directory_inherit' $1
-    else
         echo 'You forget to specify directory!'
+        return 1
     fi
+    # allow apache to access user's files
+    sudo chmod -R +a 'group:_www allow read,write,delete,add_file,add_subdirectory,file_inherit,directory_inherit' $1
+    # allow user to access files created by apache
+    sudo chmod -R +a 'group:staff allow read,write,delete,add_file,add_subdirectory,file_inherit,directory_inherit' $1
 }
