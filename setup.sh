@@ -20,7 +20,7 @@ ZPREZTO_RC_FILE="${HOME}/.zpreztorc"
 # Others
 TMUX_CONFIG_FILE="${HOME}/.tmux.conf"
 VIM_CONFIG_FILE="${HOME}/.vimrc"
-VIM_VUNDLE_DIR="${HOME}/.vim/bundle/vundle"
+VIM_VUNDLE_DIR="${HOME}/.vim/bundle/Vundle.vim"
 
 ### Helpers
 ############
