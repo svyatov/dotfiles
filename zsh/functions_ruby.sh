@@ -4,12 +4,13 @@ _bin_first() {
     if [[ -x ./bin/$1 ]]; then
         ./bin/$1 ${@:2} # means "skip first element in array"
     else
-        # bundler and rake are installed in global gemset
-        if [[ -x $GEM_HOME@global/bin/$1 ]]; then
-            $GEM_HOME@global/bin/$1 ${@:2}
-        else
-            $GEM_HOME/bin/$1 ${@:2}
-        fi
+        $(rbenv root)/shims/$1 ${@:2}
+        # # bundler and rake are installed in global gemset
+        # if [[ -x $GEM_HOME@global/bin/$1 ]]; then
+        #     $GEM_HOME@global/bin/$1 ${@:2}
+        # else
+        #     $GEM_HOME/bin/$1 ${@:2}
+        # fi
     fi
 }
 
@@ -30,7 +31,9 @@ _Rakefile_changed() {
 _rake () {
   if [ -f Rakefile ]; then
     if _Rakefile_changed; then
-      rake --tasks --quiet | cut -d " " -f 2 > .rake_tasks
+      # "tail -n +1" fixes "Broken pipe @ io_write" error
+      # See: http://superuser.com/questions/554855/how-can-i-fix-a-broken-pipe-error
+      rake --tasks --quiet | tail -n +1 | cut -d " " -f 2 >! .rake_tasks
     fi
     compadd `cat .rake_tasks`
   fi

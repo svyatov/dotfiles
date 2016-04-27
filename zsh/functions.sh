@@ -77,7 +77,7 @@ uwpp() {
 }
 
 resolve_apache_file_permissions() {
-    if [[ -n $1 ]]; then
+    if [[ -z $1 ]]; then
         echo 'You forget to specify directory!'
         return 1
     fi
@@ -85,4 +85,13 @@ resolve_apache_file_permissions() {
     sudo chmod -R +a 'group:_www allow read,write,delete,add_file,add_subdirectory,file_inherit,directory_inherit' $1
     # allow user to access files created by apache
     sudo chmod -R +a 'group:staff allow read,write,delete,add_file,add_subdirectory,file_inherit,directory_inherit' $1
+}
+
+volume() {
+    if [[ -z $1 ]]; then
+        echo 'You forget to specify value!'
+        return 1
+    fi
+
+    osascript -e "set Volume $1" 
 }

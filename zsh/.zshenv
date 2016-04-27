@@ -14,9 +14,5 @@ fi
 # PHP from Liip
 export PATH=/usr/local/php5/bin:$PATH
 
-# Other paths
-export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
-
-if [[ -d "/usr/local/share/npm/bin" ]]; then
-    export PATH=$PATH:/usr/local/share/npm/bin
-fi
+# Home bin
+export PATH=$HOME/bin:$PATH

@@ -31,7 +31,7 @@ Plugin 'tpope/vim-commentary'
 " Cool status line
 Plugin 'bling/vim-airline'
 " Tab FTW!
-Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Valloric/YouCompleteMe'
 " Handy brackets mappings
 Plugin 'tpope/vim-unimpaired'
 " Code alignment
@@ -80,6 +80,8 @@ Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'jgdavey/tslime.vim'
 " File syncing
 " Plugin 'eshion/vim-sync'
+" Elixir language support
+Plugin 'elixir-lang/vim-elixir'
 
 " All of your Plugins must be added before the following line
 call vundle#end()             " required

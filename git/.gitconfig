@@ -28,7 +28,11 @@
     st = status --short --branch --untracked-files=all
     # Stashing
     s = stash
+    ss = stash show --patch
     sa = stash apply
+    sd = stash drop
+    sp = stash pop
+    sl = stash list
     ski = stash --keep-index
     su = stash --include-untracked
     suki = stash --include-untracked --keep-index
