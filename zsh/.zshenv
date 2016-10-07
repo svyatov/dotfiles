@@ -16,3 +16,6 @@ export PATH=/usr/local/php5/bin:$PATH
 
 # Home bin
 export PATH=$HOME/bin:$PATH
+
+# Postgres.app
+export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
