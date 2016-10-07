@@ -51,6 +51,10 @@ safe_alias pup "pip freeze | grep -v '\-e' | cut -d= -f1 | xargs pip install -U"
 safe_alias exf 'cd ~/Projects/Playground/exercism && exercism fetch'
 safe_alias exs 'exercism submit'
 
+# Git
+safe_alias gps 'g ps'
+safe_alias gg 'g g'
+
 # Git extras (https://github.com/tj/git-extras)
 safe_alias ginf 'git info'        # Show information about the repo
 safe_alias gsum 'git summary'     # Outputs a repo summary

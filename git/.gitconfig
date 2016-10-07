@@ -24,10 +24,14 @@
     la = !git l --all
     lp = !git l --patch --word-diff
     ls = !git l --stat
+    # Grep
+    g = grep
+    # Search
+    s = log --max-count=50 --oneline -S
     # Status
-    st = status --short --branch --untracked-files=all
+    sts = status --short --branch --untracked-files=all
     # Stashing
-    s = stash
+    st = stash
     ss = stash show --patch
     sa = stash apply
     sd = stash drop
@@ -84,7 +88,7 @@
     m = merge
     md = merge develop
     mm = merge master
-    mf = merge --no-ff
+    mnf = merge --no-ff
     mum = merge upstream/master
     # Reseting
     rs = reset --soft
@@ -119,6 +123,8 @@
     renames = copies
     # Tell git diff to use mnemonic prefixes (index, work tree, commit, object) instead of the standard a and b notation
     mnemonicprefix = true
+    # Experimental heuristic that shifts the hunk boundary in an attempt to make the resulting patch easier to read
+    compactionHeuristic = true
 [difftool]
     prompt = false
 [mergetool "Kaleidoscope"]

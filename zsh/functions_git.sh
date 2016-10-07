@@ -3,7 +3,7 @@ _g() {
     if [[ -n $1 ]]; then
         git "$@"
     else
-        git st
+        git sts
     fi
 }
 
