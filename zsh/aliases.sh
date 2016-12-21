@@ -131,10 +131,12 @@ safe_alias ewo 'brew outdated'
 safe_alias ewc 'brew cleanup'
 safe_alias ewuo 'brew update && brew outdated'
 safe_alias ewup 'brew upgrade'
-safe_alias ewuu 'brew upgrade --all'
 
 # Other
 safe_alias jn 'jasmine-node'
 safe_alias memc '/usr/local/opt/memcached/bin/memcached -l 127.0.0.1'
-safe_alias ytd 'youtube-dl --ignore-errors --continue'
+safe_alias ytd "youtube-dl"
+safe_alias ytd-default "youtube-dl --ignore-errors --continue --format bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio/best"
+safe_alias ytds "ytd-default --output '%(title)s.%(ext)s'"
+safe_alias ytdp "ytd-default --output '%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s'"
 safe_alias myip 'dig +short myip.opendns.com @resolver1.opendns.com'
