@@ -61,6 +61,8 @@ safe_alias ct 'crontab -e'
 safe_alias vsa 'vim +"let b:is_bash=1" +"set ft=sh et ts=4 sw=4" ~/.server_aliases'
 safe_alias ssa '. ~/.server_aliases && echo .server_aliases sourced'
 safe_alias shrl 'exec $SHELL -l' # shell reload
+safe_alias duo 'du . --max-depth=1 -h | sort -h'
+safe_alias dum 'duo | tail'
 
 ### Functions
 function mkcd() {
