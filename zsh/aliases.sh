@@ -24,6 +24,8 @@ safe_alias scf 'source ~/.dotfiles/zsh/functions.sh'
 safe_alias shrl 'exec $SHELL -l' # shell reload
 safe_alias vol 'volume'
 safe_alias vol1 'volume 0.01'
+safe_alias wh 'which'
+safe_alias ws 'whois'
 
 # Update ZPrezto
 safe_alias zpu 'pushd ~/.zprezto && git pull && git submodule update --init --recursive && popd'
