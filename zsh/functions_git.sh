@@ -1,11 +1,12 @@
 safe_alias g 'noglob _g'
 _g() {
     if [[ -n $1 ]]; then
-        git "$@"
+        git $@
     else
         git sts
     fi
 }
+compdef _g=git
 
 # git clone & cd (accepts only ssh url format: git@github.com:svyatov/dotfiles.git)
 gclcd() {
