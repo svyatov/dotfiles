@@ -137,7 +137,7 @@ safe_alias ewd 'brew doctor'
 safe_alias ewo 'brew outdated'
 safe_alias ewc 'brew cleanup'
 safe_alias ewuo 'brew update && brew outdated'
-safe_alias ewup 'brew upgrade'
+safe_alias ewuu 'brew upgrade'
 
 # Other
 safe_alias jn 'jasmine-node'
