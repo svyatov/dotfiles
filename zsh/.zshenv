@@ -12,7 +12,10 @@ else
 fi
 
 # PHP from Liip
-export PATH=/usr/local/php5/bin:$PATH
+#export PATH=/usr/local/php5/bin:$PATH
+
+# Brew bin
+export PATH=/usr/local/bin:$PATH
 
 # Home bin
 export PATH=$HOME/bin:$PATH
