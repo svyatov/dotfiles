@@ -71,6 +71,7 @@
     # Fetching
     fu = fetch upstream
     fo = fetch origin
+    fp = fetch --prune
     # Pulling
     pl = pull
     plr = pull --rebase
