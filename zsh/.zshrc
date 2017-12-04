@@ -30,6 +30,9 @@ export NODE_PATH=$NVM_BIN
 # rbenv
 eval "$(rbenv init -)"
 
+# Python 3
+export PATH=$(python3 -m site --user-base)/bin:$PATH
+
 # RVM
 # [[ -d "$HOME/.rvm/bin" ]] && export PATH=$HOME/.rvm/bin:$PATH
 # [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

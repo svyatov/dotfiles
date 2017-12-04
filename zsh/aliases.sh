@@ -26,6 +26,7 @@ safe_alias vol 'volume'
 safe_alias vol1 'volume 0.01'
 safe_alias wh 'which'
 safe_alias ws 'whois'
+safe_alias m 'mosh'
 
 # Update ZPrezto
 safe_alias zpu 'pushd ~/.zprezto && git pull && git submodule update --init --recursive && popd'
@@ -56,6 +57,7 @@ safe_alias exs 'exercism submit'
 # Git
 safe_alias gps 'g ps'
 safe_alias gg 'g g'
+safe_alias psd 'g ps && capsd'
 
 # Git extras (https://github.com/tj/git-extras)
 safe_alias ginf 'git info'        # Show information about the repo
@@ -77,6 +79,11 @@ safe_alias sfcl 'php app/console cache:clear'
 safe_alias sfroute 'php app/console router:debug'
 safe_alias sfgb 'php app/console generate:bundle'
 
+# Python
+safe_alias p3 'python3'
+safe_alias pp3 'pip3'
+safe_alias pe3 'pipenv'
+
 # Ruby and Rails
 safe_alias gmi 'gem install'
 safe_alias gmu 'gem update'
@@ -94,6 +101,7 @@ safe_alias rrg 'rake routes | grep'
 safe_alias rrp 'rake routes | sed -e "1d" -e "s,^[^/]*,,g" | awk ''{print $1}'' | sort | uniq'
 safe_alias rkra 'rake rubocop:auto_correct'
 safe_alias rksl 'rake scss_lint'
+safe_alias rkcl 'rake coffeelint'
 safe_alias rksp 'rake spec'
 safe_alias ba 'bundle-audit'
 safe_alias bau 'bundle-audit update'
@@ -101,6 +109,7 @@ safe_alias be 'bundle exec'
 safe_alias bea 'bundle exec annotate'
 safe_alias ber 'bundle exec rake'
 safe_alias bes 'bundle exec sidekiq'
+safe_alias rcp 'bundle exec rubocop --parallel'
 safe_alias rca 'bundle exec rubocop --auto-correct'
 safe_alias rcaf 'bundle exec rubocop --auto-correct --fail-fast'
 safe_alias bu 'bundle update'
