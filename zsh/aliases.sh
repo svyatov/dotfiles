@@ -6,7 +6,7 @@ safe_alias b 'cd -'
 safe_alias c 'clear'
 safe_alias ll 'c && l'
 safe_alias q 'exit'
-safe_alias v 'vim'
+safe_alias v 'nvim'
 safe_alias s 'subl'
 safe_alias sn 'subl --new-window'
 safe_alias o 'open'
@@ -92,6 +92,12 @@ safe_alias p3 'python3'
 safe_alias pp3 'pip3'
 safe_alias pe3 'pipenv'
 
+# Elixir
+safe_alias ie 'iex'
+safe_alias im 'iex -S mix'
+safe_alias mt 'mix test'
+safe_alias mtt 'mix test --trace'
+
 # Ruby and Rails
 safe_alias gmi 'gem install'
 safe_alias gmu 'gem update'
@@ -137,6 +143,7 @@ safe_alias capr 'bundle exec cap production'
 safe_alias caprc 'bundle exec cap production rails:console'
 safe_alias caprd 'capr deploy'
 safe_alias caprdm 'capr deploy:migrations'
+safe_alias wds 'bin/webpack-dev-server'
 
 # Vagrant
 safe_alias vg 'vagrant'
