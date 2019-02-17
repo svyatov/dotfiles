@@ -21,7 +21,7 @@ Plugin 'scrooloose/nerdtree'
 " Fuzzy file, buffer, etc search
 Plugin 'kien/ctrlp.vim'
 " Autotaging with ctags
-Plugin 'craigemery/vim-autotag'
+" Plugin 'craigemery/vim-autotag'
 " Change/add/remove surrounding (, {, [, quotes and tags
 Plugin 'tpope/vim-surround'
 " Syntax checking
@@ -136,7 +136,7 @@ inoremap <C-a> <Home>
 inoremap <C-e> <End>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
-" Ctrl-C the same as ESC in insert mode
+" CtrlC the same as ESC in insert mode
 inoremap <C-c> <Esc>
 " w!! to write a file as sudo
 cmap w!! w !sudo tee % >/dev/null
