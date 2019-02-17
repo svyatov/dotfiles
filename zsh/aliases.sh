@@ -27,6 +27,7 @@ safe_alias vol1 'volume 0.01'
 safe_alias wh 'which'
 safe_alias ws 'whois'
 safe_alias m 'mosh'
+safe_alias n 'ngrok'
 
 # Yarn
 safe_alias y 'yarn'
@@ -79,18 +80,6 @@ safe_alias gobl 'git obliterate'  # Completely remove a file from the repository
 # Heroku
 safe_alias he 'heroku'
 safe_alias hel 'heroku logs --tail'
-
-# PHP
-safe_alias cm 'php composer.phar'
-safe_alias sf 'php app/console'
-safe_alias sfcl 'php app/console cache:clear'
-safe_alias sfroute 'php app/console router:debug'
-safe_alias sfgb 'php app/console generate:bundle'
-
-# Python
-safe_alias p3 'python3'
-safe_alias pp3 'pip3'
-safe_alias pe3 'pipenv'
 
 # Elixir
 safe_alias ie 'iex'
