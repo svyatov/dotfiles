@@ -13,7 +13,6 @@ source $HOME/.dotfiles/zsh/functions_jumps.sh
 source $HOME/.dotfiles/zsh/functions_ruby.sh
 source $HOME/.dotfiles/zsh/functions_php.sh
 source $HOME/.dotfiles/zsh/functions_git.sh
-source $HOME/.dotfiles/zsh/functions_tmux.sh
 
 mkcd() { mkdir -p "$1" && cd "$1" }
 
