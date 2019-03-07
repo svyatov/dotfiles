@@ -23,6 +23,7 @@ safe_alias bpa 'bundle package --all'
 
 # Ruby and Rails
 safe_alias r 'rails' override # r - is a zsh builtin
+safe_alias rce 'rails credentials:edit'
 safe_alias rdc 'rails dev:cache'
 safe_alias rrg 'rails routes | grep'
 safe_alias rrp 'rails routes | sed -e "1d" -e "s,^[^/]*,,g" | awk ''{print $1}'' | sort | uniq'

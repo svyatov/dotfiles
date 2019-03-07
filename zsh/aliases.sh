@@ -15,6 +15,8 @@ safe_alias edf 'v "+lcd ~/.dotfiles" -- ~/.dotfiles'
 safe_alias ea 'v "+lcd ~/.dotfiles" ~/.dotfiles/zsh/aliases.sh'
 safe_alias ear 'v "+lcd ~/.dotfiles" ~/.dotfiles/zsh/aliases_ruby.sh'
 safe_alias eae 'v "+lcd ~/.dotfiles" ~/.dotfiles/zsh/aliases_elixir.sh'
+safe_alias eah 'v "+lcd ~/.dotfiles" ~/.dotfiles/zsh/aliases_heroku.sh'
+safe_alias ead 'v "+lcd ~/.dotfiles" ~/.dotfiles/zsh/aliases_docker.sh'
 safe_alias ef 'v "+lcd ~/.dotfiles" ~/.dotfiles/zsh/functions.sh'
 safe_alias et 'v "+lcd ~/.dotfiles" ~/.dotfiles/other/.tmux.conf'
 safe_alias ez 'v ~/.zshrc'
@@ -52,3 +54,4 @@ source $HOME/.dotfiles/zsh/aliases_elixir.sh
 source $HOME/.dotfiles/zsh/aliases_yarn.sh
 source $HOME/.dotfiles/zsh/aliases_vagrant.sh
 source $HOME/.dotfiles/zsh/aliases_heroku.sh
+source $HOME/.dotfiles/zsh/aliases_docker.sh

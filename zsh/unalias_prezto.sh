@@ -2,6 +2,7 @@
 unalias _
 unalias b
 unalias cp
+unalias d
 unalias e
 unalias ln
 unalias mkdir
