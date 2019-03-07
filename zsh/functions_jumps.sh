@@ -77,7 +77,7 @@ jump-list() {
     local shortcut_basename
     local max_shortcut_length=0
 
-    shortcuts=("${(@f)$(find $JUMPS_PATH -type l)}")
+    shortcuts=("${(@f)$(find $JUMPS_PATH -type l | sort)}")
 
     for shortcut in $shortcuts; do
         shortcut_length=${#shortcut:t}
