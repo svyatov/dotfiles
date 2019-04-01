@@ -51,10 +51,12 @@
     cob = checkout -b
     # Branching
     br = branch
+    brm = branch --merged
     bra = branch --all
     brr = branch --remote
     brd = branch --delete
     brrd = branch --remote --delete
+    brclr = !git branch --merged | grep  -v '\\*\\|master\\|develop\\|staging' | xargs -n 1 git branch --delete
     # Cherry-picking
     cp = cherry-pick
     cpc = cherry-pick --continue
@@ -141,6 +143,8 @@
 [mergetool "sourcetree"]
     cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
     trustExitCode = true
+[fetch]
+    prune = true
 [pull]
     rebase = true
 [push]
