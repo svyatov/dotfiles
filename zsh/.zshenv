@@ -14,4 +14,3 @@ export PATH=$HOME/bin:$PATH
 
 # Postgres.app
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/11/bin
-#export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.6/bin
