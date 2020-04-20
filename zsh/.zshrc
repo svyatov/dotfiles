@@ -14,8 +14,10 @@ source $HOME/.dotfiles/zsh/unalias_prezto.sh
 source $HOME/.dotfiles/zsh/functions.sh
 source $HOME/.dotfiles/zsh/aliases.sh
 
-# Nvim as global editor
-export VISUAL=nvim
+# NVM
+export NVM_DIR=~/.nvm
+source /usr/local/opt/nvm/nvm.sh
+export NODE_PATH=$NVM_BIN
 
 # Heroku
 export PATH=$PATH:/usr/local/heroku/bin
