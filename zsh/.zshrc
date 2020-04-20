@@ -20,11 +20,6 @@ export VISUAL=nvim
 # Heroku
 export PATH=$PATH:/usr/local/heroku/bin
 
-# NVM
-export NVM_DIR=~/.nvm
-source $(brew --prefix nvm)/nvm.sh
-export NODE_PATH=$NVM_BIN
-
 # rbenv
 eval "$(rbenv init -)"
 

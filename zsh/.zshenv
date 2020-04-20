@@ -6,8 +6,13 @@ export ERL_AFLAGS="-kernel shell_history enabled" # Enables history for Elixir i
 
 # export no_proxy="localhost,127.0.0.0/8,*.local"
 
+# NVM
+export NVM_DIR=~/.nvm
+source /usr/local/opt/nvm/nvm.sh
+export NODE_PATH=$NVM_BIN
+
 # Brew bin
-export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
 # Home bin
 export PATH=$HOME/bin:$PATH
