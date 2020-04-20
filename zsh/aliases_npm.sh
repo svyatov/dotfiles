@@ -1,0 +1,12 @@
+# NPM
+safe_alias nrl 'npm run lint'
+safe_alias nrd 'npm run dev'
+safe_alias nrt 'npm run test'
+safe_alias nrb 'npm run build'
+safe_alias npr 'npm run'
+safe_alias npo 'npm outdated'
+safe_alias npu 'npm update'
+safe_alias npis 'npm install --save'
+safe_alias npid 'npm install --save-dev'
+safe_alias nrlf 'npm run lint-fix'
+safe_alias nrtc 'npm run test:ci'

@@ -51,6 +51,7 @@ source $HOME/.dotfiles/zsh/aliases_brew.sh
 source $HOME/.dotfiles/zsh/aliases_git.sh
 source $HOME/.dotfiles/zsh/aliases_ruby.sh
 source $HOME/.dotfiles/zsh/aliases_elixir.sh
+source $HOME/.dotfiles/zsh/aliases_npm.sh
 source $HOME/.dotfiles/zsh/aliases_yarn.sh
 source $HOME/.dotfiles/zsh/aliases_vagrant.sh
 source $HOME/.dotfiles/zsh/aliases_heroku.sh
