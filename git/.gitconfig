@@ -106,21 +106,6 @@
     dfc = diff --cached --word-diff=color --minimal
     # Syncing
     sync = "!f() { git fetch upstream && git merge upstream/$(git rev-parse --abbrev-ref HEAD) && git push; }; f"
-    # HubFlow: https://github.com/datasift/gitflow
-    hi = hf init
-    hf = hf feature
-    hfs = hf feature start
-    hfco = hf feature checkout
-    hff = hf feature finish
-    hps = hf push
-    hpl = hf pull
-    hu = hf update
-    hr = hf release
-    hrs = hf release start
-    hrf = hf release finish
-    hh = hf hotfix
-    hhs = hf hotfix start
-    hhf = hf hotfix finish
 [difftool "Kaleidoscope"]
     cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [diff]
