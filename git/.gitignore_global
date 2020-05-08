@@ -10,3 +10,5 @@ tags
 !tags/
 .vagrant
 .sass-cache
+.generators
+.rakeTasks
