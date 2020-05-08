@@ -48,7 +48,9 @@
     com = checkout master
     cod = checkout develop
     cos = checkout staging
+    coq = checkout qa
     cob = checkout -b
+    cop = checkout -
     # Branching
     br = branch
     brm = branch --merged
@@ -89,6 +91,7 @@
     rbd = rebase develop
     # Merging
     m = merge
+    mp = merge -
     md = merge develop
     mm = merge master
     mnf = merge --no-ff
