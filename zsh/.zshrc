@@ -14,6 +14,9 @@ source $HOME/.dotfiles/zsh/unalias_prezto.sh
 source $HOME/.dotfiles/zsh/functions.sh
 source $HOME/.dotfiles/zsh/aliases.sh
 
+# asdf
+source "$(brew --prefix asdf)/libexec/asdf.sh"
+
 # NVM
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
@@ -24,7 +27,13 @@ export NODE_PATH=$NVM_BIN
 export PATH=$PATH:/usr/local/heroku/bin
 
 # rbenv
-eval "$(rbenv init -)"
+#eval "$(rbenv init -)"
+
+# Disables warnings for Ruby 2.7
+# export RUBYOPT="-W:no-deprecated -W:no-experimental"
 
 # Elixir
 export PATH=$PATH:~/.mix/escripts
+
+# GoLang
+export PATH=$PATH:$HOME/go/bin

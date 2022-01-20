@@ -11,6 +11,8 @@ safe_alias gmgi 'rake install'
 # Rake
 safe_alias rk 'rake'
 safe_alias rkt 'rake -T'
+safe_alias brk 'bundle exec rake'
+safe_alias brkt 'bundle exec rake -T'
 
 # Bundler
 safe_alias be 'bundle exec'
@@ -22,15 +24,15 @@ safe_alias bp 'bundle package'
 safe_alias bpa 'bundle package --all'
 
 # Ruby and Rails
-safe_alias r 'rails' override # r - is a zsh builtin
-safe_alias rce 'rails credentials:edit'
-safe_alias rdc 'rails dev:cache'
-safe_alias rrg 'rails routes | grep'
-safe_alias rrp 'rails routes | sed -e "1d" -e "s,^[^/]*,,g" | awk ''{print $1}'' | sort | uniq'
-safe_alias rkra 'rails rubocop:auto_correct'
-safe_alias rksl 'rails scss_lint'
-safe_alias rkcl 'rails coffeelint'
-safe_alias rksp 'rails spec'
+safe_alias r 'bundle exec rails' override # r - is a zsh builtin
+safe_alias rce 'r credentials:edit'
+safe_alias rdc 'r dev:cache'
+safe_alias rrg 'r routes | grep'
+safe_alias rrp 'r routes | sed -e "1d" -e "s,^[^/]*,,g" | awk ''{print $1}'' | sort | uniq'
+safe_alias rkra 'r rubocop:auto_correct'
+safe_alias rksl 'r scss_lint'
+safe_alias rkcl 'r coffeelint'
+safe_alias rksp 'r spec'
 safe_alias bea 'bundle exec annotate'
 safe_alias ber 'bundle exec rake'
 safe_alias bes 'bundle exec sidekiq'

@@ -48,7 +48,6 @@
     com = checkout master
     cod = checkout develop
     cos = checkout staging
-    coq = checkout qa
     cob = checkout -b
     cop = checkout -
     # Branching

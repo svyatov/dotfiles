@@ -1,2 +1,5 @@
---skip-bundle    # skips bundle install on generating a new rails app
---skip-test-unit # skips making the test unit folders (because RSpec!)
+-d postgresql          # PostgreSQL WTF!
+--skip-bundle          # skips bundle install on generating a new rails app
+--skip-test            # skips making the test unit folders (because RSpec!)
+--skip-active-storage  # skips Active Storage (because Shrine!)
+--skip-action-mailbox  # skips Action Mailbox gem (because we don't need inbox for emails)

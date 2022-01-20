@@ -6,7 +6,7 @@ safe_alias gg 'g g'
 
 # Git extras (https://github.com/tj/git-extras)
 safe_alias ginf 'git info'        # Show information about the repo
-safe_alias gsum 'git summary'     # Outputs a repo summary
+# safe_alias gsum 'git summary'     # Outputs a repo summary
 safe_alias gch 'git changelog'    # Populate a file whose name matches change|history -i_ with commits since the previous tag
 safe_alias gc 'git count'         # Output commit count
 safe_alias gu 'git undo'          # Remove the latest commit

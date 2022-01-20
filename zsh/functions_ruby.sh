@@ -8,10 +8,10 @@ _bin_first() {
     fi
 }
 
-rails()  { _bin_first rails  $@ }
-rake()   { _bin_first rake   $@ }
-cap()    { _bin_first cap    $@ }
-bundle() { _bin_first bundle $@ }
+# rails()  { _bin_first rails  $@ }
+# rake()   { _bin_first rake   $@ }
+# cap()    { _bin_first cap    $@ }
+# bundle() { _bin_first bundle $@ }
 
 _Rakefile_changed() {
   if [ ! -f .rake_tasks ]; then return 0;

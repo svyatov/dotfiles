@@ -14,4 +14,4 @@ export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 export PATH=$HOME/bin:$PATH
 
 # Postgres.app
-export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/11/bin
+export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/13/bin
