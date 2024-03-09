@@ -12,6 +12,10 @@ function prompt_svyatov_current_ruby {
   asdf current ruby | awk '{print $2}'
 }
 
+function prompt_svyatov_current_nodejs {
+  asdf current nodejs | awk '{print $2}'
+}
+
 function prompt_svyatov_pwd {
   local pwd="${PWD/#$HOME/~}"
 
@@ -76,7 +80,7 @@ function prompt_svyatov_setup {
 
   # Define prompts.
   PROMPT='%F{yellow}%T%f %F{cyan}${_prompt_svyatov_pwd}%f${git_info:+${(e)git_info[prompt]}}%(!. %B%F{red}#%f%b.)${editor_info[keymap]} '
-  RPROMPT='${editor_info[overwrite]}%(?:: %F{red}⏎%f)${VIM:+" %B%F{green}V%f%b"}${git_info[rprompt]} [%F{magenta}$(prompt_svyatov_current_ruby)%f] %D{%d.%m.%y}'
+  RPROMPT='${editor_info[overwrite]}%(?:: %F{red}⏎%f)${VIM:+" %B%F{green}V%f%b"}${git_info[rprompt]} [%F{magenta}$(prompt_svyatov_current_ruby)%f][%F{yellow}$(prompt_svyatov_current_nodejs)%f]'
   SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 }
 

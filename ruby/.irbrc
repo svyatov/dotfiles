@@ -1,11 +1,26 @@
 #!/usr/bin/env ruby
-require 'irb/completion'
-require 'irb/ext/save-history'
 
-IRB.conf[:SAVE_HISTORY] = 1000
-IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
-IRB.conf[:PROMPT_MODE] = :SIMPLE
-IRB.conf[:AUTO_INDENT] = true
+require 'irb/completion'
+
+if RUBY_VERSION.start_with?('3.3')
+  require 'repl_type_completor'
+
+  IRB.conf[:COMPLETOR] = :type
+
+  Reline::Face.config(:completion_dialog) do |conf|
+    conf.define :default, foreground: :white, background: :black
+    conf.define :enhanced, foreground: :black, background: :white
+    conf.define :scrollbar, foreground: :white, background: :black
+  end
+else # versions below 3.3
+  require 'irb/ext/save-history'
+  IRB.conf[:USE_AUTOCOMPLETE] = false # the background for suggestions dialog is just nonusable
+  IRB.conf[:SAVE_HISTORY] = 1000
+  IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
+  IRB.conf[:PROMPT_MODE] = :SIMPLE
+  IRB.conf[:AUTO_INDENT] = true
+end
+
 
 class Object
   # list methods which aren't in superclass
@@ -14,4 +29,4 @@ class Object
   end
 end
 
-AwesomePrint.irb! if require 'awesome_print'
+# AwesomePrint.irb! if require 'awesome_print'

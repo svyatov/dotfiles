@@ -1,10 +1,17 @@
 [user]
     name = Leonid Svyatov
-    email = leonid@svyatov.ru
+    email = leonid@svyatov.com
+    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFAJ6xXAxFHNKCuMfkCfeoyUZV3XXvupwRt/DzI+wXlu
+[gpg]
+    format = ssh
+[gpg "ssh"]
+    program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+[commit]
+    gpgsign = true
 [color]
     ui = true
 [core]
-    editor = nvim
+    editor = vim
     excludesfile = ~/.dotfiles/git/.gitignore_global
     autocrlf = input
 [alias]
@@ -24,6 +31,7 @@
     la = !git l --all
     lp = !git l --patch --word-diff
     ls = !git l --stat
+    lo = log --oneline
     # Grep
     g = grep
     # Search
@@ -45,7 +53,7 @@
     ta = tag --annotate
     # Checkout
     co = checkout
-    com = checkout master
+    com = checkout main
     cod = checkout develop
     cos = checkout staging
     cob = checkout -b
@@ -57,7 +65,7 @@
     brr = branch --remote
     brd = branch --delete
     brrd = branch --remote --delete
-    brclr = !git branch --merged | grep  -v '\\*\\|master\\|develop\\|staging' | xargs -n 1 git branch --delete
+    brclr = !git branch --merged | grep  -v '\\*\\|master\\|main\\|develop\\|staging' | xargs -n 1 git branch --delete
     # Cherry-picking
     cp = cherry-pick
     cpc = cherry-pick --continue
@@ -70,7 +78,7 @@
     psa = push --all
     pst = push --tags
     psh = push heroku
-    pshm = push heroku master
+    pshm = push heroku main
     # Fetching
     fu = fetch upstream
     fo = fetch origin
@@ -86,15 +94,16 @@
     rbi = rebase --interactive
     rbc = rebase --continue
     rba = rebase --abort
-    rbm = rebase master
+    rbm = rebase main
     rbd = rebase develop
+    rbs = rebase staging
     # Merging
     m = merge
     mp = merge -
     md = merge develop
-    mm = merge master
+    ms = merge staging
+    mm = merge main
     mnf = merge --no-ff
-    mum = merge upstream/master
     # Reseting
     rs = reset --soft
     rh = reset --hard

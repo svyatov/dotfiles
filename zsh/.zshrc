@@ -14,26 +14,30 @@ source $HOME/.dotfiles/zsh/unalias_prezto.sh
 source $HOME/.dotfiles/zsh/functions.sh
 source $HOME/.dotfiles/zsh/aliases.sh
 
+# Bindings
+# bindkey '^ ' autosuggest-accept
+
 # asdf
 source "$(brew --prefix asdf)/libexec/asdf.sh"
 
-# NVM
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export NODE_PATH=$NVM_BIN
-
 # Heroku
-export PATH=$PATH:/usr/local/heroku/bin
-
-# rbenv
-#eval "$(rbenv init -)"
+# export PATH=$PATH:/usr/local/heroku/bin
 
 # Disables warnings for Ruby 2.7
 # export RUBYOPT="-W:no-deprecated -W:no-experimental"
 
 # Elixir
-export PATH=$PATH:~/.mix/escripts
+# export PATH=$PATH:~/.mix/escripts
 
 # GoLang
-export PATH=$PATH:$HOME/go/bin
+# export PATH=$PATH:$HOME/go/bin
+
+# Starship (https://starship.rs)
+# eval "$(starship init zsh)"
+
+# bun completions
+[ -s "/Users/leonid/.bun/_bun" ] && source "/Users/leonid/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

@@ -7,6 +7,7 @@ safe_alias gmdel 'gem uninstall'
 safe_alias gmb 'rake build'
 safe_alias gmr 'rake release'
 safe_alias gmgi 'rake install'
+safe_alias c 'bin/console'
 
 # Rake
 safe_alias rk 'rake'
@@ -40,8 +41,9 @@ safe_alias wds 'bin/webpack-dev-server'
 
 # Rubocop
 safe_alias rcp 'bundle exec rubocop --parallel'
-safe_alias rca 'bundle exec rubocop --auto-correct'
-safe_alias rcaf 'bundle exec rubocop --auto-correct --fail-fast'
+safe_alias rca 'rcp --autocorrect-all'
+safe_alias rcas 'rcp --autocorrect'
+safe_alias rcaf 'rcas --fail-fast'
 
 # Capistrano
 safe_alias caps 'bundle exec cap staging'
