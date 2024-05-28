@@ -1,158 +1,156 @@
+# vim: set ts=2 sts=2 sw=2 noet:
+
 [user]
-    name = Leonid Svyatov
-    email = leonid@svyatov.com
-    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFAJ6xXAxFHNKCuMfkCfeoyUZV3XXvupwRt/DzI+wXlu
+	name = Leonid Svyatov
+	email = leonid@svyatov.com
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFAJ6xXAxFHNKCuMfkCfeoyUZV3XXvupwRt/DzI+wXlu
 [gpg]
-    format = ssh
+	format = ssh
 [gpg "ssh"]
-    program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+	program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
 [commit]
-    gpgsign = true
+	gpgsign = true
 [color]
-    ui = true
+	ui = true
 [core]
-    editor = vim
-    excludesfile = ~/.dotfiles/git/.gitignore_global
-    autocrlf = input
+	editor = vim
+	excludesfile = ~/.dotfiles/git/.gitignore_global
+	autocrlf = input
 [alias]
-    # Adding
-    a = add
-    aa = add --all .
-    # Commiting
-    c = commit --verbose
-    ca = commit --verbose --amend
-    # Adding and commiting
-    aac = !git add --all . && git commit --verbose
-    aaca = !git add --all . && git commit --verbose --amend
-    # Total commits count
-    cc = rev-list --no-merges --count HEAD
-    # Logging
-    l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-    la = !git l --all
-    lp = !git l --patch --word-diff
-    ls = !git l --stat
-    lo = log --oneline
-    # Grep
-    g = grep
-    # Search
-    s = log --max-count=50 --oneline -S
-    # Status
-    sts = status --short --branch --untracked-files=all
-    # Stashing
-    st = stash
-    ss = stash show --patch
-    sa = stash apply
-    sd = stash drop
-    sp = stash pop
-    sl = stash list
-    ski = stash --keep-index
-    su = stash --include-untracked
-    suki = stash --include-untracked --keep-index
-    # Tags
-    t = tag
-    ta = tag --annotate
-    # Checkout
-    co = checkout
-    com = checkout main
-    cod = checkout develop
-    cos = checkout staging
-    cob = checkout -b
-    cop = checkout -
-    # Branching
-    br = branch
-    brm = branch --merged
-    bra = branch --all
-    brr = branch --remote
-    brd = branch --delete
-    brrd = branch --remote --delete
-    brclr = !git branch --merged | grep  -v '\\*\\|master\\|main\\|develop\\|staging' | xargs -n 1 git branch --delete
-    # Cherry-picking
-    cp = cherry-pick
-    cpc = cherry-pick --continue
-    cpa = cherry-pick --abort
-    cpe = cherry-pick --edit
-    cpx = cherry-pick -x
-    cpnc = cherry-pick --no-commit
-    # Pushing
-    ps = push
-    psa = push --all
-    pst = push --tags
-    psh = push heroku
-    pshm = push heroku main
-    # Fetching
-    fu = fetch upstream
-    fo = fetch origin
-    fp = fetch --prune
-    # Pulling
-    pl = pull
-    plr = pull --rebase
-    # Remote
-    rau = remote add upstream
-    rpo = remote prune origin
-    # Rebasing
-    rb = rebase
-    rbi = rebase --interactive
-    rbc = rebase --continue
-    rba = rebase --abort
-    rbm = rebase main
-    rbd = rebase develop
-    rbs = rebase staging
-    # Merging
-    m = merge
-    mp = merge -
-    md = merge develop
-    ms = merge staging
-    mm = merge main
-    mnf = merge --no-ff
-    # Reseting
-    rs = reset --soft
-    rh = reset --hard
-    # Diffs
-    dt = difftool
-    df = diff --word-diff=color --minimal
-    dtc = difftool --cached
-    dfc = diff --cached --word-diff=color --minimal
-    # Syncing
-    sync = "!f() { git fetch upstream && git merge upstream/$(git rev-parse --abbrev-ref HEAD) && git push; }; f"
+	# Adding
+	a = add
+	aa = add --all .
+	# Commiting
+	c = commit --verbose
+	ca = commit --verbose --amend
+	# Adding and commiting
+	aac = !git add --all . && git commit --verbose
+	aaca = !git add --all . && git commit --verbose --amend
+	# Total commits count
+	cc = rev-list --no-merges --count HEAD
+	# Logging
+	l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	la = !git l --all
+	lp = !git l --patch --word-diff
+	ls = !git l --stat
+	lo = log --oneline
+	# Grep
+	g = grep
+	# Search
+	s = log --max-count=50 --oneline -S
+	# Status
+	sts = status --short --branch --untracked-files=all
+	# Stashing
+	st = stash
+	ss = stash show --patch
+	sa = stash apply
+	sd = stash drop
+	sp = stash pop
+	sl = stash list
+	ski = stash --keep-index
+	su = stash --include-untracked
+	suki = stash --include-untracked --keep-index
+	# Tags
+	t = tag
+	ta = tag --annotate
+	# Checkout
+	co = checkout
+	com = checkout main
+	cod = checkout develop
+	cos = checkout staging
+	cob = checkout -b
+	cop = checkout -
+	# Branching
+	br = branch
+	brm = branch --merged
+	bra = branch --all
+	brr = branch --remote
+	brd = branch --delete
+	brrd = branch --remote --delete
+	brclr = !git branch --merged | grep  -v '\\*\\|master\\|main\\|develop\\|staging' | xargs -n 1 git branch --delete
+	# Cherry-picking
+	cp = cherry-pick
+	cpc = cherry-pick --continue
+	cpa = cherry-pick --abort
+	cpe = cherry-pick --edit
+	cpx = cherry-pick -x
+	cpnc = cherry-pick --no-commit
+	# Pushing
+	ps = push
+	psa = push --all
+	pst = push --tags
+	psh = push heroku
+	pshm = push heroku main
+	# Fetching
+	fu = fetch upstream
+	fo = fetch origin
+	fp = fetch --prune
+	# Pulling
+	pl = pull
+	plr = pull --rebase
+	# Remote
+	rau = remote add upstream
+	rpo = remote prune origin
+	# Rebasing
+	rb = rebase
+	rbi = rebase --interactive
+	rbc = rebase --continue
+	rba = rebase --abort
+	rbm = rebase main
+	rbd = rebase develop
+	rbs = rebase staging
+	# Merging
+	m = merge
+	mp = merge -
+	md = merge develop
+	ms = merge staging
+	mm = merge main
+	mnf = merge --no-ff
+	# Reseting
+	rs = reset --soft
+	rh = reset --hard
+	# Diffs
+	dt = difftool
+	df = diff --word-diff=color --minimal
+	dtc = difftool --cached
+	dfc = diff --cached --word-diff=color --minimal
+	# Syncing
+	sync = "!f() { git fetch upstream && git merge upstream/$(git rev-parse --abbrev-ref HEAD) && git push; }; f"
 [difftool "Kaleidoscope"]
-    cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [diff]
-    tool = Kaleidoscope
-    # Allow git diff to do basic rename and copy detection
-    renames = copies
-    # Tell git diff to use mnemonic prefixes (index, work tree, commit, object) instead of the standard a and b notation
-    mnemonicprefix = true
-    # Experimental heuristic that shifts the hunk boundary in an attempt to make the resulting patch easier to read
-    compactionHeuristic = true
+	tool = Kaleidoscope
+	# Allow git diff to do basic rename and copy detection
+	renames = copies
+	# Tell git diff to use mnemonic prefixes (index, work tree, commit, object) instead of the standard a and b notation
+	mnemonicprefix = true
+	# Experimental heuristic that shifts the hunk boundary in an attempt to make the resulting patch easier to read
+	compactionHeuristic = true
 [difftool]
-    prompt = false
+	prompt = false
 [mergetool "Kaleidoscope"]
-    cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-    trustExitCode = true
+	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	trustExitCode = true
 [mergetool]
-    prompt = false
+	prompt = false
 [merge]
-    tool = Kaleidoscope
+	tool = Kaleidoscope
 [difftool "sourcetree"]
-    cmd = /usr/local/bin/ksdiff -w \"$LOCAL\" \"$REMOTE\"
-    path =
+	cmd = /usr/local/bin/ksdiff -w \"$LOCAL\" \"$REMOTE\"
+	path =
 [mergetool "sourcetree"]
-    cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-    trustExitCode = true
+	cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	trustExitCode = true
 [fetch]
-    prune = true
+	prune = true
 [pull]
-    rebase = true
+	rebase = true
 [push]
-    default = current
+	default = current
 [credential]
-    helper = osxkeychain
-[filter "media"]
-    required = true
-    clean = git media clean %f
-    smudge = git media smudge %f
+  helper = osxkeychain
 [filter "lfs"]
-    required = true
-    clean = git lfs clean %f
-    smudge = git lfs smudge %f
-    process = git lfs filter-process
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
