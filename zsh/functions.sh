@@ -15,12 +15,6 @@ source $HOME/.dotfiles/zsh/functions_git.sh
 
 mkcd() { mkdir -p "$1" && cd "$1" }
 
-safe_alias ff "noglob _f f"
-safe_alias fd "noglob _f d"
-_f() {
-    noglob find . -type $1 -iname "$2"
-}
-
 _directories_list() { find $1 -type d -maxdepth 1 -not -name '.' -not -name '..' -exec basename {} + }
 
 u() {
