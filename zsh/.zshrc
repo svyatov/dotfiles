@@ -20,20 +20,11 @@ source $HOME/.dotfiles/zsh/aliases.sh
 # asdf
 source "$(brew --prefix asdf)/libexec/asdf.sh"
 
-# Heroku
-# export PATH=$PATH:/usr/local/heroku/bin
-
-# Disables warnings for Ruby 2.7
-# export RUBYOPT="-W:no-deprecated -W:no-experimental"
-
 # Elixir
 # export PATH=$PATH:~/.mix/escripts
 
 # GoLang
 # export PATH=$PATH:$HOME/go/bin
-
-# Starship (https://starship.rs)
-# eval "$(starship init zsh)"
 
 # bun completions
 [ -s "/Users/leonid/.bun/_bun" ] && source "/Users/leonid/.bun/_bun"

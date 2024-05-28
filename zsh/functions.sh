@@ -11,7 +11,6 @@ safe_alias() {
 
 source $HOME/.dotfiles/zsh/functions_jumps.sh
 source $HOME/.dotfiles/zsh/functions_ruby.sh
-source $HOME/.dotfiles/zsh/functions_php.sh
 source $HOME/.dotfiles/zsh/functions_git.sh
 
 mkcd() { mkdir -p "$1" && cd "$1" }
@@ -65,32 +64,11 @@ cmdtop() {
     history 1 | awk '{print $2}' | awk 'BEGIN {FS="|"} {print $1}' | sort | uniq -c | sort -r | head -n $list_limit
 }
 
-# Function for updating Wordpress plugins
-uwpp() {
-    if [[ -n $1 ]]; then
-        local archive=${1##*/}
-        wget $1 && rm -r ${archive%%.*} && unzip -quo $archive && rm $archive && echo 'Done.'
-    else
-        echo 'Please, provide url for plugin archive.'
-    fi
-}
-
-resolve_apache_file_permissions() {
-    if [[ -z $1 ]]; then
-        echo 'You forget to specify directory!'
-        return 1
-    fi
-    # allow apache to access user's files
-    sudo chmod -R +a 'group:_www allow read,write,delete,add_file,add_subdirectory,file_inherit,directory_inherit' $1
-    # allow user to access files created by apache
-    sudo chmod -R +a 'group:staff allow read,write,delete,add_file,add_subdirectory,file_inherit,directory_inherit' $1
-}
-
 volume() {
     if [[ -z $1 ]]; then
         echo 'You forget to specify value!'
         return 1
     fi
 
-    osascript -e "set Volume $1" 
+    osascript -e "set Volume $1"
 }
