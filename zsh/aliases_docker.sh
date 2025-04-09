@@ -3,6 +3,9 @@ safe_alias d 'docker'
 safe_alias di 'docker images'
 safe_alias dr 'docker run'
 safe_alias drm 'docker run --rm'
+safe_alias drmi 'docker run --rm -it'
+safe_alias drmia 'docker run --rm -it -v $(pwd):/app'
+safe_alias db 'docker build -t'
 
 # Docker Compose
 safe_alias dcm 'docker-compose'
