@@ -39,8 +39,10 @@ _fzf_compgen_dir() {
   fd --type=d --hidden --exclude .git . "$1"
 }
 
-# asdf
-source "$(brew --prefix asdf)/libexec/asdf.sh"
+# asdf for v0.15
+# source /opt/homebrew/opt/asdf/libexec/asdf.sh
+export ASDF_DATA_DIR=/Users/leonid/.asdf
+export PATH="$ASDF_DATA_DIR/shims:$PATH"
 
 # Elixir
 # export PATH=$PATH:~/.mix/escripts
@@ -49,8 +51,12 @@ source "$(brew --prefix asdf)/libexec/asdf.sh"
 # export PATH=$PATH:$HOME/go/bin
 
 # bun completions
-[ -s "/Users/leonid/.bun/_bun" ] && source "/Users/leonid/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+
