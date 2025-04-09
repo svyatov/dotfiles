@@ -3,9 +3,12 @@
 require 'irb/completion'
 
 if RUBY_VERSION.start_with?('3.3')
-  require 'repl_type_completor'
-
-  IRB.conf[:COMPLETOR] = :type
+  begin
+    require 'repl_type_completor'
+    IRB.conf[:COMPLETOR] = :type
+  rescue LoadError
+    nil
+  end
 
   Reline::Face.config(:completion_dialog) do |conf|
     conf.define :default, foreground: :white, background: :black
