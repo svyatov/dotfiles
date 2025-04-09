@@ -42,8 +42,8 @@ safe_alias cpk 'cat ~/.ssh/id_rsa.pub | pbcopy && echo "Public ssh key copied to
 safe_alias myip 'dig +short myip.opendns.com @resolver1.opendns.com'
 
 # YouTube-dl
-safe_alias ytd "youtube-dl"
-safe_alias ytd-default "youtube-dl --ignore-errors --continue --format \"bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio/best\""
+safe_alias ytd "yt-dlp"
+safe_alias ytd-default "yt-dlp --ignore-errors --continue --format \"bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio/best\""
 safe_alias ytds "ytd-default --output '%(title)s.%(ext)s'"
 safe_alias ytdp "ytd-default --output '%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s'"
 
