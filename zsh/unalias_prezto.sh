@@ -22,6 +22,6 @@ unalias lk
 unalias lt
 unalias lc
 unalias lu
-unalias sl
+# unalias sl
 unalias o
 unalias rake
