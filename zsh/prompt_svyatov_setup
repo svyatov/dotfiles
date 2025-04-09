@@ -9,11 +9,11 @@
 pmodload 'helper'
 
 function prompt_svyatov_current_ruby {
-  asdf current ruby | awk '{print $2}'
+  asdf current --no-header ruby | awk '{print $2}'
 }
 
 function prompt_svyatov_current_nodejs {
-  asdf current nodejs | awk '{print $2}'
+  asdf current --no-header nodejs | awk '{print $2}'
 }
 
 function prompt_svyatov_pwd {
