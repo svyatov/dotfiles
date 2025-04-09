@@ -34,6 +34,8 @@
 	lp = !git l --patch --word-diff
 	ls = !git l --stat
 	lo = log --oneline
+	# Setting upstream
+	sup = !git branch --set-upstream-to=origin/`git symbolic-ref --short HEAD`
 	# Grep
 	g = grep
 	# Search
@@ -67,7 +69,7 @@
 	brr = branch --remote
 	brd = branch --delete
 	brrd = branch --remote --delete
-	brclr = !git branch --merged | grep  -v '\\*\\|master\\|main\\|develop\\|staging' | xargs -n 1 git branch --delete
+	brclr = !git branch --merged | grep  -v '\\*\\|master\\|main\\|develop\\|development\\|staging' | xargs -n 1 git branch --delete
 	# Cherry-picking
 	cp = cherry-pick
 	cpc = cherry-pick --continue
@@ -76,7 +78,7 @@
 	cpx = cherry-pick -x
 	cpnc = cherry-pick --no-commit
 	# Pushing
-	ps = push
+	ps = push -u
 	psa = push --all
 	pst = push --tags
 	psh = push heroku
@@ -87,7 +89,6 @@
 	fp = fetch --prune
 	# Pulling
 	pl = pull
-	plr = pull --rebase
 	# Remote
 	rau = remote add upstream
 	rpo = remote prune origin
