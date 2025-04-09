@@ -16,8 +16,8 @@ export ASDF_NODEJS_LEGACY_FILE_DYNAMIC_STRATEGY=latest_available
 # Home bin
 export PATH="$HOME/bin:$PATH"
 
-# Sublime Text CLI
-export PATH="$PATH:/Applications/Sublime Text.app/Contents/SharedSupport/bin"
+# Sublime Text CLI (use zed instead)
+# export PATH="$PATH:/Applications/Sublime Text.app/Contents/SharedSupport/bin"
 
 # Postgres.app
 export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/16/bin"
@@ -25,3 +25,5 @@ export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/16/bin"
 # Added by Toolbox App
 export PATH="$PATH:/Users/leonid/Library/Application Support/JetBrains/Toolbox/scripts"
 
+# Source local secrets
+[ -f "$HOME/.secrets" ] && source "$HOME/.secrets"

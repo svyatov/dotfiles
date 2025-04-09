@@ -21,6 +21,7 @@ ZPREZTO_RC_FILE="${HOME}/.zpreztorc"
 TMUX_CONFIG_FILE="${HOME}/.tmux.conf"
 VIM_CONFIG_FILE="${HOME}/.vimrc"
 VIM_VUNDLE_DIR="${HOME}/.vim/bundle/Vundle.vim"
+SECRETS_FILE="${HOME}/.secrets"
 
 ### Helpers
 ############
@@ -82,3 +83,4 @@ fi
 ######################
 backup_file "${TMUX_CONFIG_FILE}"
 symlink_from_dotfiles "other/.tmux.conf" "${TMUX_CONFIG_FILE}"
+touch "${SECRETS_FILE}"
