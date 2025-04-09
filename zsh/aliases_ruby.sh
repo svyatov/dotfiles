@@ -32,11 +32,30 @@ safe_alias bau 'bundle-audit update'
 # Ruby and Rails
 safe_alias r 'bundle exec rails' override # r - is a zsh builtin
 safe_alias rce 'r credentials:edit'
+safe_alias rced 'r credentials:edit --environment development'
+safe_alias rcet 'r credentials:edit --environment test'
+safe_alias rces 'r credentials:edit --environment staging'
+safe_alias rcep 'r credentials:edit --environment production'
 safe_alias rdc 'r dev:cache'
-safe_alias rrg 'r routes | grep'
+safe_alias rrg 'r routes | fzf -e'
 safe_alias rrp 'r routes | sed -e "1d" -e "s,^[^/]*,,g" | awk ''{print $1}'' | sort | uniq'
 safe_alias bea 'bundle exec annotate'
 safe_alias bes 'bundle exec sidekiq'
+safe_alias hmm 'r db:migrate && RAILS_ENV=test r db:migrate && DB_NAME=halocures-sync r db:migrate'
+safe_alias hmr 'r db:rollback:primary && RAILS_ENV=test r db:rollback:primary && DB_NAME=halocures-sync r db:rollback:primary'
+safe_alias mmmr 'r db:migrate:roboscout && bin/tapioca_generate && be srb tc'
+
+# Hanami
+safe_alias hh 'bundle exec hanami'
+safe_alias hhg 'hh generate'
+safe_alias hhga 'hh generate action'
+safe_alias hhgv 'hh generate view'
+safe_alias hhgp 'hh generate part'
+safe_alias hhgs 'hh generate slice'
+safe_alias hhgm 'hh generate migration'
+safe_alias hhdm 'hh db migrate'
+safe_alias hhr 'hh routes'
+safe_alias hhm 'hh middleware'
 
 # Rubocop
 safe_alias rcp 'bundle exec rubocop --parallel'
