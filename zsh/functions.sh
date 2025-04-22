@@ -9,9 +9,9 @@ safe_alias() {
     fi
 }
 
-source $HOME/.dotfiles/zsh/functions_jumps.sh
-source $HOME/.dotfiles/zsh/functions_ruby.sh
-source $HOME/.dotfiles/zsh/functions_git.sh
+for function_file in $HOME/.dotfiles/zsh/functions_*.sh(N); do
+  source "$function_file"
+done
 
 mkcd() { mkdir -p "$1" && cd "$1" }
 
