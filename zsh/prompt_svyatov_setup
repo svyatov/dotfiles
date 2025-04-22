@@ -8,12 +8,36 @@
 # Load dependencies.
 pmodload 'helper'
 
+# helper: look for a filename up the directory tree
+find_up() {
+  local name="$1" dir="$PWD"
+  while [[ "$dir" != "/" ]]; do
+    [[ -e "$dir/$name" ]] && return 0
+    dir=${dir:h}
+  done
+  return 1
+}
+
 function prompt_svyatov_current_ruby {
-  asdf current --no-header ruby | awk '{print $2}'
+  local version=$(asdf current --no-header ruby | awk '{print $2}')
+  echo "R/$version"
 }
 
 function prompt_svyatov_current_nodejs {
-  asdf current --no-header nodejs | awk '{print $2}'
+  local version
+  if find_up bun.lock || find_up bun.lockb; then
+    # project is using Bun
+    version=$(bun --version 2>/dev/null)
+    echo "B/$version"
+  elif find_up package-lock.json || find_up yarn.lock || find_up pnpm-lock.yaml; then
+    # project is using Node
+    version=$(asdf current --no-header nodejs | awk '{print $2}')
+    echo "N/$version"
+  else
+    # fallback to Bun
+    version=$(bun --version 2>/dev/null)
+    echo "B/$version"
+  fi
 }
 
 function prompt_svyatov_pwd {
