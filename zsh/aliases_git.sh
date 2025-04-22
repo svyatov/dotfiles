@@ -24,9 +24,14 @@ safe_alias gtl 'gt log'
 safe_alias gtu 'gt up'
 safe_alias gtd 'gt down'
 safe_alias gtco 'gt checkout'
+safe_alias gtdl 'gt delete'
+safe_alias gty 'gt sync'
 
 
-# Helpers
+### Helpers
+##############
+
+# Create a new branch based on the ticket ID and title
 gtcn() {
   if [ -z "$1" ]; then
     echo "Usage: gtcn <notion_id>"
@@ -37,6 +42,7 @@ gtcn() {
   fi
 }
 
+# Outputs and copies into the clipboard the ticket title
 gtt() {
   # Get current git branch name
   local branch=$(git rev-parse --abbrev-ref HEAD)
@@ -61,6 +67,7 @@ gtt() {
   fi
 }
 
+# Quickly create a new branch while preserving the ticket ID
 gtb() {
   if [ -z "$1" ]; then
     echo "Usage: gtb <branch_name>"
@@ -81,9 +88,34 @@ gtb() {
     local new_branch="${ticket_id}-${sanitized_name}"
 
     # Create new branch using gt
-    gt create -m "$new_branch"
+    gt create "$new_branch"
   else
     echo "No matching ticket ID found in branch name."
     return 1
   fi
+}
+
+# Quickly a create a next part for the same branch/task
+#   some-branch will become some-branch-2
+#   some-branch-2 will become some-branch-3
+#   etc...
+gtbn() {
+  # Get current branch name
+  local branch=$(git rev-parse --abbrev-ref HEAD)
+
+  # Extract base name and numeric suffix
+  if [[ "$branch" =~ ^(.*)-([0-9]+)$ ]]; then
+    local base="${match[1]}"
+    local num="${match[2]}"
+    local new_num=$((num + 1))
+  else
+    local base="$branch"
+    local new_num=2
+  fi
+
+  # Construct new branch name
+  local new_branch="${base}-${new_num}"
+
+  # Create new branch with Graphite CLI
+  gt create "$new_branch"
 }
