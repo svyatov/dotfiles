@@ -1,0 +1,8 @@
+safe_alias bb 'bun'
+safe_alias bbx 'bunx'
+safe_alias bbi 'bun install'
+safe_alias bba 'bun add'
+safe_alias bbr 'bun remove'
+safe_alias bbo 'bun outdated'
+safe_alias bbu 'bun update'
+safe_alias bbc 'bun create'
