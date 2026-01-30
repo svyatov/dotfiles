@@ -19,8 +19,10 @@ ZPREZTO_DIR="${HOME}/.zprezto"
 ZPREZTO_RC_FILE="${HOME}/.zpreztorc"
 # Others
 TMUX_CONFIG_FILE="${HOME}/.tmux.conf"
-VIM_CONFIG_FILE="${HOME}/.vimrc"
-VIM_VUNDLE_DIR="${HOME}/.vim/bundle/Vundle.vim"
+NEOVIM_CONFIG_DIR="${HOME}/.config/nvim"
+NEOVIM_CONFIG_FILE="${NEOVIM_CONFIG_DIR}/init.vim"
+# VIM_CONFIG_FILE="${HOME}/.vimrc"
+# VIM_VUNDLE_DIR="${HOME}/.vim/bundle/Vundle.vim"
 SECRETS_FILE="${HOME}/.secrets"
 
 ### Helpers
@@ -72,15 +74,20 @@ symlink_from_dotfiles "ruby/.railsrc" "${RAILS_CONFIG_FILE}"
 
 ### Setting up vim
 ##################
-backup_file "${VIM_CONFIG_FILE}"
-symlink_from_dotfiles "other/.vimrc" "${VIM_CONFIG_FILE}"
-if [[ ! -d ${VIM_VUNDLE_DIR} ]]; then
-    /usr/bin/env git clone "https://github.com/gmarik/vundle.git" "${VIM_VUNDLE_DIR}"
-    /usr/bin/env vim +BundleInstall +qall
-fi
+# backup_file "${VIM_CONFIG_FILE}"
+# symlink_from_dotfiles "other/.vimrc" "${VIM_CONFIG_FILE}"
+# if [[ ! -d ${VIM_VUNDLE_DIR} ]]; then
+#     /usr/bin/env git clone "https://github.com/gmarik/vundle.git" "${VIM_VUNDLE_DIR}"
+#     /usr/bin/env vim +BundleInstall +qall
+
+### Setting up neovim
+#################
+mkdir -p "${NEOVIM_CONFIG_DIR}"
+backup_file "${NEOVIM_CONFIG_FILE}"
+symlink_from_dotfiles "nvim/init.vim" "${NEOVIM_CONFIG_FILE}"
 
 ### Setting up others
 ######################
-backup_file "${TMUX_CONFIG_FILE}"
-symlink_from_dotfiles "other/.tmux.conf" "${TMUX_CONFIG_FILE}"
+# backup_file "${TMUX_CONFIG_FILE}"
+# symlink_from_dotfiles "other/.tmux.conf" "${TMUX_CONFIG_FILE}"
 touch "${SECRETS_FILE}"

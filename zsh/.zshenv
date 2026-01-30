@@ -1,5 +1,5 @@
-export EDITOR=vim
-export VISUAL=vim
+export EDITOR=nvim
+export VISUAL=nvim
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
@@ -16,10 +16,10 @@ export ASDF_NODEJS_LEGACY_FILE_DYNAMIC_STRATEGY=latest_available
 # export ASDF_NODEJS_AUTO_ENABLE_COREPACK=true
 
 # Home bin
-export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-# Sublime Text CLI (use zed instead)
-# export PATH="$PATH:/Applications/Sublime Text.app/Contents/SharedSupport/bin"
+# Doom Emacs
+export PATH="$PATH:/$HOME/.config/emacs/bin"
 
 # Postgres.app
 export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/16/bin"
