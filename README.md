@@ -1,11 +1,6 @@
-# dotfiles
+# dotfiles ![macOS](https://img.shields.io/badge/macOS-000000?style=flat&logo=apple&logoColor=white) ![Zsh](https://img.shields.io/badge/Zsh-F15A24?style=flat&logo=zsh&logoColor=white) ![Neovim](https://img.shields.io/badge/Neovim-57A143?style=flat&logo=neovim&logoColor=white) ![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)
 
 > Personal shell configuration for productive web development on macOS
-
-![macOS](https://img.shields.io/badge/macOS-000000?style=flat&logo=apple&logoColor=white)
-![Zsh](https://img.shields.io/badge/Zsh-F15A24?style=flat&logo=zsh&logoColor=white)
-![Neovim](https://img.shields.io/badge/Neovim-57A143?style=flat&logo=neovim&logoColor=white)
-![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)
 
 ## 📋 Overview
 
