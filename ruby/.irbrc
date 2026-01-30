@@ -2,7 +2,7 @@
 
 require 'irb/completion'
 
-if RUBY_VERSION.start_with?('3.3')
+if RUBY_VERSION.start_with?('3.3') || RUBY_VERSION.start_with?('3.4')
   begin
     require 'repl_type_completor'
     IRB.conf[:COMPLETOR] = :type
