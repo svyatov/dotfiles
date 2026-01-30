@@ -40,6 +40,21 @@ function prompt_svyatov_current_nodejs {
   fi
 }
 
+function prompt_svyatov_current_python {
+  local version
+  if [[ -n "$VIRTUAL_ENV" ]]; then
+    # Activated virtualenv - use its Python
+    version=$("$VIRTUAL_ENV/bin/python" --version 2>/dev/null | awk '{print $2}')
+  elif [[ -x ".venv/bin/python" ]]; then
+    # Local .venv directory (uv/poetry style) - use its Python
+    version=$(.venv/bin/python --version 2>/dev/null | awk '{print $2}')
+  else
+    # Use system/homebrew Python
+    version=$(python3 --version 2>/dev/null | awk '{print $2}')
+  fi
+  echo "P/$version"
+}
+
 function prompt_svyatov_pwd {
   local pwd="${PWD/#$HOME/~}"
 
@@ -104,7 +119,7 @@ function prompt_svyatov_setup {
 
   # Define prompts.
   PROMPT='%F{yellow}%T%f %F{cyan}${_prompt_svyatov_pwd}%f${git_info:+${(e)git_info[prompt]}}%(!. %B%F{red}#%f%b.)${editor_info[keymap]} '
-  RPROMPT='${editor_info[overwrite]}%(?:: %F{red}⏎%f)${VIM:+" %B%F{green}V%f%b"}${git_info[rprompt]} [%F{magenta}$(prompt_svyatov_current_ruby)%f][%F{yellow}$(prompt_svyatov_current_nodejs)%f]'
+  RPROMPT='${editor_info[overwrite]}%(?:: %F{red}⏎%f)${VIM:+" %B%F{green}V%f%b"}${git_info[rprompt]} [%F{magenta}$(prompt_svyatov_current_ruby)%f][%F{cyan}$(prompt_svyatov_current_python)%f][%F{yellow}$(prompt_svyatov_current_nodejs)%f]'
   SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 }
 
