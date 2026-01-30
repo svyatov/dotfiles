@@ -10,13 +10,14 @@ safe_alias v 'nvim'
 safe_alias z 'zed'
 safe_alias o 'open'
 safe_alias edf 'v ~/.dotfiles'
-safe_alias ea 'v ~/.dotfiles ~/.dotfiles/zsh/aliases.sh'
-safe_alias ear 'v ~/.dotfiles ~/.dotfiles/zsh/aliases_ruby.sh'
-safe_alias eab 'v ~/.dotfiles ~/.dotfiles/zsh/aliases_bun.sh'
-safe_alias eah 'v ~/.dotfiles ~/.dotfiles/zsh/aliases_heroku.sh'
-safe_alias ead 'v ~/.dotfiles ~/.dotfiles/zsh/aliases_docker.sh'
-safe_alias ef 'v ~/.dotfiles ~/.dotfiles/zsh/functions.sh'
+safe_alias ea 'v ~/.dotfiles/zsh/aliases.sh'
+safe_alias ear 'v ~/.dotfiles/zsh/aliases_ruby.sh'
+safe_alias eab 'v ~/.dotfiles/zsh/aliases_bun.sh'
+safe_alias eah 'v ~/.dotfiles/zsh/aliases_heroku.sh'
+safe_alias ead 'v ~/.dotfiles/zsh/aliases_docker.sh'
+safe_alias ef 'v ~/.dotfiles/zsh/functions.sh'
 safe_alias ez 'v ~/.zshrc'
+safe_alias esc 'v ~/.ssh/config'
 safe_alias egc 'v ~/.gitconfig'
 safe_alias egi 'v .gitignore'
 safe_alias sca 'source ~/.dotfiles/zsh/aliases.sh'
@@ -33,7 +34,7 @@ safe_alias ai 'claude'
 # Update ZPrezto
 safe_alias zpu 'pushd ~/.zprezto && git pull && git submodule update --init --recursive && popd'
 
-# Copy public ssh key
+# Copy public ssh key (TODO: change this to use 1P)
 safe_alias cpk 'cat ~/.ssh/id_rsa.pub | pbcopy && echo "Public ssh key copied to clipboard!"'
 
 # My public IP
