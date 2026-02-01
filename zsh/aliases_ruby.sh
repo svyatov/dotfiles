@@ -7,7 +7,7 @@ safe_alias gmdel 'gem uninstall'
 safe_alias gmb 'rake build'
 safe_alias gmr 'rake release'
 safe_alias gmgi 'rake install'
-safe_alias c 'bin/console'
+safe_alias con 'bin/console'
 
 # Rake
 safe_alias rk 'rake'
