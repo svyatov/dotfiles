@@ -14,4 +14,21 @@ tags
 .rakeTasks
 **/.claude/settings.local.json
 **/CLAUDE.local.md
+**/.claude/history.jsonl
+**/.claude/stats-cache.json
+**/.claude/ide/
+**/.claude/session-env/
+**/.claude/projects/
+**/.claude/tasks/
+**/.claude/todos/
+**/.claude/telemetry/
+**/.claude/statsig/
+**/.claude/file-history/
+**/.claude/shell-snapshots/
+**/.claude/paste-cache/
+**/.claude/downloads/
+**/.claude/debug/
+**/.claude/cache/
+**/.claude/plugins/cache/
+**/.claude/security_warnings_state_*.json
 

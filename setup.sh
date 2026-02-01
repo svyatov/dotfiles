@@ -91,3 +91,18 @@ symlink_from_dotfiles "nvim/init.vim" "${NEOVIM_CONFIG_FILE}"
 # backup_file "${TMUX_CONFIG_FILE}"
 # symlink_from_dotfiles "other/.tmux.conf" "${TMUX_CONFIG_FILE}"
 touch "${SECRETS_FILE}"
+
+### Setting up Claude Code
+##########################
+CLAUDE_CONFIG_DIR="${HOME}/.claude"
+mkdir -p "${CLAUDE_CONFIG_DIR}"
+
+# Symlink settings and statusline
+backup_file "${CLAUDE_CONFIG_DIR}/settings.json"
+symlink_from_dotfiles "claude/settings.json" "${CLAUDE_CONFIG_DIR}/settings.json"
+symlink_from_dotfiles "claude/statusline-command.sh" "${CLAUDE_CONFIG_DIR}/statusline-command.sh"
+
+echo ""
+echo "Claude Code setup complete."
+echo "To install plugins, run: bash ~/.dotfiles/claude/plugins.txt"
+echo "To install skills.sh skills, run: bash ~/.dotfiles/claude/skills.txt"
