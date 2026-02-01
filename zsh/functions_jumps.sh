@@ -71,33 +71,24 @@ jump-list() {
         _jumps_no_shortcuts && return 1;
     fi
 
-    local shortcuts
-    local shortcut_link
-    local shortcut_length
-    local shortcut_basename
-    local max_shortcut_length=0
+    local -a pairs
+    local pair target shortcut name max_len=0
 
-    shortcuts=("${(@f)$(find $JUMPS_PATH -type l | sort)}")
+    pairs=("${(@f)$(stat -f '%Y|%N' $JUMPS_PATH/*(@N) 2>/dev/null | sort -t'|' -k1,1)}")
 
-    for shortcut in $shortcuts; do
-        shortcut_length=${#shortcut:t}
-        if [[ $shortcut_length -gt $max_shortcut_length ]]; then
-            max_shortcut_length=$shortcut_length
-        fi
+    for pair in $pairs; do
+        name=${pair#*|}; name=${name:t}
+        (( ${#name} > max_len )) && max_len=${#name}
     done
 
-    if [[ $max_shortcut_length -eq 0 ]]; then
+    if [[ $max_len -eq 0 ]]; then
         _jumps_no_shortcuts && return 1;
     fi
 
-    max_shortcut_length=$(($max_shortcut_length + 18)) # adding spaces for color codes
-
-    local delimiter="${FX[none]}-->"
-
-    for shortcut in $shortcuts; do
-        shortcut_basename="${FX[none]}${FG[14]}${shortcut:t}"
-        shortcut_link="${FX[none]}${FG[242]}$(readlink $shortcut)${FX[none]}"
-        echo "$(printf "  %-${max_shortcut_length}s %s  %s\n" $shortcut_basename $delimiter $shortcut_link)"
+    for pair in $pairs; do
+        target=${pair%%|*}
+        shortcut=${pair#*|}
+        printf "  ${FG[14]}%-${max_len}s${FX[none]}  -->  ${FG[242]}%s${FX[none]}\n" "${shortcut:t}" "$target"
     done
 }
 
