@@ -14,20 +14,13 @@ _bin_first() {
 # bundle() { _bin_first bundle $@ }
 
 _Rakefile_changed() {
-  if [ ! -f .rake_tasks ]; then return 0;
-  else
-    accurate=$(stat -f%m .rake_tasks)
-    changed=$(stat -f%m Rakefile)
-    return $(expr $accurate '>=' $changed)
-  fi
+  [[ ! -f .rake_tasks ]] || [[ Rakefile -nt .rake_tasks ]]
 }
 
 _rake () {
   if [ -f Rakefile ]; then
     if _Rakefile_changed; then
-      # "tail -n +1" fixes "Broken pipe @ io_write" error
-      # See: http://superuser.com/questions/554855/how-can-i-fix-a-broken-pipe-error
-      rake --tasks --quiet | tail -n +1 | cut -d " " -f 2 >! .rake_tasks
+      rake --tasks --quiet | awk '{print $2}' >! .rake_tasks
     fi
     compadd `cat .rake_tasks`
   fi

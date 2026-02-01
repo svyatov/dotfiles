@@ -15,15 +15,9 @@ done
 
 mkcd() { mkdir -p "$1" && cd "$1" }
 
-_directories_list() { find $1 -type d -maxdepth 1 -not -name '.' -not -name '..' -exec basename {} + }
+_directories_list() { print -l "$1"/*(/N:t) }
 
-u() {
-    if [[ -n $1 ]]; then
-        cd ../$1
-    else
-        cd ..
-    fi
-}
+u() { cd ../${1:+$1} }
 _u() { reply=("${(@f)$(_directories_list ..)}") }
 compctl -M 'm:{a-z}={A-Z}' -K _u u
 
@@ -51,11 +45,7 @@ proxysh() {
 
 # Shows most often used shell commands
 cmdtop() {
-    local list_limit=10 # show top 10 commands by default
-    if [[ -n $1 ]]; then
-        local list_limit=$1
-    fi
-    history 1 | awk '{print $2}' | awk 'BEGIN {FS="|"} {print $1}' | sort | uniq -c | sort -r | head -n $list_limit
+    history 1 | awk -F'|' '{print $1}' | awk '{print $2}' | sort | uniq -c | sort -rn | head -n ${1:-10}
 }
 
 volume() {

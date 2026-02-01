@@ -82,7 +82,7 @@ gtb() {
     local ticket_id=${match[1]}
 
     # Convert input string to a valid branch name
-    local sanitized_name=$(echo "$1" | tr -d '[:cntrl:]' | tr -s '[:space:]' '-' | tr -cd '[:alnum:]-' | tr '[:upper:]' '[:lower:]')
+    local sanitized_name=$(echo "$1" | tr '[:upper:]' '[:lower:]' | tr -cs '[:alnum:]' '-' | tr -s '-')
 
     # Construct new branch name
     local new_branch="${ticket_id}-${sanitized_name}"
