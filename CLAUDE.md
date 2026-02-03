@@ -76,8 +76,10 @@ To add new domain: create `aliases_newdomain.sh` or `functions_newdomain.sh` - i
 | `zsh/prompt_svyatov_setup` | `~/.zprezto/modules/prompt/functions/prompt_svyatov_setup` |
 | `git/.gitconfig` | `~/.gitconfig` |
 | `ruby/.gemrc`, `.irbrc`, `.railsrc` | `~/.*` |
+| `zsh/.zlogin` | `~/.zlogin` |
 | `nvim/init.vim` | `~/.config/nvim/init.vim` |
 | `claude/settings.json` | `~/.claude/settings.json` |
+| `claude/statusline-command.sh` | `~/.claude/statusline-command.sh` |
 
 ### Key Utilities
 
@@ -108,6 +110,9 @@ safe_alias g 'git' 'override'     # Forces creation
 | `git/.gitconfig` | 90+ git aliases, 1Password SSH signing, diff tools |
 | `nvim/init.vim` | Neovim config with Claude Code integration |
 | `claude/settings.json` | Claude Code permissions and plugins |
+| `claude/statusline-command.sh` | Custom status line showing git, Ruby, Node versions |
+| `claude/install-plugins.sh` | Install Claude Code plugins from settings |
+| `claude/install-skills.sh` | Install Claude Code skills from superpowers repo |
 
 ## Conventions
 
