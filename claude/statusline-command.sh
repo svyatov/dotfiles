@@ -1,5 +1,45 @@
 #!/bin/bash
 
+# =============================================================================
+# Color Palette - ANSI 256 escape sequences
+# =============================================================================
+C_RESET='\033[0m'
+
+# Primary (bright)
+C_SAGE='\033[38;5;71m'           # muted sage green - git branch, clean status, added files
+C_GOLD='\033[38;5;179m'          # muted gold - time, unmerged, ahead/behind
+C_CORAL='\033[38;5;167m'         # muted coral-red - dirty status, deleted files
+
+# Teal variants
+C_TEAL='\033[38;5;66m'           # muted teal - model name
+C_TEAL_SOFT='\033[38;5;73m'      # soft teal - path
+C_TEAL_MID='\033[38;5;109m'      # mid teal - modified files, stashed
+
+# Dim variants
+C_SAGE_DIM='\033[38;5;65m'       # dim sage - token count (safe zone)
+C_GOLD_DIM='\033[38;5;136m'      # dim gold - token count (caution zone)
+C_CORAL_DIM='\033[38;5;131m'     # dim coral - token count (danger zone)
+
+# Olive tones
+C_OLIVE='\033[38;5;101m'         # dim olive/khaki - version (up-to-date)
+C_OLIVE_DIM='\033[38;5;59m'      # dim olive-grey - context size
+C_TAN='\033[38;5;180m'           # tan/gold - version (outdated)
+
+# Progress bar empty states
+C_GREEN_EMPTY='\033[38;5;22m'    # dim green
+C_YELLOW_EMPTY='\033[38;5;94m'   # dim yellow/brown
+C_RED_EMPTY='\033[38;5;52m'      # dim red
+
+# UI chrome
+C_SEPARATOR='\033[38;5;237m'     # dark grey - separators
+C_MUTED='\033[38;5;243m'         # muted grey - memory indicator
+
+# Bold colors
+C_BOLD_MAGENTA='\033[1;35m'      # git renamed
+C_BOLD_WHITE='\033[1;37m'        # git untracked
+
+# =============================================================================
+
 # Read JSON input from stdin
 input=$(cat)
 
@@ -46,11 +86,9 @@ get_version_display() {
 
     # Compare versions and output with appropriate color (no "v" prefix)
     if [ "$current_version" = "$latest_version" ]; then
-        # Up-to-date: muted grey
-        printf '\033[38;5;243m%s\033[0m' "$current_version"
+        printf "${C_OLIVE}%s${C_RESET}" "$current_version"
     else
-        # Outdated: warmer shade (tan/gold)
-        printf '\033[38;5;180m%s\033[0m' "$current_version"
+        printf "${C_TAN}%s${C_RESET}" "$current_version"
     fi
 }
 
@@ -92,15 +130,13 @@ if [ "$usage" != "null" ]; then
     # Calculate current step based on percentage (0 to total_steps)
     current_step=$((pct * total_steps / 100))
 
-    # Zone colors (ANSI 256)
-    # Filled colors (bright)
-    green_filled=71   # muted sage green
-    yellow_filled=179 # muted gold
-    red_filled=167    # muted coral-red
-    # Empty colors (dimmed zone colors - heat map always visible)
-    green_empty=22    # dim green
-    yellow_empty=94   # dim yellow/brown
-    red_empty=52      # dim red
+    # Zone colors - use palette variables
+    green_filled=$C_SAGE
+    yellow_filled=$C_GOLD
+    red_filled=$C_CORAL
+    green_empty=$C_GREEN_EMPTY
+    yellow_empty=$C_YELLOW_EMPTY
+    red_empty=$C_RED_EMPTY
 
     # Build braille progress bar with zone-based coloring
     bar=""
@@ -126,33 +162,30 @@ if [ "$usage" != "null" ]; then
 
         if [ "$current_step" -ge "$cell_end" ]; then
             # Cell is fully filled
-            bar="${bar}\033[38;5;${filled_color}m${braille_gradient[6]}\033[0m"
+            bar="${bar}${filled_color}${braille_gradient[6]}${C_RESET}"
         elif [ "$current_step" -le "$cell_start" ]; then
             # Cell is empty - use dimmed zone color (heat map visible)
-            bar="${bar}\033[38;5;${empty_color}m${braille_gradient[0]}\033[0m"
+            bar="${bar}${empty_color}${braille_gradient[0]}${C_RESET}"
         else
             # Cell is partially filled - calculate gradient level (0-6)
             steps_into_cell=$((current_step - cell_start))
-            bar="${bar}\033[38;5;${filled_color}m${braille_gradient[$steps_into_cell]}\033[0m"
+            bar="${bar}${filled_color}${braille_gradient[$steps_into_cell]}${C_RESET}"
         fi
     done
 
-    # Token count - color based on zone (dimmer than bar), size dimmed
-    # Determine token color based on percentage zone
+    # Token count color based on percentage zone
     if [ "$pct" -lt 50 ]; then
-        token_color=65   # dim sage green
+        token_color=$C_SAGE_DIM
     elif [ "$pct" -lt 75 ]; then
-        token_color=136  # dim gold
+        token_color=$C_GOLD_DIM
     else
-        token_color=131  # dim coral
+        token_color=$C_CORAL_DIM
     fi
-    context_info="${bar} \033[38;5;${token_color}m${current_display}\033[0m\033[38;5;239m/${size_display}\033[0m"
+    context_info="${bar} ${token_color}${current_display}${C_RESET}${C_OLIVE_DIM}/${size_display}${C_RESET}"
 else
     # No usage data yet - show empty braille bar (8 cells) with zone colors
-    # Green zone (4 cells), Yellow zone (2 cells), Red zone (2 cells)
-    bar="\033[38;5;22m⣀⣀⣀⣀\033[0m\033[38;5;94m⣀⣀\033[0m\033[38;5;52m⣀⣀\033[0m"
-    # 0k in dim green (safe zone), size dimmed
-    context_info="${bar} \033[38;5;65m  0k\033[0m\033[38;5;239m/${size_display}\033[0m"
+    bar="${C_GREEN_EMPTY}⣀⣀⣀⣀${C_RESET}${C_YELLOW_EMPTY}⣀⣀${C_RESET}${C_RED_EMPTY}⣀⣀${C_RESET}"
+    context_info="${bar} ${C_SAGE_DIM}  0k${C_RESET}${C_OLIVE_DIM}/${size_display}${C_RESET}"
 fi
 
 # Get current directory and apply zsh-style shortening
@@ -215,76 +248,74 @@ if [ -d "$workspace_dir/.git" ] || git -C "$workspace_dir" rev-parse --git-dir >
     branch=$(git -C "$workspace_dir" --no-optional-locks branch --show-current 2>/dev/null)
 
     if [ -n "$branch" ]; then
-        git_status=" \033[38;5;71m${branch}\033[0m"
+        git_status=" ${C_SAGE}${branch}${C_RESET}"
 
         # Check if repo is clean or dirty
         if ! git -C "$workspace_dir" --no-optional-locks diff --quiet 2>/dev/null || \
            ! git -C "$workspace_dir" --no-optional-locks diff --cached --quiet 2>/dev/null || \
            [ -n "$(git -C "$workspace_dir" --no-optional-locks ls-files --others --exclude-standard 2>/dev/null)" ]; then
-            # Dirty - muted coral-red ✗
-            git_status="${git_status} \033[38;5;167m✗\033[0m"
+            git_status="${git_status} ${C_CORAL}✗${C_RESET}"
         else
-            # Clean - muted sage ✓
-            git_status="${git_status} \033[38;5;71m✓\033[0m"
+            git_status="${git_status} ${C_SAGE}✓${C_RESET}"
         fi
 
         # Get detailed status indicators
         indicators=""
 
-        # Added files (staged new files) - muted sage green ✚
+        # Added files (staged new files)
         added=$(git -C "$workspace_dir" --no-optional-locks diff --cached --numstat 2>/dev/null | grep -c "^0.*0" || true)
         if [ "$added" -gt 0 ]; then
-            indicators="${indicators} \033[38;5;71m✚\033[0m"
+            indicators="${indicators} ${C_SAGE}✚${C_RESET}"
         fi
 
-        # Deleted files - muted coral-red ✖
+        # Deleted files
         deleted=$(git -C "$workspace_dir" --no-optional-locks diff --name-status 2>/dev/null | grep -c "^D" || true)
         deleted_cached=$(git -C "$workspace_dir" --no-optional-locks diff --cached --name-status 2>/dev/null | grep -c "^D" || true)
         if [ "$((deleted + deleted_cached))" -gt 0 ]; then
-            indicators="${indicators} \033[38;5;167m✖\033[0m"
+            indicators="${indicators} ${C_CORAL}✖${C_RESET}"
         fi
 
-        # Modified files - soft teal ✱
+        # Modified files
         modified=$(git -C "$workspace_dir" --no-optional-locks diff --name-only 2>/dev/null | wc -l | tr -d ' ')
         if [ "$modified" -gt 0 ]; then
-            indicators="${indicators} \033[38;5;109m✱\033[0m"
+            indicators="${indicators} ${C_TEAL_MID}✱${C_RESET}"
         fi
 
-        # Renamed files - magenta ➜
+        # Renamed files
         renamed=$(git -C "$workspace_dir" --no-optional-locks diff --cached --name-status 2>/dev/null | grep -c "^R" || true)
         if [ "$renamed" -gt 0 ]; then
-            indicators="${indicators} \033[1;35m➜\033[0m"
+            indicators="${indicators} ${C_BOLD_MAGENTA}➜${C_RESET}"
         fi
 
-        # Untracked files - white ◼
+        # Untracked files
         untracked=$(git -C "$workspace_dir" --no-optional-locks ls-files --others --exclude-standard 2>/dev/null | wc -l | tr -d ' ')
         if [ "$untracked" -gt 0 ]; then
-            indicators="${indicators} \033[1;37m◼\033[0m"
+            indicators="${indicators} ${C_BOLD_WHITE}◼${C_RESET}"
         fi
 
-        # Stashed changes - soft teal ✭
+        # Stashed changes
         stashed=$(git -C "$workspace_dir" --no-optional-locks stash list 2>/dev/null | wc -l | tr -d ' ')
         if [ "$stashed" -gt 0 ]; then
-            indicators="${indicators} \033[38;5;109m✭\033[0m"
+            indicators="${indicators} ${C_TEAL_MID}✭${C_RESET}"
         fi
 
-        # Unmerged files - muted gold ═
+        # Unmerged files
         unmerged=$(git -C "$workspace_dir" --no-optional-locks diff --name-only --diff-filter=U 2>/dev/null | wc -l | tr -d ' ')
         if [ "$unmerged" -gt 0 ]; then
-            indicators="${indicators} \033[38;5;179m═\033[0m"
+            indicators="${indicators} ${C_GOLD}═${C_RESET}"
         fi
 
-        # Ahead/behind - muted gold ⬆⬇
+        # Ahead/behind
         upstream=$(git -C "$workspace_dir" --no-optional-locks rev-parse --abbrev-ref @{upstream} 2>/dev/null)
         if [ -n "$upstream" ]; then
             ahead=$(git -C "$workspace_dir" --no-optional-locks rev-list --count @{upstream}..HEAD 2>/dev/null || echo "0")
             behind=$(git -C "$workspace_dir" --no-optional-locks rev-list --count HEAD..@{upstream} 2>/dev/null || echo "0")
 
             if [ "$ahead" -gt 0 ]; then
-                indicators="${indicators} \033[38;5;179m⬆\033[0m"
+                indicators="${indicators} ${C_GOLD}⬆${C_RESET}"
             fi
             if [ "$behind" -gt 0 ]; then
-                indicators="${indicators} \033[38;5;179m⬇\033[0m"
+                indicators="${indicators} ${C_GOLD}⬇${C_RESET}"
             fi
         fi
 
@@ -295,20 +326,20 @@ fi
 # Get current time in 24h format
 current_time=$(date '+%H:%M')
 
-# Memory indicator - show 󰈙 if CLAUDE.md exists in workspace (muted grey)
+# Memory indicator - show 󰈙 if CLAUDE.md exists in workspace
 memory_indicator=""
 if [ -f "$workspace_dir/CLAUDE.md" ]; then
-    memory_indicator=" \033[38;5;243m󰈙\033[0m"
+    memory_indicator=" ${C_MUTED}󰈙${C_RESET}"
 fi
 
-# Build version segment (only if version is available) - appears after tokens
+# Build version segment (only if version is available)
 version_segment=""
 if [ -n "$version_display" ]; then
-    version_segment=" \033[38;5;237m│\033[0m ${version_display}"
+    version_segment=" ${C_SEPARATOR}│${C_RESET} ${version_display}"
 fi
 
-# Build status line: clock (muted gold), separator, model (muted teal), memory, separator, progress bar, tokens, version, separator, path (soft teal), git branch
-output="\033[38;5;179m${current_time}\033[0m \033[38;5;237m│\033[0m \033[38;5;66m${model_name}\033[0m${memory_indicator} \033[38;5;237m│\033[0m ${context_info}${version_segment} \033[38;5;237m│\033[0m \033[38;5;73m${short_path}\033[0m${git_info}"
+# Build status line
+output="${C_GOLD}${current_time}${C_RESET} ${C_SEPARATOR}│${C_RESET} ${C_TEAL}${model_name}${C_RESET}${memory_indicator} ${C_SEPARATOR}│${C_RESET} ${context_info}${version_segment} ${C_SEPARATOR}│${C_RESET} ${C_TEAL_SOFT}${short_path}${C_RESET}${git_info}"
 
 # Print the status line
 printf "%b" "$output"
