@@ -9,13 +9,11 @@ echo "Installing Claude Code plugins..."
 # Official plugins (from anthropics/claude-plugins-official)
 claude plugin install frontend-design
 claude plugin install feature-dev
-claude plugin install code-review
 claude plugin install commit-commands
 claude plugin install typescript-lsp
 claude plugin install pyright-lsp
 claude plugin install gopls-lsp
 claude plugin install security-guidance
-claude plugin install code-simplifier
 claude plugin install pr-review-toolkit
 claude plugin install superpowers
 
