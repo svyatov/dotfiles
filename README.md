@@ -21,17 +21,23 @@ A curated collection of shell configurations, aliases, and functions optimized f
 
 ```
 ~/.dotfiles/
-├── zsh/              # Shell config, aliases, functions
-│   ├── .zshrc        # Main Zsh configuration
-│   ├── .zpreztorc    # Prezto framework settings
-│   ├── aliases.sh    # Common aliases
-│   ├── aliases_*.sh  # Domain-specific aliases (git, ruby, docker, etc.)
-│   └── functions.sh  # Custom shell functions
-├── git/              # Git config and global gitignore
-├── ruby/             # Ruby, Rails, IRB configuration
-├── nvim/             # Neovim configuration with cheatsheet
-├── bash/             # Legacy/server bash config
-└── archive/          # Deprecated configs (vim, tmux)
+├── zsh/                        # Shell config, aliases, functions
+│   ├── .zshrc                  # Main Zsh configuration
+│   ├── .zpreztorc              # Prezto framework settings
+│   ├── aliases.sh              # Common aliases
+│   ├── aliases_*.sh            # Domain-specific aliases (git, ruby, docker, etc.)
+│   ├── aliases_local.sh.example  # Template for local aliases
+│   ├── functions.sh            # Custom shell functions
+│   └── functions_local.sh.example # Template for local functions
+├── git/                        # Git config and global gitignore
+├── ruby/                       # Ruby, Rails, IRB configuration
+├── nvim/                       # Neovim configuration with cheatsheet
+├── claude/                     # Claude Code settings and scripts
+├── bash/                       # Legacy/server bash config
+├── Brewfile                    # Homebrew dependencies
+├── setup.sh                    # Installation script
+├── uninstall.sh                # Uninstallation script
+└── archive/                    # Deprecated configs (vim, tmux)
 ```
 
 ## 🛠 Prerequisites
@@ -42,6 +48,14 @@ A curated collection of shell configurations, aliases, and functions optimized f
 - Zsh (default on modern macOS)
 
 **Recommended Tools:**
+
+Install all recommended tools at once with the included Brewfile:
+
+```bash
+brew bundle --file=~/.dotfiles/Brewfile
+```
+
+Or install individually:
 
 | Tool | Purpose | Install |
 |------|---------|---------|
@@ -55,15 +69,31 @@ A curated collection of shell configurations, aliases, and functions optimized f
 
 ```bash
 git clone git://github.com/svyatov/dotfiles.git ~/.dotfiles
-chmod +x ~/.dotfiles/setup.sh
+brew bundle --file=~/.dotfiles/Brewfile  # Install dependencies
 ~/.dotfiles/setup.sh
 ```
+
+**Setup script options:**
+
+| Option | Description |
+|--------|-------------|
+| `--help` | Show usage and list of symlinks |
+| `--dry-run` | Preview changes without modifying anything |
+| `--confirm` | Ask before creating each symlink |
 
 **What the setup script does:**
 - Backs up existing configs (adds `.orig` extension)
 - Creates symlinks from home directory to dotfiles
 - Clones the [Prezto](https://github.com/sorin-ionescu/prezto) framework
 - Creates `~/.secrets` for private environment variables
+- Verifies all symlinks were created correctly
+
+**To uninstall:**
+
+```bash
+~/.dotfiles/uninstall.sh            # Remove symlinks, restore backups
+~/.dotfiles/uninstall.sh --dry-run  # Preview what would be removed
+```
 
 ## 📂 Key Files Reference
 
@@ -77,6 +107,15 @@ chmod +x ~/.dotfiles/setup.sh
 | `ruby/.irbrc` | `~/.irbrc` | IRB configuration |
 | `ruby/.railsrc` | `~/.railsrc` | Rails generator defaults |
 | `nvim/init.vim` | `~/.config/nvim/init.vim` | Neovim configuration |
+| `claude/settings.json` | `~/.claude/settings.json` | Claude Code settings |
+
+**Tooling scripts (not symlinked):**
+
+| File | Purpose |
+|------|---------|
+| `setup.sh` | Install dotfiles (with `--help`, `--dry-run`, `--confirm`) |
+| `uninstall.sh` | Remove dotfiles (with `--help`, `--dry-run`) |
+| `Brewfile` | Homebrew dependencies (`brew bundle`) |
 
 ## ⚡ Jump Shortcuts
 
@@ -218,7 +257,25 @@ export GITHUB_TOKEN="ghp_..."
 export DATABASE_URL="postgres://..."
 ```
 
+**Important:** The shell warns if `~/.secrets` has insecure permissions. Fix with:
+
+```bash
+chmod 600 ~/.secrets
+```
+
 This file is not tracked by git.
+
+## 🏠 Local Customizations
+
+For machine-specific configuration that shouldn't be committed, use these files (all gitignored and auto-sourced):
+
+| File | Purpose |
+|------|---------|
+| `~/.zshrc.local` | Machine-specific shell config |
+| `zsh/aliases_local.sh` | Local aliases |
+| `zsh/functions_local.sh` | Local functions |
+
+Example templates are provided: copy `aliases_local.sh.example` or `functions_local.sh.example` and customize.
 
 ## ⌨️ Neovim Quick Reference
 
