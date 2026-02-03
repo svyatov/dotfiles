@@ -28,4 +28,9 @@ export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/16/bin"
 export PATH="$PATH:/Users/leonid/Library/Application Support/JetBrains/Toolbox/scripts"
 
 # Source local secrets
-[ -f "$HOME/.secrets" ] && source "$HOME/.secrets"
+if [[ -f "$HOME/.secrets" ]]; then
+  if [[ "$(stat -f '%Lp' "$HOME/.secrets" 2>/dev/null)" != "600" ]]; then
+    echo "WARNING: ~/.secrets has insecure permissions. Run: chmod 600 ~/.secrets" >&2
+  fi
+  source "$HOME/.secrets"
+fi

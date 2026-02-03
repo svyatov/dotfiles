@@ -17,7 +17,11 @@ set signcolumn=yes          " Always show sign column
 set scrolloff=8             " Keep 8 lines above/below cursor
 set sidescrolloff=8         " Keep 8 columns left/right of cursor
 set termguicolors           " Enable 24-bit RGB colors
-colorscheme wildcharm      " Color scheme
+try
+  colorscheme wildcharm    " Color scheme
+catch /^Vim\%((\a\+)\)\=:E185/
+  colorscheme default
+endtry
 
 " =============================================================================
 " INDENTATION

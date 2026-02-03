@@ -1,0 +1,45 @@
+# Local functions - machine-specific, not tracked in git
+# Copy this file to functions_local.sh and customize
+#
+# This file is auto-sourced by functions.sh via the glob pattern.
+#
+# Example: Notion ticket integration
+# gtcn() {
+#   if [ -z "$1" ]; then echo "Usage: gtcn <notion_id>"; return 1; fi
+#   gt create -m "$(bin/notion_commit $1 -g)" || \
+#     gt create -m "$(bin/notion_commit $1 -g)-$(date +"%Y-%m-%d-%H:%M:%S")"
+# }
+#
+# gtt() {
+#   local branch=$(git rev-parse --abbrev-ref HEAD)
+#   if [[ ${branch:l} =~ halo-([0-9]{4,}) ]]; then
+#     local msg=$(bin/notion_commit "${match[1]}")
+#     [[ -n "$msg" ]] && echo -n "$msg" | pbcopy && echo "Copied: $msg"
+#   else
+#     echo "No ticket ID in branch name."; return 1
+#   fi
+# }
+#
+# gtb() {
+#   if [ -z "$1" ]; then echo "Usage: gtb <branch_name>"; return 1; fi
+#   local branch=$(git rev-parse --abbrev-ref HEAD)
+#   if [[ ${branch:l} =~ (halo-[0-9]{4,}) ]]; then
+#     local ticket_id=${match[1]}
+#     local sanitized_name=$(echo "$1" | tr '[:upper:]' '[:lower:]' | tr -cs '[:alnum:]' '-' | tr -s '-')
+#     gt create "${ticket_id}-${sanitized_name}"
+#   else
+#     echo "No matching ticket ID found in branch name."; return 1
+#   fi
+# }
+#
+# gtbn() {
+#   local branch=$(git rev-parse --abbrev-ref HEAD)
+#   if [[ "$branch" =~ ^(.*)-([0-9]+)$ ]]; then
+#     local base="${match[1]}"
+#     local new_num=$((${match[2]} + 1))
+#   else
+#     local base="$branch"
+#     local new_num=2
+#   fi
+#   gt create "${base}-${new_num}"
+# }

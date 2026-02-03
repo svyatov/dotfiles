@@ -10,16 +10,27 @@ Personal dotfiles for macOS web development (Ruby/Rails, Node.js, Docker). Uses 
 
 ```bash
 git clone git://github.com/svyatov/dotfiles.git ~/.dotfiles
-chmod +x ~/.dotfiles/setup.sh
+brew bundle --file=~/.dotfiles/Brewfile  # Install dependencies
 ~/.dotfiles/setup.sh
 ```
 
 The setup script creates symlinks from `~/.dotfiles/*` to home directory locations, backs up existing files with `.orig` extension, and clones Prezto if needed.
 
+Setup script options:
+- `--help` - Show usage and list of symlinks
+- `--dry-run` - Preview changes without modifying anything
+- `--confirm` - Ask before creating each symlink
+
 After setup, install Claude plugins and skills:
 ```bash
 ~/.dotfiles/claude/install-plugins.sh
 ~/.dotfiles/claude/install-skills.sh
+```
+
+To uninstall (removes symlinks, restores backups):
+```bash
+~/.dotfiles/uninstall.sh          # Run uninstall
+~/.dotfiles/uninstall.sh --dry-run # Preview what would be removed
 ```
 
 ## Common Commands
@@ -37,15 +48,17 @@ After setup, install Claude plugins and skills:
 ### Loading Order
 
 ```
-.zshenv (environment: PATH, Homebrew, asdf, Postgres)
+.zshenv (environment: PATH, Homebrew, asdf, Postgres, secrets)
     ↓
 .zshrc (interactive)
     ├── Prezto framework
     ├── set_terminal_titles.sh
     ├── unalias_prezto.sh
-    ├── functions.sh → sources all functions_*.sh
-    ├── aliases.sh → sources all aliases_*.sh
-    └── fzf/fd configuration
+    ├── functions.sh → sources all functions_*.sh (incl. functions_local.sh)
+    ├── aliases.sh → sources all aliases_*.sh (incl. aliases_local.sh)
+    ├── fzf/fd configuration (guarded, warns if missing)
+    ├── asdf configuration (guarded, warns if missing)
+    └── ~/.zshrc.local (machine-specific, optional)
 ```
 
 ### Modular File Pattern
@@ -65,6 +78,19 @@ done
 ```
 
 To add new domain: create `aliases_newdomain.sh` or `functions_newdomain.sh` - it will be auto-sourced.
+
+### Local Customizations
+
+Machine-specific configuration that shouldn't be committed:
+
+| File | Purpose |
+|------|---------|
+| `~/.zshrc.local` | Machine-specific shell config (sourced at end of .zshrc) |
+| `zsh/aliases_local.sh` | Local aliases (auto-sourced, gitignored) |
+| `zsh/functions_local.sh` | Local functions (auto-sourced, gitignored) |
+| `~/.secrets` | Environment variables with secrets (permission-checked) |
+
+Example templates are provided: `aliases_local.sh.example` and `functions_local.sh.example`.
 
 ### Symlink Structure
 
@@ -104,9 +130,13 @@ safe_alias g 'git' 'override'     # Forces creation
 
 | File | Purpose |
 |------|---------|
-| `setup.sh` | Bootstrap script, creates all symlinks |
+| `setup.sh` | Bootstrap script with --help, --dry-run, --confirm options |
+| `uninstall.sh` | Remove symlinks and restore backups |
+| `Brewfile` | Homebrew dependencies (install with `brew bundle`) |
 | `zsh/.zpreztorc` | Prezto modules and theme configuration |
 | `zsh/prompt_svyatov_setup` | Custom prompt with Ruby/Node/Python versions |
+| `zsh/aliases_local.sh.example` | Template for machine-specific aliases |
+| `zsh/functions_local.sh.example` | Template for machine-specific functions |
 | `git/.gitconfig` | 90+ git aliases, 1Password SSH signing, diff tools |
 | `nvim/init.vim` | Neovim config with Claude Code integration |
 | `claude/settings.json` | Claude Code permissions and plugins |
@@ -119,5 +149,6 @@ safe_alias g 'git' 'override'     # Forces creation
 - Use `safe_alias()` instead of raw `alias` to avoid overwriting commands
 - Keep domain-specific aliases in separate `aliases_*.sh` files
 - Keep domain-specific functions in separate `functions_*.sh` files
-- Secrets go in `~/.secrets` (not tracked, auto-sourced by shell)
+- Keep machine/project-specific config in local files (`aliases_local.sh`, `functions_local.sh`, `~/.zshrc.local`)
+- Secrets go in `~/.secrets` (not tracked, auto-sourced, must have 600 permissions)
 - The `archive/` directory contains deprecated configs (vim, tmux) - do not use

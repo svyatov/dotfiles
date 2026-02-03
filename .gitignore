@@ -1,2 +1,6 @@
 .DS_Store
 zsh/projects
+
+# Local customization files (machine-specific)
+zsh/aliases_local.sh
+zsh/functions_local.sh

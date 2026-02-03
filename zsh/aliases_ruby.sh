@@ -42,9 +42,6 @@ safe_alias rrg 'r routes | fzf -e'
 safe_alias rrp 'r routes | sed -e "1d" -e "s,^[^/]*,,g" | awk ''{print $1}'' | sort | uniq'
 safe_alias bea 'bundle exec annotate'
 safe_alias bes 'bundle exec sidekiq'
-safe_alias hmm 'r db:migrate && RAILS_ENV=test r db:migrate && DB_NAME=halocures-sync r db:migrate'
-safe_alias hmr 'r db:rollback:primary && RAILS_ENV=test r db:rollback:primary && DB_NAME=halocures-sync r db:rollback:primary'
-safe_alias mmmr 'r db:migrate:roboscout && bin/tapioca_generate && be srb tc'
 
 # Hanami
 safe_alias hh 'bundle exec hanami'

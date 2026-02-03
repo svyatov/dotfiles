@@ -1,0 +1,9 @@
+# Local aliases - machine-specific, not tracked in git
+# Copy this file to aliases_local.sh and customize
+#
+# This file is auto-sourced by aliases.sh via the glob pattern.
+#
+# Example project-specific aliases:
+# safe_alias hmm 'r db:migrate && RAILS_ENV=test r db:migrate && DB_NAME=halocures-sync r db:migrate'
+# safe_alias hmr 'r db:rollback:primary && RAILS_ENV=test r db:rollback:primary && DB_NAME=halocures-sync r db:rollback:primary'
+# safe_alias mmmr 'r db:migrate:roboscout && bin/tapioca_generate && be srb tc'

@@ -25,32 +25,171 @@ NEOVIM_CONFIG_FILE="${NEOVIM_CONFIG_DIR}/init.vim"
 # VIM_VUNDLE_DIR="${HOME}/.vim/bundle/Vundle.vim"
 SECRETS_FILE="${HOME}/.secrets"
 
+### Options
+###########
+DRY_RUN=false
+CONFIRM=false
+HELP=false
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --dry-run)
+            DRY_RUN=true
+            shift
+            ;;
+        --confirm)
+            CONFIRM=true
+            shift
+            ;;
+        --help|-h)
+            HELP=true
+            shift
+            ;;
+        *)
+            echo "Unknown option: $1"
+            exit 1
+            ;;
+    esac
+done
+
+if [[ "$HELP" == true ]]; then
+    cat << EOF
+Usage: setup.sh [OPTIONS]
+
+Sets up dotfiles by creating symlinks from this repo to home directory locations.
+Existing files are backed up with .orig extension.
+
+Options:
+    --dry-run   Show what would be done without making changes
+    --confirm   Ask for confirmation before each symlink
+    --help, -h  Show this help message
+
+Files that will be symlinked:
+    ~/.gitconfig     <- git/.gitconfig
+    ~/.zshrc         <- zsh/.zshrc
+    ~/.zshenv        <- zsh/.zshenv
+    ~/.zlogin        <- zsh/.zlogin
+    ~/.zpreztorc     <- zsh/.zpreztorc
+    ~/.gemrc         <- ruby/.gemrc
+    ~/.irbrc         <- ruby/.irbrc
+    ~/.railsrc       <- ruby/.railsrc
+    ~/.config/nvim/init.vim <- nvim/init.vim
+    ~/.claude/settings.json <- claude/settings.json
+    ~/.claude/statusline-command.sh <- claude/statusline-command.sh
+EOF
+    exit 0
+fi
+
+### Pre-flight checks
+#####################
+echo "Running pre-flight checks..."
+
+if ! command -v git &> /dev/null; then
+    echo "ERROR: git is not installed"
+    exit 1
+fi
+
+if ! command -v zsh &> /dev/null; then
+    echo "WARNING: zsh is not installed (shell configs will still be symlinked)"
+fi
+
+if [[ ! -d "$DOTFILES_DIR" ]]; then
+    echo "ERROR: Dotfiles directory not found: $DOTFILES_DIR"
+    exit 1
+fi
+
+echo "Pre-flight checks passed."
+echo ""
+
 ### Helpers
 ############
 function backup_file() {
-    if [[ -f $1 && ! -L $1 ]]; then
-        if /bin/mv "${1}" "${1}.orig"; then
-            echo "File ${1} is backed up successfully!"
+    local file="$1"
+    local backup="${file}.orig"
+
+    if [[ -f "$file" && ! -L "$file" ]]; then
+        if [[ -f "$backup" ]]; then
+            if [[ "$DRY_RUN" == true ]]; then
+                echo "[DRY RUN] WARNING: Backup already exists: $backup (would be overwritten)"
+            else
+                echo "WARNING: Backup already exists: $backup (will be overwritten)"
+            fi
+        fi
+        if [[ "$DRY_RUN" == true ]]; then
+            echo "[DRY RUN] Would backup: $file -> $backup"
+        else
+            if /bin/mv "${file}" "${backup}"; then
+                echo "Backed up: $file -> $backup"
+            fi
         fi
     fi
 }
 
 function symlink_from_dotfiles() {
-    # s - symlink
-    # h - do not follow symlink if exists
-    # f - overwrite symlink if exists
-    /bin/ln -shf "${DOTFILES_DIR}/${1}" "${2}"
+    local source="${DOTFILES_DIR}/${1}"
+    local target="${2}"
+
+    if [[ "$CONFIRM" == true && "$DRY_RUN" != true ]]; then
+        read -p "Create symlink $target -> $source? [y/N] " -n 1 -r
+        echo
+        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+            echo "Skipped: $target"
+            return
+        fi
+    fi
+
+    if [[ "$DRY_RUN" == true ]]; then
+        echo "[DRY RUN] Would symlink: $target -> $source"
+    else
+        # s - symlink
+        # h - do not follow symlink if exists
+        # f - overwrite symlink if exists
+        /bin/ln -shf "$source" "$target"
+        echo "Symlinked: $target -> $source"
+    fi
 }
+
+function verify_symlink() {
+    local target="$1"
+    local expected_source="$2"
+
+    if [[ -L "$target" ]]; then
+        local actual_source
+        actual_source=$(readlink "$target")
+        if [[ "$actual_source" == "$expected_source" ]]; then
+            echo "  OK: $target"
+            return 0
+        else
+            echo "  MISMATCH: $target points to $actual_source (expected $expected_source)"
+            return 1
+        fi
+    else
+        echo "  MISSING: $target is not a symlink"
+        return 1
+    fi
+}
+
+if [[ "$DRY_RUN" == true ]]; then
+    echo "=== DRY RUN MODE ==="
+    echo ""
+fi
 
 ### Setting up git
 ###################
+echo "Setting up git..."
 backup_file "${GIT_CONFIG_FILE}"
 symlink_from_dotfiles "git/.gitconfig" "${GIT_CONFIG_FILE}"
 
 ### Setting up zsh
 ###################
+echo ""
+echo "Setting up zsh..."
 if [[ ! -d ${ZPREZTO_DIR} ]]; then
-    /usr/bin/env git clone --recursive "https://github.com/sorin-ionescu/prezto.git" "${ZPREZTO_DIR}"
+    if [[ "$DRY_RUN" == true ]]; then
+        echo "[DRY RUN] Would clone Prezto to ${ZPREZTO_DIR}"
+    else
+        /usr/bin/env git clone --recursive "https://github.com/sorin-ionescu/prezto.git" "${ZPREZTO_DIR}"
+    fi
 fi
 backup_file "${ZSH_RC_FILE}"
 symlink_from_dotfiles "zsh/.zshrc" "${ZSH_RC_FILE}"
@@ -65,6 +204,8 @@ backup_file "${ZSH_PROFILE_FILE}" # just "remove" .zprofile because it's useless
 
 ### Setting up ruby: rails, irb, gem
 #####################################
+echo ""
+echo "Setting up ruby..."
 backup_file "${GEM_CONFIG_FILE}"
 symlink_from_dotfiles "ruby/.gemrc" "${GEM_CONFIG_FILE}"
 backup_file "${IRB_CONFIG_FILE}"
@@ -82,7 +223,11 @@ symlink_from_dotfiles "ruby/.railsrc" "${RAILS_CONFIG_FILE}"
 
 ### Setting up neovim
 #################
-mkdir -p "${NEOVIM_CONFIG_DIR}"
+echo ""
+echo "Setting up neovim..."
+if [[ "$DRY_RUN" != true ]]; then
+    mkdir -p "${NEOVIM_CONFIG_DIR}"
+fi
 backup_file "${NEOVIM_CONFIG_FILE}"
 symlink_from_dotfiles "nvim/init.vim" "${NEOVIM_CONFIG_FILE}"
 
@@ -90,19 +235,55 @@ symlink_from_dotfiles "nvim/init.vim" "${NEOVIM_CONFIG_FILE}"
 ######################
 # backup_file "${TMUX_CONFIG_FILE}"
 # symlink_from_dotfiles "other/.tmux.conf" "${TMUX_CONFIG_FILE}"
-touch "${SECRETS_FILE}"
+if [[ "$DRY_RUN" != true ]]; then
+    touch "${SECRETS_FILE}"
+fi
 
 ### Setting up Claude Code
 ##########################
+echo ""
+echo "Setting up Claude Code..."
 CLAUDE_CONFIG_DIR="${HOME}/.claude"
-mkdir -p "${CLAUDE_CONFIG_DIR}"
+if [[ "$DRY_RUN" != true ]]; then
+    mkdir -p "${CLAUDE_CONFIG_DIR}"
+fi
 
 # Symlink settings and statusline
 backup_file "${CLAUDE_CONFIG_DIR}/settings.json"
 symlink_from_dotfiles "claude/settings.json" "${CLAUDE_CONFIG_DIR}/settings.json"
 symlink_from_dotfiles "claude/statusline-command.sh" "${CLAUDE_CONFIG_DIR}/statusline-command.sh"
 
+### Verification
+################
+if [[ "$DRY_RUN" != true ]]; then
+    echo ""
+    echo "Verifying symlinks..."
+    VERIFY_FAILED=0
+
+    verify_symlink "${GIT_CONFIG_FILE}" "${DOTFILES_DIR}/git/.gitconfig" || VERIFY_FAILED=1
+    verify_symlink "${ZSH_RC_FILE}" "${DOTFILES_DIR}/zsh/.zshrc" || VERIFY_FAILED=1
+    verify_symlink "${ZSH_ENV_FILE}" "${DOTFILES_DIR}/zsh/.zshenv" || VERIFY_FAILED=1
+    verify_symlink "${ZSH_LOGIN_FILE}" "${DOTFILES_DIR}/zsh/.zlogin" || VERIFY_FAILED=1
+    verify_symlink "${ZPREZTO_RC_FILE}" "${DOTFILES_DIR}/zsh/.zpreztorc" || VERIFY_FAILED=1
+    verify_symlink "${GEM_CONFIG_FILE}" "${DOTFILES_DIR}/ruby/.gemrc" || VERIFY_FAILED=1
+    verify_symlink "${IRB_CONFIG_FILE}" "${DOTFILES_DIR}/ruby/.irbrc" || VERIFY_FAILED=1
+    verify_symlink "${RAILS_CONFIG_FILE}" "${DOTFILES_DIR}/ruby/.railsrc" || VERIFY_FAILED=1
+    verify_symlink "${NEOVIM_CONFIG_FILE}" "${DOTFILES_DIR}/nvim/init.vim" || VERIFY_FAILED=1
+    verify_symlink "${CLAUDE_CONFIG_DIR}/settings.json" "${DOTFILES_DIR}/claude/settings.json" || VERIFY_FAILED=1
+    verify_symlink "${CLAUDE_CONFIG_DIR}/statusline-command.sh" "${DOTFILES_DIR}/claude/statusline-command.sh" || VERIFY_FAILED=1
+
+    if [[ $VERIFY_FAILED -eq 1 ]]; then
+        echo ""
+        echo "WARNING: Some symlinks could not be verified."
+    fi
+fi
+
 echo ""
-echo "Claude Code setup complete."
-echo "To install plugins, run: ~/.dotfiles/claude/install-plugins.sh"
-echo "To install skills, run: ~/.dotfiles/claude/install-skills.sh"
+if [[ "$DRY_RUN" == true ]]; then
+    echo "Dry run complete. No changes were made."
+else
+    echo "Setup complete."
+    echo ""
+    echo "To install Claude Code plugins, run: ~/.dotfiles/claude/install-plugins.sh"
+    echo "To install Claude Code skills, run: ~/.dotfiles/claude/install-skills.sh"
+fi
