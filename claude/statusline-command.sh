@@ -44,13 +44,13 @@ get_version_display() {
         fi
     fi
 
-    # Compare versions and output with appropriate color
+    # Compare versions and output with appropriate color (no "v" prefix)
     if [ "$current_version" = "$latest_version" ]; then
         # Up-to-date: muted grey
-        printf '\033[38;5;243mv%s\033[0m' "$current_version"
+        printf '\033[38;5;243m%s\033[0m' "$current_version"
     else
         # Outdated: warmer shade (tan/gold)
-        printf '\033[38;5;180mv%s\033[0m' "$current_version"
+        printf '\033[38;5;180m%s\033[0m' "$current_version"
     fi
 }
 
@@ -72,17 +72,18 @@ if [ "$usage" != "null" ]; then
     current=$(echo "$usage" | jq '.input_tokens + .output_tokens + .cache_creation_input_tokens + .cache_read_input_tokens')
     pct=$((current * 100 / size))
 
-    # Format current token count (e.g., 50000 -> 50k)
+# Format current token count (e.g., 50000 -> 50k)
     # Right-align to 4 characters to prevent jumping (max 999k)
-    if [ "$current" -ge 1000 ]; then
-        tokens_num=$((current / 1000))
-        current_display=$(printf "%3sk" "$tokens_num")
-    else
-        current_display=$(printf "%4s" "${current}")
-    fi
+    # Always show 'k' suffix for consistency (0k, 1k, 50k, etc.)
+    tokens_num=$((current / 1000))
+    current_display=$(printf "%3sk" "$tokens_num")
 
-    # Braille Density progress bar with 7-level smooth gradient (8 cells)
+# Braille Density progress bar with 7-level smooth gradient (8 cells)
     # Gradient: ⣀ → ⣄ → ⣤ → ⣦ → ⣶ → ⣷ → ⣿ (0-6 dots, empty shows ⣀)
+    # Zone-based coloring:
+    #   - Green zone: cells 0-3 (0-50%) - safe
+    #   - Yellow zone: cells 4-5 (50-75%) - caution
+    #   - Red zone: cells 6-7 (75-100%) - danger, compaction at ~82.5%
     braille_gradient=("⣀" "⣄" "⣤" "⣦" "⣶" "⣷" "⣿")
     bar_width=8
     levels_per_cell=7
@@ -91,34 +92,67 @@ if [ "$usage" != "null" ]; then
     # Calculate current step based on percentage (0 to total_steps)
     current_step=$((pct * total_steps / 100))
 
-    # Build braille progress bar with smooth gradient
+    # Zone colors (ANSI 256)
+    # Filled colors (bright)
+    green_filled=71   # muted sage green
+    yellow_filled=179 # muted gold
+    red_filled=167    # muted coral-red
+    # Empty colors (dimmed zone colors - heat map always visible)
+    green_empty=22    # dim green
+    yellow_empty=94   # dim yellow/brown
+    red_empty=52      # dim red
+
+    # Build braille progress bar with zone-based coloring
     bar=""
     for ((i=0; i<bar_width; i++)); do
+        # Determine zone colors based on cell position
+        if [ "$i" -lt 4 ]; then
+            # Green zone (cells 0-3, 0-50%)
+            filled_color=$green_filled
+            empty_color=$green_empty
+        elif [ "$i" -lt 6 ]; then
+            # Yellow zone (cells 4-5, 50-75%)
+            filled_color=$yellow_filled
+            empty_color=$yellow_empty
+        else
+            # Red zone (cells 6-7, 75-100%)
+            filled_color=$red_filled
+            empty_color=$red_empty
+        fi
+
         # Calculate the step range for this cell
         cell_start=$((i * levels_per_cell))
         cell_end=$(((i + 1) * levels_per_cell))
 
         if [ "$current_step" -ge "$cell_end" ]; then
-            # Cell is fully filled - use ⣿ (index 6) in soft grey
-            bar="${bar}\033[38;5;245m${braille_gradient[6]}\033[0m"
+            # Cell is fully filled
+            bar="${bar}\033[38;5;${filled_color}m${braille_gradient[6]}\033[0m"
         elif [ "$current_step" -le "$cell_start" ]; then
-            # Cell is empty - use ⣀ (index 0) in dark grey (track visible)
-            bar="${bar}\033[38;5;239m${braille_gradient[0]}\033[0m"
+            # Cell is empty - use dimmed zone color (heat map visible)
+            bar="${bar}\033[38;5;${empty_color}m${braille_gradient[0]}\033[0m"
         else
             # Cell is partially filled - calculate gradient level (0-6)
             steps_into_cell=$((current_step - cell_start))
-            # Use medium grey for partial/transition cells
-            bar="${bar}\033[38;5;242m${braille_gradient[$steps_into_cell]}\033[0m"
+            bar="${bar}\033[38;5;${filled_color}m${braille_gradient[$steps_into_cell]}\033[0m"
         fi
     done
 
-    # Token count - soft teal
-    context_info="${bar} \033[38;5;109m${current_display}/${size_display}\033[0m"
+    # Token count - color based on zone (dimmer than bar), size dimmed
+    # Determine token color based on percentage zone
+    if [ "$pct" -lt 50 ]; then
+        token_color=65   # dim sage green
+    elif [ "$pct" -lt 75 ]; then
+        token_color=136  # dim gold
+    else
+        token_color=131  # dim coral
+    fi
+    context_info="${bar} \033[38;5;${token_color}m${current_display}\033[0m\033[38;5;239m/${size_display}\033[0m"
 else
-    # No usage data yet - show empty braille bar (8 cells)
-    # Right-align "0" to match token display width
-    bar="\033[38;5;239m⣀⣀⣀⣀⣀⣀⣀⣀\033[0m"
-    context_info="${bar} \033[38;5;109m$(printf "%4s" "0")/${size_display}\033[0m"
+    # No usage data yet - show empty braille bar (8 cells) with zone colors
+    # Green zone (4 cells), Yellow zone (2 cells), Red zone (2 cells)
+    bar="\033[38;5;22m⣀⣀⣀⣀\033[0m\033[38;5;94m⣀⣀\033[0m\033[38;5;52m⣀⣀\033[0m"
+    # 0k in dim green (safe zone), size dimmed
+    context_info="${bar} \033[38;5;65m  0k\033[0m\033[38;5;239m/${size_display}\033[0m"
 fi
 
 # Get current directory and apply zsh-style shortening
@@ -267,14 +301,14 @@ if [ -f "$workspace_dir/CLAUDE.md" ]; then
     memory_indicator=" \033[38;5;243m󰈙\033[0m"
 fi
 
-# Build version segment (only if version is available)
+# Build version segment (only if version is available) - appears after tokens
 version_segment=""
 if [ -n "$version_display" ]; then
     version_segment=" \033[38;5;237m│\033[0m ${version_display}"
 fi
 
-# Build status line: clock (muted gold), separator, model (muted teal), memory, separator, version, separator, progress bar, tokens, separator, path (soft teal), git branch
-output="\033[38;5;179m${current_time}\033[0m \033[38;5;237m│\033[0m \033[38;5;66m${model_name}\033[0m${memory_indicator}${version_segment} \033[38;5;237m│\033[0m ${context_info} \033[38;5;237m│\033[0m \033[38;5;73m${short_path}\033[0m${git_info}"
+# Build status line: clock (muted gold), separator, model (muted teal), memory, separator, progress bar, tokens, version, separator, path (soft teal), git branch
+output="\033[38;5;179m${current_time}\033[0m \033[38;5;237m│\033[0m \033[38;5;66m${model_name}\033[0m${memory_indicator} \033[38;5;237m│\033[0m ${context_info}${version_segment} \033[38;5;237m│\033[0m \033[38;5;73m${short_path}\033[0m${git_info}"
 
 # Print the status line
 printf "%b" "$output"
