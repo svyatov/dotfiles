@@ -1,6 +1,6 @@
 #!/bin/bash
 # Claude Code skills installation commands (via skills.sh)
-# Run with: bash ~/.dotfiles/claude/skills.txt
+# Run with: ~/.dotfiles/claude/install-skills.sh
 # Requires: skills.sh installed (https://skills.sh)
 
 set -e

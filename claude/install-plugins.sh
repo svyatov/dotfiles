@@ -1,6 +1,6 @@
 #!/bin/bash
 # Claude Code plugin installation commands
-# Run with: bash ~/.dotfiles/claude/plugins.txt
+# Run with: ~/.dotfiles/claude/install-plugins.sh
 
 set -e
 

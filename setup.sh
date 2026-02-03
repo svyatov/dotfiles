@@ -104,5 +104,5 @@ symlink_from_dotfiles "claude/statusline-command.sh" "${CLAUDE_CONFIG_DIR}/statu
 
 echo ""
 echo "Claude Code setup complete."
-echo "To install plugins, run: bash ~/.dotfiles/claude/plugins.txt"
-echo "To install skills.sh skills, run: bash ~/.dotfiles/claude/skills.txt"
+echo "To install plugins, run: ~/.dotfiles/claude/install-plugins.sh"
+echo "To install skills, run: ~/.dotfiles/claude/install-skills.sh"
