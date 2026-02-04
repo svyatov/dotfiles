@@ -21,9 +21,7 @@ C_GOLD_DIM='\033[38;5;136m'      # dim gold - token count (caution zone)
 C_CORAL_DIM='\033[38;5;131m'     # dim coral - token count (danger zone)
 
 # Olive tones
-C_OLIVE='\033[38;5;101m'         # dim olive/khaki - version (up-to-date)
 C_OLIVE_DIM='\033[38;5;59m'      # dim olive-grey - context size
-C_TAN='\033[38;5;180m'           # tan/gold - version (outdated)
 
 # Progress bar empty states
 C_GREEN_EMPTY='\033[38;5;22m'    # dim green
@@ -45,54 +43,6 @@ input=$(cat)
 
 # Extract model display name
 model_name=$(echo "$input" | jq -r '.model.display_name')
-
-# Get Claude Code version display with update check
-get_version_display() {
-    local cache_file="$HOME/.claude/cache/version-check.json"
-    local checker_script="$HOME/.dotfiles/claude/claude-version-check.sh"
-    local stale_threshold=10800  # 3 hours in seconds
-
-    # If no cache exists, spawn background check and return empty
-    if [ ! -f "$cache_file" ]; then
-        if [ -x "$checker_script" ]; then
-            nohup "$checker_script" > /dev/null 2>&1 &
-        fi
-        return
-    fi
-
-    # Read cache
-    local current_version latest_version checked_at
-    current_version=$(jq -r '.current_version // empty' "$cache_file" 2>/dev/null)
-    latest_version=$(jq -r '.latest_version // empty' "$cache_file" 2>/dev/null)
-    checked_at=$(jq -r '.checked_at // 0' "$cache_file" 2>/dev/null)
-
-    # If cache is corrupt or empty, spawn background check and return empty
-    if [ -z "$current_version" ] || [ -z "$latest_version" ]; then
-        if [ -x "$checker_script" ]; then
-            nohup "$checker_script" > /dev/null 2>&1 &
-        fi
-        return
-    fi
-
-    # Check if cache is stale
-    local now=$(date +%s)
-    local age=$((now - checked_at))
-    if [ "$age" -gt "$stale_threshold" ]; then
-        # Spawn background update (non-blocking)
-        if [ -x "$checker_script" ]; then
-            nohup "$checker_script" > /dev/null 2>&1 &
-        fi
-    fi
-
-    # Compare versions and output with appropriate color (no "v" prefix)
-    if [ "$current_version" = "$latest_version" ]; then
-        printf "${C_OLIVE}%s${C_RESET}" "$current_version"
-    else
-        printf "${C_TAN}%s${C_RESET}" "$current_version"
-    fi
-}
-
-version_display=$(get_version_display)
 
 # Calculate context usage percentage and tokens
 context_info=""
@@ -332,14 +282,8 @@ if [ -f "$workspace_dir/CLAUDE.md" ]; then
     memory_indicator=" ${C_MUTED}󰈙${C_RESET}"
 fi
 
-# Build version segment (only if version is available)
-version_segment=""
-if [ -n "$version_display" ]; then
-    version_segment=" ${C_SEPARATOR}│${C_RESET} ${version_display}"
-fi
-
 # Build status line
-output="${C_GOLD}${current_time}${C_RESET} ${C_SEPARATOR}│${C_RESET} ${C_TEAL}${model_name}${C_RESET}${memory_indicator} ${C_SEPARATOR}│${C_RESET} ${context_info}${version_segment} ${C_SEPARATOR}│${C_RESET} ${C_TEAL_SOFT}${short_path}${C_RESET}${git_info}"
+output="${C_GOLD}${current_time}${C_RESET} ${C_SEPARATOR}│${C_RESET} ${C_TEAL}${model_name}${C_RESET}${memory_indicator} ${C_SEPARATOR}│${C_RESET} ${context_info} ${C_SEPARATOR}│${C_RESET} ${C_TEAL_SOFT}${short_path}${C_RESET}${git_info}"
 
 # Print the status line
 printf "%b" "$output"
