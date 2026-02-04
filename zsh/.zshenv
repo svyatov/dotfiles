@@ -1,6 +1,7 @@
 export EDITOR=nvim
 export VISUAL=nvim
 export LANG=en_US.UTF-8
+export ENABLE_LSP_TOOL=1  # Enable LSP support in Claude Code
 export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export ERL_AFLAGS="-kernel shell_history enabled" # Enables history for Elixir iex console
