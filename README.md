@@ -71,6 +71,8 @@ Or install individually:
 git clone git://github.com/svyatov/dotfiles.git ~/.dotfiles
 brew bundle --file=~/.dotfiles/Brewfile  # Install dependencies
 ~/.dotfiles/setup.sh
+~/.dotfiles/claude/install-plugins.sh    # Install Claude Code plugins
+~/.dotfiles/claude/install-skills.sh     # Install Claude Code skills
 ```
 
 **Setup script options:**
@@ -108,6 +110,7 @@ brew bundle --file=~/.dotfiles/Brewfile  # Install dependencies
 | `ruby/.railsrc` | `~/.railsrc` | Rails generator defaults |
 | `nvim/init.vim` | `~/.config/nvim/init.vim` | Neovim configuration |
 | `claude/settings.json` | `~/.claude/settings.json` | Claude Code settings |
+| `claude/statusline-command.sh` | `~/.claude/statusline-command.sh` | Claude Code status line |
 
 **Tooling scripts (not symlinked):**
 
@@ -116,6 +119,8 @@ brew bundle --file=~/.dotfiles/Brewfile  # Install dependencies
 | `setup.sh` | Install dotfiles (with `--help`, `--dry-run`, `--confirm`) |
 | `uninstall.sh` | Remove dotfiles (with `--help`, `--dry-run`) |
 | `Brewfile` | Homebrew dependencies (`brew bundle`) |
+| `claude/install-plugins.sh` | Install Claude Code plugins |
+| `claude/install-skills.sh` | Install Claude Code skills (with `--force`) |
 
 ## ⚡ Jump Shortcuts
 
