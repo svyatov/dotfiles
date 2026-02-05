@@ -69,11 +69,11 @@ if [ "$usage" != "null" ]; then
 # Braille Density progress bar with 7-level smooth gradient (8 cells)
     # Gradient: ⣀ → ⣄ → ⣤ → ⣦ → ⣶ → ⣷ → ⣿ (0-6 dots, empty shows ⣀)
     # Zone-based coloring:
-    #   - Green zone: cells 0-3 (0-50%) - safe
-    #   - Yellow zone: cells 4-5 (50-75%) - caution
-    #   - Red zone: cells 6-7 (75-100%) - danger, compaction at ~82.5%
+    #   - Green zone: cells 0-5 (0-60%) - safe
+    #   - Yellow zone: cells 6-7 (60-80%) - caution
+    #   - Red zone: cells 8-9 (80-100%) - danger, compaction imminent
     braille_gradient=("⣀" "⣄" "⣤" "⣦" "⣶" "⣷" "⣿")
-    bar_width=8
+    bar_width=10
     levels_per_cell=7
     total_steps=$((bar_width * levels_per_cell))
 
@@ -92,16 +92,16 @@ if [ "$usage" != "null" ]; then
     bar=""
     for ((i=0; i<bar_width; i++)); do
         # Determine zone colors based on cell position
-        if [ "$i" -lt 4 ]; then
-            # Green zone (cells 0-3, 0-50%)
+        if [ "$i" -lt 6 ]; then
+            # Green zone (cells 0-5, 0-60%)
             filled_color=$green_filled
             empty_color=$green_empty
-        elif [ "$i" -lt 6 ]; then
-            # Yellow zone (cells 4-5, 50-75%)
+        elif [ "$i" -lt 8 ]; then
+            # Yellow zone (cells 6-7, 60-80%)
             filled_color=$yellow_filled
             empty_color=$yellow_empty
         else
-            # Red zone (cells 6-7, 75-100%)
+            # Red zone (cells 8-9, 80-100%)
             filled_color=$red_filled
             empty_color=$red_empty
         fi
@@ -126,7 +126,7 @@ if [ "$usage" != "null" ]; then
     context_info="${bar}"
 else
     # No usage data yet - show empty braille bar (8 cells) with zone colors
-    bar="${C_GREEN_EMPTY}⣀⣀⣀⣀${C_RESET}${C_YELLOW_EMPTY}⣀⣀${C_RESET}${C_RED_EMPTY}⣀⣀${C_RESET}"
+    bar="${C_GREEN_EMPTY}⣀⣀⣀⣀⣀⣀${C_RESET}${C_YELLOW_EMPTY}⣀⣀${C_RESET}${C_RED_EMPTY}⣀⣀${C_RESET}"
     context_info="${bar}"
 fi
 
