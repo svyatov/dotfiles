@@ -9,7 +9,7 @@ Lightweight shell configurations for remote and server environments. Two tiers: 
 - **Safe alias system** - Prevents accidentally shadowing existing commands
 - **Package manager aliases** - Auto-detects APT, DNF, or YUM
 - **System administration shortcuts** - Services, configs, logs
-- **Server vim config** - Sensible defaults without modifying existing configs
+- **Server vim config** - Sensible defaults applied to all vim commands
 
 ## Quick Start
 
@@ -37,8 +37,8 @@ After installation, run `source ~/.bashrc` or start a new shell.
 | `q` | `exit` | Exit shell |
 | `c` | `clear` | Clear screen |
 | `cl` | `clear && l` | Clear and list |
-| `v` | `vim` | Open vim |
-| `sv` | `vim -u ~/.config/svyatov/vimrc` | Open vim with server config |
+| `v` | `vim -u ~/.config/svyatov/vimrc` | Open vim with server config |
+| `sv` | `sudo vim -u ~/.config/svyatov/vimrc` | Sudo vim with server config |
 | `duo` | `du . --max-depth=1 -h \| sort -h` | Disk usage sorted by size |
 | `dum` | `duo \| tail` | Top disk usage |
 
@@ -52,7 +52,7 @@ After installation, run `source ~/.bashrc` or start a new shell.
 | `jl` | List all bookmarks |
 | `jb` | Jump back to previous location |
 
-Bookmarks are stored as symlinks in `~/.jump_shortcuts/`.
+Bookmarks are stored as symlinks in `~/.config/svyatov/jump_shortcuts/`.
 
 **Example:**
 ```bash
@@ -120,17 +120,13 @@ jb               # Return to /tmp
 | `ne` | Show external network connections only |
 | `i` | Show iptables rules |
 | `t` | Attach or create tmux session |
-| `ssr <service>` | Service management (with tab completion) |
-| `svi` | Edit file as root (`sudo vim`) |
+| `ssr <cmd>` | Service management via systemctl (or legacy service) |
 
 #### Config Directory Shortcuts
 
 | Alias | Directory |
 |-------|-----------|
-| `ngx` | `/etc/nginx` |
-| `apch` | `/etc/apache2` |
 | `lgrt` | `/etc/logrotate.d` |
-| `msql` | `/etc/mysql` |
 | `logs` | `/var/log` |
 
 #### User Management
@@ -138,7 +134,60 @@ jb               # Return to /tmp
 | Alias | Description |
 |-------|-------------|
 | `au` | Add user |
-| `auwop` | Add user without password |
+| `aunop` | Add user without password |
+
+#### UFW (Uncomplicated Firewall)
+
+*Only available when UFW is installed*
+
+| Alias | Command | Description |
+|-------|---------|-------------|
+| `ufs` | `ufw status verbose` | Show firewall status |
+| `ufe` | `ufw enable` | Enable firewall |
+| `ufd` | `ufw disable` | Disable firewall |
+| `ufap <port>` | `ufw allow <port>` | Allow port |
+| `ufaf <ip>` | `ufw allow from <ip>` | Allow from IP address |
+| `ufdp <port>` | `ufw deny <port>` | Deny port |
+| `ufdel <num>` | `ufw delete <num>` | Delete rule by number |
+| `ufr` | `ufw reload` | Reload firewall rules |
+| `ufn` | `ufw status numbered` | Show numbered rule list |
+
+#### Docker
+
+*Only available when Docker is installed*
+
+| Alias | Command | Description |
+|-------|---------|-------------|
+| `dk` | `docker` | Docker command |
+| `dkps` | `docker ps` | List running containers |
+| `dkpsa` | `docker ps -a` | List all containers |
+| `dki` | `docker images` | List images |
+| `dkl` | `docker logs` | Show container logs |
+| `dklf` | `docker logs -f` | Follow container logs |
+| `dkx` | `docker exec -it` | Execute interactive command |
+| `dkr` | `docker run -it --rm` | Run interactive, auto-remove |
+| `dkst` | `docker stop` | Stop container |
+| `dkrm` | `docker rm` | Remove container |
+| `dkrmi` | `docker rmi` | Remove image |
+| `dkpr` | `docker system prune -f` | Prune unused data |
+| `dkpra` | `docker system prune -af` | Prune all unused (including images) |
+
+#### Docker Compose
+
+*Only available when Docker Compose is installed (v1 or v2)*
+
+| Alias | Command | Description |
+|-------|---------|-------------|
+| `dcp` | `docker compose` | Docker Compose command |
+| `dcup` | `docker compose up -d` | Start services (detached) |
+| `dcdn` | `docker compose down` | Stop and remove services |
+| `dcr` | `docker compose restart` | Restart services |
+| `dcl` | `docker compose logs` | Show logs |
+| `dclf` | `docker compose logs -f` | Follow logs |
+| `dcps` | `docker compose ps` | List services |
+| `dcx` | `docker compose exec` | Execute command in service |
+| `dcb` | `docker compose build` | Build services |
+| `dcpl` | `docker compose pull` | Pull service images |
 
 #### Kernel Management
 
@@ -190,12 +239,10 @@ safe_alias myalias 'my command' 'override' # Forces creation
 Update to the latest version:
 
 ```bash
-# Base user
-sa_update
-
-# Admin user
-saa_update
+update_svyatov_config
 ```
+
+This command auto-detects whether you have admin access and downloads the appropriate files.
 
 ## Troubleshooting
 
@@ -219,7 +266,7 @@ source ~/.bashrc
 **Solution:** Ensure the jump shortcuts directory exists:
 
 ```bash
-mkdir -p ~/.jump_shortcuts
+mkdir -p ~/.config/svyatov/jump_shortcuts
 ```
 
 ### Package Manager Aliases Not Working
@@ -270,4 +317,5 @@ To use the original command, escape it: `\command` or use full path `/usr/bin/co
 | `~/.config/svyatov/aliases` | Base aliases, functions, prompt, jump system |
 | `~/.config/svyatov/admin_aliases` | Admin extensions (sources aliases) |
 | `~/.config/svyatov/vimrc` | Minimal vim config for servers |
+| `~/.config/svyatov/jump_shortcuts/` | Directory bookmark symlinks |
 | `~/.config/svyatov/README.md` | Pointer to this documentation |

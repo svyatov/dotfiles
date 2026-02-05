@@ -49,7 +49,7 @@ if [[ -z "$(type -t _service)" ]] && [[ -n "$_service_completion" ]]; then
 fi
 
 ### Aliases
-safe_alias vsaa 'vim +"let b:is_bash=1" +"set ft=sh et ts=4 sw=4" "$SVYATOV_DIR/admin_aliases"'
+safe_alias vsaa 'v "$SVYATOV_DIR/admin_aliases"'
 safe_alias ssaa 'source "$SVYATOV_DIR/admin_aliases"'
 safe_alias s 'autosudo'
 safe_alias r 's su -'
@@ -57,7 +57,6 @@ safe_alias n 's netstat -tulpen'
 safe_alias ne "n | awk '\$4 !~ /(127\.0\.0\.1:|::1:)/ {print \$0}'" # show external IPs only
 safe_alias i 's iptables -L -v -n'
 safe_alias t 'tmux attach || tmux new'
-safe_alias svi 's vim' # sudo vim (sv is used for server vim config in aliases)
 
 ### Package manager aliases (conditional by distro)
 case "$_PKG_MANAGER" in
@@ -112,18 +111,27 @@ case "$_PKG_MANAGER" in
         ;;
 esac
 
-### Service management
-safe_alias ssr 's service'
-if type -t _service &>/dev/null; then
-    make-completion-wrapper _service _ssr_service service
-    complete -F _ssr_service ssr
+### Service management (systemd or legacy service)
+if command -v systemctl &>/dev/null; then
+    safe_alias ssr 's systemctl'
+    # Try to load systemctl completions
+    _systemctl_completion=$(_find_completion systemctl)
+    if [[ -z "$(type -t _systemctl)" ]] && [[ -n "$_systemctl_completion" ]]; then
+        source "$_systemctl_completion"
+    fi
+    if type -t _systemctl &>/dev/null; then
+        complete -F _systemctl ssr
+    fi
+else
+    safe_alias ssr 's service'
+    if type -t _service &>/dev/null; then
+        make-completion-wrapper _service _ssr_service service
+        complete -F _ssr_service ssr
+    fi
 fi
 
 ### Config directory shortcuts
-safe_alias ngx 'cd /etc/nginx'
-safe_alias apch 'cd /etc/apache2'
 safe_alias lgrt 'cd /etc/logrotate.d'
-safe_alias msql 'cd /etc/mysql'
 safe_alias logs 'cd /var/log'
 
 ### Kernel management (APT-based systems only)
@@ -150,29 +158,54 @@ safe_alias change-default-editor 's update-alternatives --config editor'
 
 ### User management
 safe_alias au 's adduser'
-safe_alias auwop 's adduser --disabled-password'
+safe_alias aunop 's adduser --disabled-password'
 
-### Functions
-function saa_update() {
-    local base_url="https://raw.githubusercontent.com/svyatov/dotfiles/master/servers/.config"
-    local tmp_aliases=$(mktemp)
-    local tmp_admin=$(mktemp)
-    local tmp_vimrc=$(mktemp)
-    local tmp_readme=$(mktemp)
+### UFW (Uncomplicated Firewall)
+if command -v ufw &>/dev/null; then
+    safe_alias ufs 's ufw status verbose'      # ufw status
+    safe_alias ufe 's ufw enable'              # ufw enable
+    safe_alias ufd 's ufw disable'             # ufw disable
+    safe_alias ufap 's ufw allow'              # ufw allow <port>
+    safe_alias ufaf 's ufw allow from'         # ufw allow from <ip> (use: ufaf 1.2.3.4)
+    safe_alias ufdp 's ufw deny'               # ufw deny <port>
+    safe_alias ufdel 's ufw delete'            # ufw delete <rule_num>
+    safe_alias ufr 's ufw reload'              # ufw reload
+    safe_alias ufn 's ufw status numbered'     # ufw numbered list
+fi
 
-    if curl -fsSL "$base_url/aliases" -o "$tmp_aliases" && \
-       curl -fsSL "$base_url/admin_aliases" -o "$tmp_admin" && \
-       curl -fsSL "$base_url/vimrc" -o "$tmp_vimrc" && \
-       curl -fsSL "$base_url/README.md" -o "$tmp_readme"; then
-        mkdir -p "$SVYATOV_DIR"
-        mv "$tmp_aliases" "$SVYATOV_DIR/aliases"
-        mv "$tmp_admin" "$SVYATOV_DIR/admin_aliases"
-        mv "$tmp_vimrc" "$SVYATOV_DIR/vimrc"
-        mv "$tmp_readme" "$SVYATOV_DIR/README.md"
-        ssaa && echo "aliases & admin_aliases updated successfully"
+### Docker
+if command -v docker &>/dev/null; then
+    safe_alias dk 'docker'
+    safe_alias dkps 'docker ps'                # running containers
+    safe_alias dkpsa 'docker ps -a'            # all containers
+    safe_alias dki 'docker images'             # list images
+    safe_alias dkl 'docker logs'               # container logs
+    safe_alias dklf 'docker logs -f'           # follow logs
+    safe_alias dkx 'docker exec -it'           # exec interactive
+    safe_alias dkr 'docker run -it --rm'       # run interactive, auto-remove
+    safe_alias dkst 'docker stop'              # stop container
+    safe_alias dkrm 'docker rm'                # remove container
+    safe_alias dkrmi 'docker rmi'              # remove image
+    safe_alias dkpr 'docker system prune -f'   # prune unused data
+    safe_alias dkpra 'docker system prune -af' # prune all unused (including images)
+fi
+
+### Docker Compose
+if command -v docker-compose &>/dev/null || docker compose version &>/dev/null 2>&1; then
+    # Use 'docker compose' (v2) if available, else 'docker-compose' (v1)
+    if docker compose version &>/dev/null 2>&1; then
+        _DC='docker compose'
     else
-        rm -f "$tmp_aliases" "$tmp_admin" "$tmp_vimrc" "$tmp_readme"
-        echo "Update failed - could not download" >&2
-        return 1
+        _DC='docker-compose'
     fi
-}
+    safe_alias dcp "$_DC"
+    safe_alias dcup "$_DC up -d"               # up detached
+    safe_alias dcdn "$_DC down"                # down
+    safe_alias dcr "$_DC restart"              # restart
+    safe_alias dcl "$_DC logs"                 # logs
+    safe_alias dclf "$_DC logs -f"             # follow logs
+    safe_alias dcps "$_DC ps"                  # ps
+    safe_alias dcx "$_DC exec"                 # exec
+    safe_alias dcb "$_DC build"                # build
+    safe_alias dcpl "$_DC pull"                # pull
+fi

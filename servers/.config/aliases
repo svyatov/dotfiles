@@ -70,20 +70,20 @@ function safe_alias() {
 
 ### Aliases
 safe_alias l 'ls -laGh'
-safe_alias v 'vim'
+safe_alias v 'vim -u "$SVYATOV_DIR/vimrc"'
+safe_alias sv 'sudo vim -u "$SVYATOV_DIR/vimrc"'
 safe_alias h 'cd ~'
 safe_alias u 'cd ..'
 safe_alias b 'cd -'
 safe_alias q 'exit'
 safe_alias c 'clear'
 safe_alias cl 'clear && l'
-safe_alias vb 'vim ~/.bashrc'
+safe_alias vb 'v ~/.bashrc'
 safe_alias sb '. ~/.bashrc && echo .bashrc sourced'
 safe_alias ct 'crontab -e'
-safe_alias vsa 'vim +"let b:is_bash=1" +"set ft=sh et ts=4 sw=4" "$SVYATOV_DIR/aliases"'
+safe_alias vsa 'v "$SVYATOV_DIR/aliases"'
 safe_alias ssa '. "$SVYATOV_DIR/aliases" && echo aliases sourced'
 safe_alias shrl 'exec $SHELL -l' # shell reload
-safe_alias sv 'vim -u "$SVYATOV_DIR/vimrc"' # server vim with sensible defaults
 safe_alias duo 'du . --max-depth=1 -h | sort -h'
 safe_alias dum 'duo | tail'
 
@@ -104,25 +104,8 @@ function hgrep() {
     history | grep -v grep | grep "$@" -i
 }
 
-function sa_update() {
-    local base_url="https://raw.githubusercontent.com/svyatov/dotfiles/master/servers/.config"
-    local tmp_aliases=$(mktemp)
-    local tmp_vimrc=$(mktemp)
-    local tmp_readme=$(mktemp)
-
-    if curl -fsSL "$base_url/aliases" -o "$tmp_aliases" && \
-       curl -fsSL "$base_url/vimrc" -o "$tmp_vimrc" && \
-       curl -fsSL "$base_url/README.md" -o "$tmp_readme"; then
-        mkdir -p "$SVYATOV_DIR"
-        mv "$tmp_aliases" "$SVYATOV_DIR/aliases"
-        mv "$tmp_vimrc" "$SVYATOV_DIR/vimrc"
-        mv "$tmp_readme" "$SVYATOV_DIR/README.md"
-        ssa && echo "aliases updated successfully"
-    else
-        rm -f "$tmp_aliases" "$tmp_vimrc" "$tmp_readme"
-        echo "Update failed - could not download" >&2
-        return 1
-    fi
+function update_svyatov_config() {
+    curl -fsSL https://raw.githubusercontent.com/svyatov/dotfiles/master/servers/update.sh | bash
 }
 
 # Wraps a completion function
@@ -148,8 +131,14 @@ function $function_name {
     eval "$function"
 }
 
-JUMPS_PATH=$HOME/.jump_shortcuts
+JUMPS_PATH="$SVYATOV_DIR/jump_shortcuts"
 export JUMPS_PATH
+
+# Migrate old jump shortcuts location
+if [[ -d "$HOME/.jump_shortcuts" ]] && [[ ! -d "$JUMPS_PATH" ]]; then
+    mv "$HOME/.jump_shortcuts" "$JUMPS_PATH"
+    echo "Migrated jump shortcuts to $JUMPS_PATH"
+fi
 
 safe_alias j 'jump'
 safe_alias ja 'jump-add'
