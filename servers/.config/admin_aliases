@@ -1,0 +1,178 @@
+source "$HOME/.config/svyatov/aliases"
+
+### Functions
+function autosudo() {
+    if [[ $EUID -ne 0 ]]; then
+        sudo "$@"
+    else
+        "$@"
+    fi
+}
+
+### Package manager detection
+_detect_pkg_manager() {
+    if command -v apt-get &>/dev/null; then
+        echo "apt"
+    elif command -v dnf &>/dev/null; then
+        echo "dnf"
+    elif command -v yum &>/dev/null; then
+        echo "yum"
+    else
+        echo "unknown"
+    fi
+}
+_PKG_MANAGER=$(_detect_pkg_manager)
+
+### Completions
+# Find completion file in common locations
+_find_completion() {
+    local name="$1"
+    for dir in /usr/share/bash-completion/completions /etc/bash_completion.d; do
+        [[ -f "$dir/$name" ]] && echo "$dir/$name" && return
+    done
+}
+
+# Source completions if not already loaded
+_apt_get_completion=$(_find_completion apt-get)
+if [[ -z "$(type -t _apt_get)" ]] && [[ -n "$_apt_get_completion" ]]; then
+    source "$_apt_get_completion"
+fi
+
+_apt_cache_completion=$(_find_completion apt-cache)
+if [[ -z "$(type -t _apt_cache)" ]] && [[ -n "$_apt_cache_completion" ]]; then
+    source "$_apt_cache_completion"
+fi
+
+_service_completion=$(_find_completion service)
+if [[ -z "$(type -t _service)" ]] && [[ -n "$_service_completion" ]]; then
+    source "$_service_completion"
+fi
+
+### Aliases
+safe_alias vsaa 'vim +"let b:is_bash=1" +"set ft=sh et ts=4 sw=4" "$SVYATOV_DIR/admin_aliases"'
+safe_alias ssaa 'source "$SVYATOV_DIR/admin_aliases"'
+safe_alias s 'autosudo'
+safe_alias r 's su -'
+safe_alias n 's netstat -tulpen'
+safe_alias ne "n | awk '\$4 !~ /(127\.0\.0\.1:|::1:)/ {print \$0}'" # show external IPs only
+safe_alias i 's iptables -L -v -n'
+safe_alias t 'tmux attach || tmux new'
+safe_alias svi 's vim' # sudo vim (sv is used for server vim config in aliases)
+
+### Package manager aliases (conditional by distro)
+case "$_PKG_MANAGER" in
+    apt)
+        safe_alias agi 's apt-get install -y'
+        if type -t _apt_get &>/dev/null; then
+            make-completion-wrapper _apt_get _agi apt-get install
+            complete -F _agi agi
+        fi
+        safe_alias agu 's apt-get update'
+        safe_alias agg 's apt-get upgrade -uV'
+        safe_alias agdu 's apt-get dist-upgrade'
+        safe_alias aguu 'agu && agg'
+        safe_alias addrepo 's add-apt-repository'
+        safe_alias acf 's apt-cache search'
+        if type -t _apt_cache &>/dev/null; then
+            make-completion-wrapper _apt_cache _acf apt-cache search
+            complete -F _acf acf
+        fi
+        safe_alias acs 's apt-cache show'
+        if type -t _apt_cache &>/dev/null; then
+            make-completion-wrapper _apt_cache _acs apt-cache show
+            complete -F _acs acs
+        fi
+        safe_alias agr 's apt-get remove'
+        if type -t _apt_get &>/dev/null; then
+            make-completion-wrapper _apt_get _agr apt-get remove
+            complete -F _agr agr
+        fi
+        safe_alias agp 's apt-get purge'
+        if type -t _apt_get &>/dev/null; then
+            make-completion-wrapper _apt_get _agp apt-get purge
+            complete -F _agp agp
+        fi
+        safe_alias agcl 's apt-get changelog'
+        if type -t _apt_get &>/dev/null; then
+            make-completion-wrapper _apt_get _agcl apt-get changelog
+            complete -F _agcl agcl
+        fi
+        safe_alias agc 's apt-get clean'
+        safe_alias agar 's apt-get autoremove'
+        ;;
+    dnf|yum)
+        safe_alias agi "s $_PKG_MANAGER install -y"
+        safe_alias agu "s $_PKG_MANAGER check-update"
+        safe_alias agg "s $_PKG_MANAGER upgrade -y"
+        safe_alias agr "s $_PKG_MANAGER remove"
+        safe_alias acf "s $_PKG_MANAGER search"
+        safe_alias acs "s $_PKG_MANAGER info"
+        safe_alias agc "s $_PKG_MANAGER clean all"
+        safe_alias agar "s $_PKG_MANAGER autoremove"
+        ;;
+esac
+
+### Service management
+safe_alias ssr 's service'
+if type -t _service &>/dev/null; then
+    make-completion-wrapper _service _ssr_service service
+    complete -F _ssr_service ssr
+fi
+
+### Config directory shortcuts
+safe_alias ngx 'cd /etc/nginx'
+safe_alias apch 'cd /etc/apache2'
+safe_alias lgrt 'cd /etc/logrotate.d'
+safe_alias msql 'cd /etc/mysql'
+safe_alias logs 'cd /var/log'
+
+### Kernel management (APT-based systems only)
+if [[ "$_PKG_MANAGER" == "apt" ]]; then
+    remove-old-kernels() {
+        echo "This will remove old kernel packages."
+        echo "Current kernel: $(uname -r)"
+        echo ""
+        local old_kernels=$(dpkg -l linux-{image,headers}-"[0-9]*" 2>/dev/null | awk '/ii/{print $2}' | grep -ve "$(uname -r | sed -r 's/-[a-z]+//')")
+        if [[ -z "$old_kernels" ]]; then
+            echo "No old kernels found to remove."
+            return 0
+        fi
+        echo "Packages to remove:"
+        echo "$old_kernels"
+        echo ""
+        read -p "Continue? [y/N] " confirm
+        [[ "$confirm" =~ ^[Yy]$ ]] || { echo "Aborted"; return 1; }
+        autosudo apt-get purge $old_kernels
+    }
+fi
+
+safe_alias change-default-editor 's update-alternatives --config editor'
+
+### User management
+safe_alias au 's adduser'
+safe_alias auwop 's adduser --disabled-password'
+
+### Functions
+function saa_update() {
+    local base_url="https://raw.githubusercontent.com/svyatov/dotfiles/master/servers/.config"
+    local tmp_aliases=$(mktemp)
+    local tmp_admin=$(mktemp)
+    local tmp_vimrc=$(mktemp)
+    local tmp_readme=$(mktemp)
+
+    if curl -fsSL "$base_url/aliases" -o "$tmp_aliases" && \
+       curl -fsSL "$base_url/admin_aliases" -o "$tmp_admin" && \
+       curl -fsSL "$base_url/vimrc" -o "$tmp_vimrc" && \
+       curl -fsSL "$base_url/README.md" -o "$tmp_readme"; then
+        mkdir -p "$SVYATOV_DIR"
+        mv "$tmp_aliases" "$SVYATOV_DIR/aliases"
+        mv "$tmp_admin" "$SVYATOV_DIR/admin_aliases"
+        mv "$tmp_vimrc" "$SVYATOV_DIR/vimrc"
+        mv "$tmp_readme" "$SVYATOV_DIR/README.md"
+        ssaa && echo "aliases & admin_aliases updated successfully"
+    else
+        rm -f "$tmp_aliases" "$tmp_admin" "$tmp_vimrc" "$tmp_readme"
+        echo "Update failed - could not download" >&2
+        return 1
+    fi
+}

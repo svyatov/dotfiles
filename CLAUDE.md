@@ -143,6 +143,19 @@ safe_alias g 'git' 'override'     # Forces creation
 | `claude/statusline-command.sh` | Custom status line showing git, Ruby, Node versions |
 | `claude/install-plugins.sh` | Install Claude Code plugins from settings |
 | `claude/install-skills.sh` | Install Claude Code skills from superpowers repo |
+| `servers/install.sh` | One-line installer for server shell config |
+| `servers/README.md` | Server shell config documentation |
+
+## Server Shell Configuration
+
+Lightweight shell configs for remote Linux servers (separate from macOS Zsh config).
+
+**Install on a server:**
+```bash
+curl -fsSL https://raw.githubusercontent.com/svyatov/dotfiles/master/servers/install.sh | bash
+```
+
+See `servers/README.md` for full documentation.
 
 ## Conventions
 

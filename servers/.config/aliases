@@ -1,3 +1,25 @@
+### Svyatov's server shell configuration
+# Install directory
+SVYATOV_DIR="$HOME/.config/svyatov"
+
+### Conflict fix for default .bashrc aliases
+# Comment out conflicting aliases (e.g., Ubuntu's 'alias l=...')
+_fix_bashrc_conflicts() {
+    local bashrc="$HOME/.bashrc"
+    [[ -f "$bashrc" ]] || return 0
+
+    if grep -q "^alias l=" "$bashrc" 2>/dev/null; then
+        sed -i.bak "s/^alias l=/#alias l=/" "$bashrc"
+        echo "Commented out conflicting 'alias l' in .bashrc"
+    fi
+}
+
+# Run on first source (check marker to avoid re-running)
+if [[ -z "$_SERVER_ALIASES_LOADED" ]]; then
+    _fix_bashrc_conflicts
+    export _SERVER_ALIASES_LOADED=1
+fi
+
 ### Colors
 RESET_COLOR="\[\e[0m\]"
 BLACK="\[\e[0;30m\]"
@@ -58,9 +80,10 @@ safe_alias cl 'clear && l'
 safe_alias vb 'vim ~/.bashrc'
 safe_alias sb '. ~/.bashrc && echo .bashrc sourced'
 safe_alias ct 'crontab -e'
-safe_alias vsa 'vim +"let b:is_bash=1" +"set ft=sh et ts=4 sw=4" ~/.server_aliases'
-safe_alias ssa '. ~/.server_aliases && echo .server_aliases sourced'
+safe_alias vsa 'vim +"let b:is_bash=1" +"set ft=sh et ts=4 sw=4" "$SVYATOV_DIR/aliases"'
+safe_alias ssa '. "$SVYATOV_DIR/aliases" && echo aliases sourced'
 safe_alias shrl 'exec $SHELL -l' # shell reload
+safe_alias sv 'vim -u "$SVYATOV_DIR/vimrc"' # server vim with sensible defaults
 safe_alias duo 'du . --max-depth=1 -h | sort -h'
 safe_alias dum 'duo | tail'
 
@@ -82,8 +105,24 @@ function hgrep() {
 }
 
 function sa_update() {
-    curl -o ~/.server_aliases "https://raw.githubusercontent.com/Svyatov/dotfiles/master/bash/.server_aliases" \
-    && ssa && echo ".server_aliases has been updated successfully"
+    local base_url="https://raw.githubusercontent.com/svyatov/dotfiles/master/servers/.config"
+    local tmp_aliases=$(mktemp)
+    local tmp_vimrc=$(mktemp)
+    local tmp_readme=$(mktemp)
+
+    if curl -fsSL "$base_url/aliases" -o "$tmp_aliases" && \
+       curl -fsSL "$base_url/vimrc" -o "$tmp_vimrc" && \
+       curl -fsSL "$base_url/README.md" -o "$tmp_readme"; then
+        mkdir -p "$SVYATOV_DIR"
+        mv "$tmp_aliases" "$SVYATOV_DIR/aliases"
+        mv "$tmp_vimrc" "$SVYATOV_DIR/vimrc"
+        mv "$tmp_readme" "$SVYATOV_DIR/README.md"
+        ssa && echo "aliases updated successfully"
+    else
+        rm -f "$tmp_aliases" "$tmp_vimrc" "$tmp_readme"
+        echo "Update failed - could not download" >&2
+        return 1
+    fi
 }
 
 # Wraps a completion function
@@ -109,7 +148,8 @@ function $function_name {
     eval "$function"
 }
 
-export JUMPS_PATH=$HOME/.jump_shortcuts
+JUMPS_PATH=$HOME/.jump_shortcuts
+export JUMPS_PATH
 
 safe_alias j 'jump'
 safe_alias ja 'jump-add'
@@ -188,9 +228,9 @@ jump-list() {
     local shortcut_basename
     local max_shortcut_length=0
 
-    shortcuts=("$(find $JUMPS_PATH -type l)")
+    mapfile -t shortcuts < <(find "$JUMPS_PATH" -type l)
 
-    for shortcut in $shortcuts; do
+    for shortcut in "${shortcuts[@]}"; do
         shortcut_basename=${shortcut##*/}
         shortcut_length=${#shortcut_basename}
         if [[ $shortcut_length -gt $max_shortcut_length ]]; then
@@ -204,10 +244,10 @@ jump-list() {
 
     local delimiter="-->"
 
-    for shortcut in $shortcuts; do
+    for shortcut in "${shortcuts[@]}"; do
         shortcut_basename="${shortcut##*/}"
-        shortcut_link="$(readlink $shortcut)"
-        echo "$(printf "  %-${max_shortcut_length}s %s  %s\n" $shortcut_basename $delimiter $shortcut_link)"
+        shortcut_link="$(readlink "$shortcut")"
+        printf "  %-${max_shortcut_length}s %s  %s\n" "$shortcut_basename" "$delimiter" "$shortcut_link"
     done
 }
 

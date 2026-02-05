@@ -1,0 +1,28 @@
+" Minimal server vim config
+" Use with: sv filename (alias defined in aliases)
+
+set nocompatible          " Use Vim defaults
+set background=dark       " Dark terminal background
+syntax on                 " Syntax highlighting
+
+" Remember cursor position
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" Usability
+set number                " Line numbers
+set ruler                 " Show cursor position
+set showcmd               " Show partial commands
+set showmatch             " Highlight matching brackets
+set incsearch             " Incremental search
+set hlsearch              " Highlight search results
+set ignorecase smartcase  " Smart case search
+
+" Indentation
+set autoindent            " Auto indent
+set tabstop=2 shiftwidth=2 expandtab  " 2-space tabs
+
+" Quality of life
+set backspace=indent,eol,start  " Backspace works everywhere
+set scrolloff=3           " Keep 3 lines visible above/below cursor
+set wildmenu              " Command completion menu
+set encoding=utf-8        " UTF-8 encoding
