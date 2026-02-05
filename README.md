@@ -63,7 +63,7 @@ Or install individually:
 | [fzf](https://github.com/junegunn/fzf) | Fuzzy finder for shell history/files | `brew install fzf` |
 | [fd](https://github.com/sharkdp/fd) | Fast file finder | `brew install fd` |
 | [Neovim](https://neovim.io) | Modern Vim | `brew install neovim` |
-| [Graphite](https://graphite.dev) | Stacked diffs workflow | `brew install withgraphite/tap/graphite` |
+| [Graphite](https://graphite.com) | Stacked diffs workflow | `brew install withgraphite/tap/graphite` |
 
 ## 🚀 Installation
 

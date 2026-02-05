@@ -14,7 +14,7 @@ safe_alias gset 'git setup'       # Set up a git repository (if one doesn't exis
 safe_alias gobl 'git obliterate'  # Completely remove a file from the repository, including past commits and tags
 
 
-# Graphite (https://app.graphite.dev)
+# Graphite (https://graphite.com)
 safe_alias gtc 'gt create'
 safe_alias gts 'gt submit'
 safe_alias gtss 'gt submit --stack'
