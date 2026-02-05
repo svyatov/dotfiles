@@ -123,19 +123,11 @@ if [ "$usage" != "null" ]; then
         fi
     done
 
-    # Token count color based on percentage zone
-    if [ "$pct" -lt 50 ]; then
-        token_color=$C_SAGE_DIM
-    elif [ "$pct" -lt 75 ]; then
-        token_color=$C_GOLD_DIM
-    else
-        token_color=$C_CORAL_DIM
-    fi
-    context_info="${bar} ${token_color}${current_display}${C_RESET}${C_OLIVE_DIM}/${size_display}${C_RESET}"
+    context_info="${bar}"
 else
     # No usage data yet - show empty braille bar (8 cells) with zone colors
     bar="${C_GREEN_EMPTY}⣀⣀⣀⣀${C_RESET}${C_YELLOW_EMPTY}⣀⣀${C_RESET}${C_RED_EMPTY}⣀⣀${C_RESET}"
-    context_info="${bar} ${C_SAGE_DIM}  0k${C_RESET}${C_OLIVE_DIM}/${size_display}${C_RESET}"
+    context_info="${bar}"
 fi
 
 # Get current directory and apply zsh-style shortening
