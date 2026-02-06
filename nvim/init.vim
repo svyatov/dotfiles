@@ -119,6 +119,17 @@ nnoremap <leader>p "+p
 nnoremap <leader>P "+P
 vnoremap <leader>p "+p
 
+" Typo-proof commands (shift held too long)
+command! W w
+command! Q q
+command! Wq wq
+command! WQ wq
+command! Qa qa
+command! QA qa
+command! Wqa wqa
+command! WQa wqa
+command! WQA wqa
+
 " Config: open and reload
 nnoremap <leader>ve :e $MYVIMRC<CR>
 nnoremap <leader>vs :source $MYVIMRC<CR>:echo "Config reloaded!"<CR>
