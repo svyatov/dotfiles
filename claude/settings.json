@@ -61,6 +61,9 @@
     "type": "command",
     "command": "bash ~/.claude/statusline-command.sh"
   },
+  "env": {
+    "ENABLE_LSP_TOOL": "1"
+  },
   "enabledPlugins": {
     "frontend-design@claude-plugins-official": true,
     "feature-dev@claude-plugins-official": true,
