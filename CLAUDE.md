@@ -106,6 +106,7 @@ Example templates are provided: `aliases_local.sh.example` and `functions_local.
 | `nvim/init.vim` | `~/.config/nvim/init.vim` |
 | `claude/settings.json` | `~/.claude/settings.json` |
 | `claude/statusline-command.sh` | `~/.claude/statusline-command.sh` |
+| `claude/CLAUDE.md` | `~/.claude/CLAUDE.md` |
 
 ### Key Utilities
 
@@ -141,6 +142,7 @@ safe_alias g 'git' 'override'     # Forces creation
 | `nvim/init.vim` | Neovim config with Claude Code integration |
 | `claude/settings.json` | Claude Code permissions and plugins |
 | `claude/statusline-command.sh` | Custom status line showing git, Ruby, Node versions |
+| `claude/CLAUDE.md` | Global Claude Code preferences (loaded in every conversation) |
 | `claude/install-plugins.sh` | Install Claude Code plugins from settings |
 | `claude/install-skills.sh` | Install Claude Code skills from superpowers repo |
 | `servers/install.sh` | One-line installer for server shell config |

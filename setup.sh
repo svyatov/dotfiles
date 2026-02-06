@@ -76,6 +76,7 @@ Files that will be symlinked:
     ~/.config/nvim/init.vim <- nvim/init.vim
     ~/.claude/settings.json <- claude/settings.json
     ~/.claude/statusline-command.sh <- claude/statusline-command.sh
+    ~/.claude/CLAUDE.md <- claude/CLAUDE.md
 EOF
     exit 0
 fi
@@ -252,6 +253,8 @@ fi
 backup_file "${CLAUDE_CONFIG_DIR}/settings.json"
 symlink_from_dotfiles "claude/settings.json" "${CLAUDE_CONFIG_DIR}/settings.json"
 symlink_from_dotfiles "claude/statusline-command.sh" "${CLAUDE_CONFIG_DIR}/statusline-command.sh"
+backup_file "${CLAUDE_CONFIG_DIR}/CLAUDE.md"
+symlink_from_dotfiles "claude/CLAUDE.md" "${CLAUDE_CONFIG_DIR}/CLAUDE.md"
 
 ### Verification
 ################
@@ -271,6 +274,7 @@ if [[ "$DRY_RUN" != true ]]; then
     verify_symlink "${NEOVIM_CONFIG_FILE}" "${DOTFILES_DIR}/nvim/init.vim" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_CONFIG_DIR}/settings.json" "${DOTFILES_DIR}/claude/settings.json" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_CONFIG_DIR}/statusline-command.sh" "${DOTFILES_DIR}/claude/statusline-command.sh" || VERIFY_FAILED=1
+    verify_symlink "${CLAUDE_CONFIG_DIR}/CLAUDE.md" "${DOTFILES_DIR}/claude/CLAUDE.md" || VERIFY_FAILED=1
 
     if [[ $VERIFY_FAILED -eq 1 ]]; then
         echo ""

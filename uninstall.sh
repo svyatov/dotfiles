@@ -18,6 +18,7 @@ SYMLINKS=(
     "${HOME}/.config/nvim/init.vim"
     "${HOME}/.claude/settings.json"
     "${HOME}/.claude/statusline-command.sh"
+    "${HOME}/.claude/CLAUDE.md"
 )
 
 ### Options
