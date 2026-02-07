@@ -99,6 +99,12 @@ for file in "${SYMLINKS[@]}"; do
     remove_symlink "$file"
 done
 
+# Remove skill symlinks (auto-discovered)
+for skill_dir in "${DOTFILES_DIR}"/claude/skills/*/; do
+    skill_name=$(basename "$skill_dir")
+    remove_symlink "${HOME}/.claude/skills/${skill_name}"
+done
+
 echo ""
 if [[ "$DRY_RUN" == true ]]; then
     echo "Dry run complete. No changes were made."

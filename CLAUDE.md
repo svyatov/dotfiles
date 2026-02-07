@@ -107,6 +107,7 @@ Example templates are provided: `aliases_local.sh.example` and `functions_local.
 | `claude/settings.json` | `~/.claude/settings.json` |
 | `claude/statusline-command.sh` | `~/.claude/statusline-command.sh` |
 | `claude/CLAUDE.md` | `~/.claude/CLAUDE.md` |
+| `claude/skills/*` | `~/.claude/skills/*` (auto-discovered) |
 
 ### Key Utilities
 

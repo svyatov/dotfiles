@@ -77,6 +77,7 @@ Files that will be symlinked:
     ~/.claude/settings.json <- claude/settings.json
     ~/.claude/statusline-command.sh <- claude/statusline-command.sh
     ~/.claude/CLAUDE.md <- claude/CLAUDE.md
+    ~/.claude/skills/*  <- claude/skills/* (auto-discovered)
 EOF
     exit 0
 fi
@@ -256,6 +257,16 @@ symlink_from_dotfiles "claude/statusline-command.sh" "${CLAUDE_CONFIG_DIR}/statu
 backup_file "${CLAUDE_CONFIG_DIR}/CLAUDE.md"
 symlink_from_dotfiles "claude/CLAUDE.md" "${CLAUDE_CONFIG_DIR}/CLAUDE.md"
 
+# Symlink skills
+CLAUDE_SKILLS_DIR="${CLAUDE_CONFIG_DIR}/skills"
+if [[ "$DRY_RUN" != true ]]; then
+    mkdir -p "${CLAUDE_SKILLS_DIR}"
+fi
+for skill_dir in "${DOTFILES_DIR}"/claude/skills/*/; do
+    skill_name=$(basename "$skill_dir")
+    symlink_from_dotfiles "claude/skills/${skill_name}" "${CLAUDE_SKILLS_DIR}/${skill_name}"
+done
+
 ### Verification
 ################
 if [[ "$DRY_RUN" != true ]]; then
@@ -275,6 +286,10 @@ if [[ "$DRY_RUN" != true ]]; then
     verify_symlink "${CLAUDE_CONFIG_DIR}/settings.json" "${DOTFILES_DIR}/claude/settings.json" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_CONFIG_DIR}/statusline-command.sh" "${DOTFILES_DIR}/claude/statusline-command.sh" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_CONFIG_DIR}/CLAUDE.md" "${DOTFILES_DIR}/claude/CLAUDE.md" || VERIFY_FAILED=1
+    for skill_dir in "${DOTFILES_DIR}"/claude/skills/*/; do
+        skill_name=$(basename "$skill_dir")
+        verify_symlink "${CLAUDE_SKILLS_DIR}/${skill_name}" "${DOTFILES_DIR}/claude/skills/${skill_name}" || VERIFY_FAILED=1
+    done
 
     if [[ $VERIFY_FAILED -eq 1 ]]; then
         echo ""
