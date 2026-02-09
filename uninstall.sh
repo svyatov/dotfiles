@@ -19,6 +19,9 @@ SYMLINKS=(
     "${HOME}/.claude/settings.json"
     "${HOME}/.claude/statusline-command.sh"
     "${HOME}/.claude/CLAUDE.md"
+    "${HOME}/Library/Application Support/Cursor/User/settings.json"
+    "${HOME}/Library/Application Support/Cursor/User/keybindings.json"
+    "${HOME}/.cursor/mcp.json"
 )
 
 ### Options

@@ -23,6 +23,9 @@ NEOVIM_CONFIG_DIR="${HOME}/.config/nvim"
 NEOVIM_CONFIG_FILE="${NEOVIM_CONFIG_DIR}/init.vim"
 # VIM_CONFIG_FILE="${HOME}/.vimrc"
 # VIM_VUNDLE_DIR="${HOME}/.vim/bundle/Vundle.vim"
+# Cursor
+CURSOR_CONFIG_DIR="${HOME}/Library/Application Support/Cursor/User"
+CURSOR_DOT_DIR="${HOME}/.cursor"
 SECRETS_FILE="${HOME}/.secrets"
 
 ### Options
@@ -78,6 +81,9 @@ Files that will be symlinked:
     ~/.claude/statusline-command.sh <- claude/statusline-command.sh
     ~/.claude/CLAUDE.md <- claude/CLAUDE.md
     ~/.claude/skills/*  <- claude/skills/* (auto-discovered)
+    ~/Library/Application Support/Cursor/User/settings.json <- cursor/settings.json
+    ~/Library/Application Support/Cursor/User/keybindings.json <- cursor/keybindings.json
+    ~/.cursor/mcp.json <- cursor/mcp.json
 EOF
     exit 0
 fi
@@ -233,6 +239,21 @@ fi
 backup_file "${NEOVIM_CONFIG_FILE}"
 symlink_from_dotfiles "nvim/init.vim" "${NEOVIM_CONFIG_FILE}"
 
+### Setting up Cursor
+#####################
+echo ""
+echo "Setting up Cursor..."
+if [[ "$DRY_RUN" != true ]]; then
+    mkdir -p "${CURSOR_CONFIG_DIR}"
+    mkdir -p "${CURSOR_DOT_DIR}"
+fi
+backup_file "${CURSOR_CONFIG_DIR}/settings.json"
+symlink_from_dotfiles "cursor/settings.json" "${CURSOR_CONFIG_DIR}/settings.json"
+backup_file "${CURSOR_CONFIG_DIR}/keybindings.json"
+symlink_from_dotfiles "cursor/keybindings.json" "${CURSOR_CONFIG_DIR}/keybindings.json"
+backup_file "${CURSOR_DOT_DIR}/mcp.json"
+symlink_from_dotfiles "cursor/mcp.json" "${CURSOR_DOT_DIR}/mcp.json"
+
 ### Setting up others
 ######################
 # backup_file "${TMUX_CONFIG_FILE}"
@@ -286,6 +307,9 @@ if [[ "$DRY_RUN" != true ]]; then
     verify_symlink "${CLAUDE_CONFIG_DIR}/settings.json" "${DOTFILES_DIR}/claude/settings.json" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_CONFIG_DIR}/statusline-command.sh" "${DOTFILES_DIR}/claude/statusline-command.sh" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_CONFIG_DIR}/CLAUDE.md" "${DOTFILES_DIR}/claude/CLAUDE.md" || VERIFY_FAILED=1
+    verify_symlink "${CURSOR_CONFIG_DIR}/settings.json" "${DOTFILES_DIR}/cursor/settings.json" || VERIFY_FAILED=1
+    verify_symlink "${CURSOR_CONFIG_DIR}/keybindings.json" "${DOTFILES_DIR}/cursor/keybindings.json" || VERIFY_FAILED=1
+    verify_symlink "${CURSOR_DOT_DIR}/mcp.json" "${DOTFILES_DIR}/cursor/mcp.json" || VERIFY_FAILED=1
     for skill_dir in "${DOTFILES_DIR}"/claude/skills/*/; do
         skill_name=$(basename "$skill_dir")
         verify_symlink "${CLAUDE_SKILLS_DIR}/${skill_name}" "${DOTFILES_DIR}/claude/skills/${skill_name}" || VERIFY_FAILED=1
@@ -305,4 +329,5 @@ else
     echo ""
     echo "To install Claude Code plugins, run: ~/.dotfiles/claude/install-plugins.sh"
     echo "To install Claude Code skills, run: ~/.dotfiles/claude/install-skills.sh"
+    echo "To install Cursor extensions, run: ~/.dotfiles/cursor/install-extensions.sh"
 fi
