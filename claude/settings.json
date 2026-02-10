@@ -12,6 +12,7 @@
       "Glob",
       "Grep",
       "WebSearch",
+      "WebFetch",
       "Edit",
       "Write",
       "Bash(git:*)",
@@ -33,6 +34,7 @@
       "Bash(bundle:*)",
       "Bash(go:*)",
       "Bash(make:*)",
+      "Bash(just:*)",
       "Bash(ls:*)",
       "Bash(find:*)",
       "Bash(cat:*)",
@@ -41,7 +43,7 @@
       "Bash(echo:*)",
       "Bash(mkdir:*)",
       "Bash(touch:*)",
-      "mcp__plugin_github_github"
+      "Bash(docker:*)"
     ],
     "deny": [
       "Read(./.env)",
@@ -54,7 +56,6 @@
       "Bash(git commit:*)",
       "Bash(git push:*)",
       "Bash(rm:*)",
-      "WebFetch",
       "Bash(curl:*)",
       "Bash(wget:*)"
     ],
