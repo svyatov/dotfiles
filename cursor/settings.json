@@ -97,4 +97,5 @@
   "gitlens.currentLine.dateFormat": "",
   "json.schemaDownload.enable": true,
   "editor.codeActionsOnSave": {},
+  "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
 }
