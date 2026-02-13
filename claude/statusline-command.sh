@@ -131,9 +131,9 @@ else
 fi
 
 # Get current directory and apply zsh-style shortening
-cwd=$(echo "$input" | jq -r '.workspace.current_dir')
+raw_cwd=$(echo "$input" | jq -r '.workspace.current_dir')
 # Replace home directory with ~
-cwd="${cwd/#$HOME/~}"
+cwd="${raw_cwd/#$HOME/~}"
 
 # Shorten directory path: ~/Projects/My/something -> ~/P/M/something
 shorten_path() {
@@ -173,8 +173,12 @@ shorten_path() {
             # Keep last part full
             result="${result}/${parts[$i]}"
         else
-            # Shorten to first letter
-            result="${result}/${parts[$i]:0:1}"
+            # Shorten to first letter (2 chars for dot-prefixed dirs)
+            if [[ "${parts[$i]}" == .* ]]; then
+                result="${result}/${parts[$i]:0:2}"
+            else
+                result="${result}/${parts[$i]:0:1}"
+            fi
         fi
     done
     echo "$result"
@@ -186,16 +190,25 @@ short_path=$(shorten_path "$cwd")
 git_info=""
 workspace_dir=$(echo "$input" | jq -r '.workspace.project_dir')
 if [ -d "$workspace_dir/.git" ] || git -C "$workspace_dir" rev-parse --git-dir > /dev/null 2>&1; then
+    # Detect worktree and resolve correct git working directory
+    git_work_dir="$workspace_dir"
+    worktree_info=""
+    git_dir=$(git -C "$raw_cwd" --no-optional-locks rev-parse --git-dir 2>/dev/null)
+    if [[ "$git_dir" == *"/worktrees/"* ]]; then
+        worktree_info=" ${C_TEAL_MID}⎇${C_RESET} "
+        git_work_dir="$raw_cwd"
+    fi
+
     # Get branch name (muted sage green)
-    branch=$(git -C "$workspace_dir" --no-optional-locks branch --show-current 2>/dev/null)
+    branch=$(git -C "$git_work_dir" --no-optional-locks branch --show-current 2>/dev/null)
 
     if [ -n "$branch" ]; then
         git_status=" ${C_SAGE}${branch}${C_RESET}"
 
         # Check if repo is clean or dirty
-        if ! git -C "$workspace_dir" --no-optional-locks diff --quiet 2>/dev/null || \
-           ! git -C "$workspace_dir" --no-optional-locks diff --cached --quiet 2>/dev/null || \
-           [ -n "$(git -C "$workspace_dir" --no-optional-locks ls-files --others --exclude-standard 2>/dev/null)" ]; then
+        if ! git -C "$git_work_dir" --no-optional-locks diff --quiet 2>/dev/null || \
+           ! git -C "$git_work_dir" --no-optional-locks diff --cached --quiet 2>/dev/null || \
+           [ -n "$(git -C "$git_work_dir" --no-optional-locks ls-files --others --exclude-standard 2>/dev/null)" ]; then
             git_status="${git_status} ${C_CORAL}✗${C_RESET}"
         else
             git_status="${git_status} ${C_SAGE}✓${C_RESET}"
@@ -205,53 +218,53 @@ if [ -d "$workspace_dir/.git" ] || git -C "$workspace_dir" rev-parse --git-dir >
         indicators=""
 
         # Added files (staged new files)
-        added=$(git -C "$workspace_dir" --no-optional-locks diff --cached --numstat 2>/dev/null | grep -c "^0.*0" || true)
+        added=$(git -C "$git_work_dir" --no-optional-locks diff --cached --numstat 2>/dev/null | grep -c "^0.*0" || true)
         if [ "$added" -gt 0 ]; then
             indicators="${indicators} ${C_SAGE}✚${C_RESET}"
         fi
 
         # Deleted files
-        deleted=$(git -C "$workspace_dir" --no-optional-locks diff --name-status 2>/dev/null | grep -c "^D" || true)
-        deleted_cached=$(git -C "$workspace_dir" --no-optional-locks diff --cached --name-status 2>/dev/null | grep -c "^D" || true)
+        deleted=$(git -C "$git_work_dir" --no-optional-locks diff --name-status 2>/dev/null | grep -c "^D" || true)
+        deleted_cached=$(git -C "$git_work_dir" --no-optional-locks diff --cached --name-status 2>/dev/null | grep -c "^D" || true)
         if [ "$((deleted + deleted_cached))" -gt 0 ]; then
             indicators="${indicators} ${C_CORAL}✖${C_RESET}"
         fi
 
         # Modified files
-        modified=$(git -C "$workspace_dir" --no-optional-locks diff --name-only 2>/dev/null | wc -l | tr -d ' ')
+        modified=$(git -C "$git_work_dir" --no-optional-locks diff --name-only 2>/dev/null | wc -l | tr -d ' ')
         if [ "$modified" -gt 0 ]; then
             indicators="${indicators} ${C_TEAL_MID}✱${C_RESET}"
         fi
 
         # Renamed files
-        renamed=$(git -C "$workspace_dir" --no-optional-locks diff --cached --name-status 2>/dev/null | grep -c "^R" || true)
+        renamed=$(git -C "$git_work_dir" --no-optional-locks diff --cached --name-status 2>/dev/null | grep -c "^R" || true)
         if [ "$renamed" -gt 0 ]; then
             indicators="${indicators} ${C_BOLD_MAGENTA}➜${C_RESET}"
         fi
 
         # Untracked files
-        untracked=$(git -C "$workspace_dir" --no-optional-locks ls-files --others --exclude-standard 2>/dev/null | wc -l | tr -d ' ')
+        untracked=$(git -C "$git_work_dir" --no-optional-locks ls-files --others --exclude-standard 2>/dev/null | wc -l | tr -d ' ')
         if [ "$untracked" -gt 0 ]; then
             indicators="${indicators} ${C_BOLD_WHITE}◼${C_RESET}"
         fi
 
         # Stashed changes
-        stashed=$(git -C "$workspace_dir" --no-optional-locks stash list 2>/dev/null | wc -l | tr -d ' ')
+        stashed=$(git -C "$git_work_dir" --no-optional-locks stash list 2>/dev/null | wc -l | tr -d ' ')
         if [ "$stashed" -gt 0 ]; then
             indicators="${indicators} ${C_TEAL_MID}✭${C_RESET}"
         fi
 
         # Unmerged files
-        unmerged=$(git -C "$workspace_dir" --no-optional-locks diff --name-only --diff-filter=U 2>/dev/null | wc -l | tr -d ' ')
+        unmerged=$(git -C "$git_work_dir" --no-optional-locks diff --name-only --diff-filter=U 2>/dev/null | wc -l | tr -d ' ')
         if [ "$unmerged" -gt 0 ]; then
             indicators="${indicators} ${C_GOLD}═${C_RESET}"
         fi
 
         # Ahead/behind
-        upstream=$(git -C "$workspace_dir" --no-optional-locks rev-parse --abbrev-ref @{upstream} 2>/dev/null)
+        upstream=$(git -C "$git_work_dir" --no-optional-locks rev-parse --abbrev-ref @{upstream} 2>/dev/null)
         if [ -n "$upstream" ]; then
-            ahead=$(git -C "$workspace_dir" --no-optional-locks rev-list --count @{upstream}..HEAD 2>/dev/null || echo "0")
-            behind=$(git -C "$workspace_dir" --no-optional-locks rev-list --count HEAD..@{upstream} 2>/dev/null || echo "0")
+            ahead=$(git -C "$git_work_dir" --no-optional-locks rev-list --count @{upstream}..HEAD 2>/dev/null || echo "0")
+            behind=$(git -C "$git_work_dir" --no-optional-locks rev-list --count HEAD..@{upstream} 2>/dev/null || echo "0")
 
             if [ "$ahead" -gt 0 ]; then
                 indicators="${indicators} ${C_GOLD}⬆${C_RESET}"
@@ -261,7 +274,7 @@ if [ -d "$workspace_dir/.git" ] || git -C "$workspace_dir" rev-parse --git-dir >
             fi
         fi
 
-        git_info="${git_status}${indicators}"
+        git_info="${worktree_info}${git_status}${indicators}"
     fi
 fi
 
