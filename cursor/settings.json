@@ -98,4 +98,5 @@
   "json.schemaDownload.enable": true,
   "editor.codeActionsOnSave": {},
   "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
+  "git.confirmSync": false,
 }
