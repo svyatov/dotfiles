@@ -27,7 +27,7 @@ safe_alias vol 'volume'
 safe_alias vol1 'volume 0.01'
 safe_alias wh 'which'
 safe_alias ws 'whois'
-safe_alias m 'mosh'
+safe_alias m 'mise'
 safe_alias n 'ngrok'
 safe_alias ai 'claude'
 

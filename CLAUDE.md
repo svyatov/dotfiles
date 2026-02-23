@@ -48,7 +48,7 @@ To uninstall (removes symlinks, restores backups):
 ### Loading Order
 
 ```
-.zshenv (environment: PATH, Homebrew, asdf, Postgres, secrets)
+.zshenv (environment: PATH, Homebrew, Postgres, secrets)
     ↓
 .zshrc (interactive)
     ├── Prezto framework
@@ -57,7 +57,7 @@ To uninstall (removes symlinks, restores backups):
     ├── functions.sh → sources all functions_*.sh (incl. functions_local.sh)
     ├── aliases.sh → sources all aliases_*.sh (incl. aliases_local.sh)
     ├── fzf/fd configuration (guarded, warns if missing)
-    ├── asdf configuration (guarded, warns if missing)
+    ├── mise activation
     └── ~/.zshrc.local (machine-specific, optional)
 ```
 

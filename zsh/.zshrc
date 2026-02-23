@@ -41,13 +41,8 @@ else
   echo "dotfiles: fzf not found. Install with 'brew install fzf' for fuzzy finding." >&2
 fi
 
-# asdf version manager
-if [[ -d "${HOME}/.asdf" ]]; then
-  export ASDF_DATA_DIR="${HOME}/.asdf"
-  export PATH="$ASDF_DATA_DIR/shims:$PATH"
-else
-  echo "dotfiles: asdf not found. Install with 'brew install asdf' for version management." >&2
-fi
+# mise version manager
+eval "$(mise activate zsh)"
 
 # Elixir
 # export PATH=$PATH:~/.mix/escripts

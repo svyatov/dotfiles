@@ -19,7 +19,7 @@ find_up() {
 }
 
 function prompt_svyatov_current_ruby {
-  local version=$(asdf current --no-header ruby | awk '{print $2}')
+  local version=$(mise current ruby)
   echo "R/$version"
 }
 
@@ -31,7 +31,7 @@ function prompt_svyatov_current_nodejs {
     echo "B/$version"
   elif find_up package-lock.json || find_up yarn.lock || find_up pnpm-lock.yaml; then
     # project is using Node
-    version=$(asdf current --no-header nodejs | awk '{print $2}')
+    version=$(mise current node)
     echo "N/$version"
   else
     # fallback to Bun

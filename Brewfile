@@ -5,7 +5,7 @@ brew "fzf"          # Fuzzy finder
 brew "fd"           # Simple, fast find alternative (used with fzf)
 brew "git-extras"   # Git utilities
 brew "neovim"       # Text editor
-brew "asdf"         # Version manager
+brew "mise"         # Version manager
 
 # Optional tools
 brew "yt-dlp"       # Video downloader

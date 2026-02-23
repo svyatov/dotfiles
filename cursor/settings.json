@@ -56,7 +56,7 @@
     "typeHierarchy": true,
     "workspaceSymbol": true,
   },
-  "rubyLsp.rubyExecutablePath": "/Users/leonid/.asdf/shims/ruby",
+  "rubyLsp.rubyExecutablePath": "/Users/leonid/.local/share/mise/shims/ruby",
   "search.exclude": {
     ".idea": true,
     ".rake_tasks": true,

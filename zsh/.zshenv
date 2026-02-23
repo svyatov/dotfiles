@@ -10,11 +10,6 @@ export ERL_AFLAGS="-kernel shell_history enabled" # Enables history for Elixir i
 # Set PATH, MANPATH, etc., for Homebrew.
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# https://github.com/asdf-vm/asdf-nodejs#partial-and-codename-versions
-export ASDF_NODEJS_LEGACY_FILE_DYNAMIC_STRATEGY=latest_available
-# Enable corepack for new installations (conflicts with bun)
-# export ASDF_NODEJS_AUTO_ENABLE_COREPACK=true
-
 # Home bin
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 

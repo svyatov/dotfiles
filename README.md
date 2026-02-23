@@ -59,7 +59,7 @@ Or install individually:
 
 | Tool | Purpose | Install |
 |------|---------|---------|
-| [asdf](https://asdf-vm.com) | Version manager for Ruby, Node, Python | `brew install asdf` |
+| [mise](https://mise.jdx.dev) | Version manager for Ruby, Node, Python | `brew install mise` |
 | [fzf](https://github.com/junegunn/fzf) | Fuzzy finder for shell history/files | `brew install fzf` |
 | [fd](https://github.com/sharkdp/fd) | Fast file finder | `brew install fd` |
 | [Neovim](https://neovim.io) | Modern Vim | `brew install neovim` |
