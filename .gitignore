@@ -4,3 +4,6 @@ zsh/projects
 # Local customization files (machine-specific)
 zsh/aliases_local.sh
 zsh/functions_local.sh
+
+# Command log for alias stats
+data/

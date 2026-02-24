@@ -32,6 +32,7 @@ A curated collection of shell configurations, aliases, and functions optimized f
 ├── git/                        # Git config and global gitignore
 ├── ruby/                       # Ruby, Rails, IRB configuration
 ├── nvim/                       # Neovim configuration with cheatsheet
+├── bin/                        # Helper scripts (alias_stats)
 ├── claude/                     # Claude Code settings and scripts
 ├── bash/                       # Legacy/server bash config
 ├── Brewfile                    # Homebrew dependencies
@@ -121,6 +122,7 @@ brew bundle --file=~/.dotfiles/Brewfile  # Install dependencies
 | `Brewfile` | Homebrew dependencies (`brew bundle`) |
 | `claude/install-plugins.sh` | Install Claude Code plugins |
 | `claude/install-skills.sh` | Install Claude Code skills (with `--force`) |
+| `bin/alias_stats` | Alias usage stats with colorful grouped output |
 
 ## ⚡ Jump Shortcuts
 
@@ -166,6 +168,7 @@ Bookmarks persist across sessions (stored as symlinks in `~/.jump_shortcuts`) an
 | `uu [dir]` | Jump up two levels |
 | `cmdtop [n]` | Show most-used commands (default: 10) |
 | `g` | Smart git: runs `git status` when called without arguments |
+| `alias_stats [days]` | Alias usage stats: used/unused grouped by file, suggestions |
 | `rncd app` | Create new Rails app and cd into it |
 
 ### Common Aliases
@@ -180,6 +183,7 @@ Bookmarks persist across sessions (stored as symlinks in `~/.jump_shortcuts`) an
 | `shrl` | `exec $SHELL -l` | Reload shell |
 | `myip` | `dig +short myip.opendns.com...` | Show public IP |
 | `ai` | `claude` | Launch Claude Code |
+| `astats` | `alias_stats` | Alias usage statistics |
 
 ### Git Aliases (from `.gitconfig`)
 

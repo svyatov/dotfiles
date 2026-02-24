@@ -1,0 +1,201 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Alias usage statistics from preexec command log.
+#
+# Scans ~/.dotfiles/zsh/aliases*.sh for safe_alias definitions,
+# cross-references with ~/.dotfiles/data/command_log.
+# Trims entries older than 90 days on each run.
+
+RETENTION_DAYS = 90
+DOTFILES_DIR = File.expand_path("~/.dotfiles")
+LOGFILE = File.join(DOTFILES_DIR, "data", "command_log")
+ALIAS_GLOB = File.join(DOTFILES_DIR, "zsh", "aliases*.sh")
+SAFE_ALIAS_RE = /\Asafe_alias\s+(\S+)\s+/
+COLOR = $stdout.tty? && !ENV.key?("NO_COLOR")
+
+CommandLog = Data.define(:retained_lines, :counts, :total_commands, :commands)
+
+def s(code, text, bold: false)
+  return text.to_s unless COLOR
+  "\e[#{bold ? '1;' : ''}38;5;#{code}m#{text}\e[0m"
+end
+
+def scan_alias_sources
+  aliases = {}
+  Dir.glob(ALIAS_GLOB).sort.each do |path|
+    file = File.basename(path)
+    File.foreach(path) do |line|
+      next unless (m = line.match(SAFE_ALIAS_RE))
+      rest = line[m.end(0)..]
+      command = case rest
+                when /\A'([^']*)'/ then $1
+                when /\A"([^"]*)"/ then $1
+                end
+      aliases[m[1]] = { file:, command: }
+    end
+  end
+  aliases
+end
+
+def parse_command_log(days)
+  now = Time.now.to_i
+  cutoff = now - days * 86_400
+  trim_cutoff = now - RETENTION_DAYS * 86_400
+  retained = []
+  counts = Hash.new(0)
+  total = 0
+  commands = []
+
+  File.open(LOGFILE, "r:ASCII-8BIT") do |f|
+    f.each_line do |line|
+      space = line.index(" ")
+      next unless space
+      ts = line[0...space].to_i
+      next if ts < trim_cutoff
+
+      retained << line
+      next if ts < cutoff
+
+      cmd = line[(space + 1)..].strip
+      first = cmd.split(/\s+/, 2).first
+      next if first.nil? || first.empty?
+
+      total += 1
+      counts[first] += 1
+      commands << cmd
+    end
+  end
+
+  File.write(LOGFILE, retained.join)
+  CommandLog[retained_lines: retained, counts:, total_commands: total, commands:]
+end
+
+def terminal_width
+  @terminal_width ||= (`tput cols 2>/dev/null`.to_i.then { |c| c > 0 ? c : 80 })
+end
+
+def wrap_columns(items, indent: 2)
+  width = terminal_width
+  prefix = " " * indent
+  lines = []
+  row = ""
+  items.each do |item|
+    if !row.empty? && row.length + item.length + indent + 2 > width
+      lines << "#{prefix}#{row}"
+      row = item
+    else
+      row = row.empty? ? item : "#{row}  #{item}"
+    end
+  end
+  lines << "#{prefix}#{row}" unless row.empty?
+  lines
+end
+
+def print_used(used)
+  puts s(114, "\uf00c Used aliases:", bold: true)
+  if used.any?
+    cw = used.first[1].to_s.length
+    used.each { |name, count| puts "  #{s(114, "%#{cw}d" % count)}  #{s(255, name)}" }
+  else
+    puts "  #{s(242, "No alias usage found in this period.")}"
+  end
+end
+
+def print_unused_grouped(unused_names, aliases)
+  grouped = Hash.new { |h, k| h[k] = [] }
+  unused_names.each { |name| grouped[aliases[name][:file]] << name }
+
+  puts s(245, "\uf070 Unused aliases (#{unused_names.size}):", bold: true)
+  grouped.sort.each do |file, names|
+    puts "  #{s(180, "\uf0f6 #{file}")} #{s(242, "(#{names.size}):")}"
+    wrap_columns(names.sort, indent: 4).each { |line| puts s(242, line) }
+  end
+end
+
+def print_suggestions(aliases, log)
+  alias_names = aliases.keys.to_set
+  exp_map = aliases.each_with_object({}) { |(n, i), h| h[i[:command]] = n if i[:command] }
+  sorted_exps = exp_map.keys.sort_by { |e| -e.length }
+
+  missed = Hash.new(0)
+  two_token = Hash.new(0)
+  matched_keys = Set.new
+
+  log.commands.each do |cmd|
+    first = cmd.split(/\s+/, 2).first
+    next if alias_names.include?(first)
+
+    hit = sorted_exps.find { |e| cmd == e || cmd.start_with?("#{e} ") }
+    if hit
+      missed[hit] += 1
+      matched_keys << cmd.split(/\s+/, 3)[0..1].join(" ")
+    end
+
+    two_token[cmd.split(/\s+/, 3)[0..1].join(" ")] += 1
+  end
+
+  missed_top = missed.sort_by { |_, c| -c }.first(10)
+  frequent = two_token.reject { |k, _| matched_keys.include?(k) }
+                       .sort_by { |_, c| -c }.first(10)
+
+  return if missed_top.empty? && frequent.empty?
+
+  puts s(220, "\uf0eb Suggestions:", bold: true)
+
+  if missed_top.any?
+    puts "  #{s(215, "Aliases you're not using:")}"
+    cw = missed_top.first[1].to_s.length
+    ew = missed_top.map { |e, _| e.length }.max
+    missed_top.each do |exp, c|
+      puts "    #{s(215, "%#{cw}dx" % c)}  #{s(255, "%-#{ew}s" % exp)}  " \
+           "#{s(242, "\uf061")}  #{s(114, exp_map[exp])}"
+    end
+  end
+
+  if frequent.any?
+    puts "  #{s(215, "\uf201 Frequent commands without aliases:")}"
+    cw = frequent.first[1].to_s.length
+    frequent.each { |key, c| puts "    #{s(215, "%#{cw}dx" % c)}  #{s(255, key)}" }
+  end
+
+  puts
+end
+
+def print_summary(used_count, total_aliases, invocations, total_commands)
+  pct = total_commands > 0 ? invocations * 100 / total_commands : 0
+  puts "#{s(75, "\uf05a Summary:", bold: true)} " \
+       "#{s(114, used_count)}#{s(245, '/')}#{s(255, total_aliases)} aliases used, " \
+       "#{s(114, invocations)} invocations " \
+       "(#{s(114, "#{pct}%")} of #{s(255, total_commands)} commands)"
+end
+
+def main
+  days = (ARGV[0] || 30).to_i
+
+  unless File.exist?(LOGFILE)
+    warn "Command log not found: #{LOGFILE}"
+    warn "Run some commands first — the preexec hook creates it automatically."
+    exit 1
+  end
+
+  aliases = scan_alias_sources
+  log = parse_command_log(days)
+
+  used = log.counts.select { |name, _| aliases.key?(name) }.sort_by { |_, c| -c }
+  used_names = used.map(&:first).to_set
+  unused = (aliases.keys - used_names.to_a).sort
+  invocations = used.sum { |_, c| c }
+
+  puts s(75, "\uf080 Alias usage stats (last #{days} days)", bold: true)
+  puts s(240, "\u2550" * 39)
+  puts
+  print_used(used)
+  puts
+  print_unused_grouped(unused, aliases)
+  puts
+  print_suggestions(aliases, log)
+  print_summary(used.size, aliases.size, invocations, log.total_commands)
+end
+
+main

@@ -30,6 +30,7 @@ safe_alias wh 'which'
 safe_alias ws 'whois'
 safe_alias n 'ngrok'
 safe_alias ai 'claude'
+safe_alias astats 'alias_stats'
 
 # Update ZPrezto
 safe_alias zpu 'pushd ~/.zprezto && git pull && git submodule update --init --recursive && popd'
