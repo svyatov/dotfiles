@@ -98,6 +98,7 @@ Example templates are provided: `aliases_local.sh.example` and `functions_local.
 |--------|-------------|
 | `zsh/.zshrc` | `~/.zshrc` |
 | `zsh/.zshenv` | `~/.zshenv` |
+| `zsh/.zprofile` | `~/.zprofile` |
 | `zsh/.zpreztorc` | `~/.zpreztorc` |
 | `zsh/prompt_svyatov_setup` | `~/.zprezto/modules/prompt/functions/prompt_svyatov_setup` |
 | `git/.gitconfig` | `~/.gitconfig` |

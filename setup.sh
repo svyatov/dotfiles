@@ -71,6 +71,7 @@ Files that will be symlinked:
     ~/.gitconfig     <- git/.gitconfig
     ~/.zshrc         <- zsh/.zshrc
     ~/.zshenv        <- zsh/.zshenv
+    ~/.zprofile      <- zsh/.zprofile
     ~/.zlogin        <- zsh/.zlogin
     ~/.zpreztorc     <- zsh/.zpreztorc
     ~/.gemrc         <- ruby/.gemrc
@@ -208,7 +209,8 @@ symlink_from_dotfiles "zsh/.zlogin" "${ZSH_LOGIN_FILE}"
 backup_file "${ZPREZTO_RC_FILE}"
 symlink_from_dotfiles "zsh/.zpreztorc" "${ZPREZTO_RC_FILE}"
 symlink_from_dotfiles "zsh/prompt_svyatov_setup" "${ZPREZTO_DIR}/modules/prompt/functions/prompt_svyatov_setup"
-backup_file "${ZSH_PROFILE_FILE}" # just "remove" .zprofile because it's useless
+backup_file "${ZSH_PROFILE_FILE}"
+symlink_from_dotfiles "zsh/.zprofile" "${ZSH_PROFILE_FILE}"
 
 ### Setting up ruby: rails, irb, gem
 #####################################
@@ -298,6 +300,7 @@ if [[ "$DRY_RUN" != true ]]; then
     verify_symlink "${GIT_CONFIG_FILE}" "${DOTFILES_DIR}/git/.gitconfig" || VERIFY_FAILED=1
     verify_symlink "${ZSH_RC_FILE}" "${DOTFILES_DIR}/zsh/.zshrc" || VERIFY_FAILED=1
     verify_symlink "${ZSH_ENV_FILE}" "${DOTFILES_DIR}/zsh/.zshenv" || VERIFY_FAILED=1
+    verify_symlink "${ZSH_PROFILE_FILE}" "${DOTFILES_DIR}/zsh/.zprofile" || VERIFY_FAILED=1
     verify_symlink "${ZSH_LOGIN_FILE}" "${DOTFILES_DIR}/zsh/.zlogin" || VERIFY_FAILED=1
     verify_symlink "${ZPREZTO_RC_FILE}" "${DOTFILES_DIR}/zsh/.zpreztorc" || VERIFY_FAILED=1
     verify_symlink "${GEM_CONFIG_FILE}" "${DOTFILES_DIR}/ruby/.gemrc" || VERIFY_FAILED=1

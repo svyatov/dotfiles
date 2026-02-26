@@ -9,6 +9,7 @@ SYMLINKS=(
     "${HOME}/.gitconfig"
     "${HOME}/.zshrc"
     "${HOME}/.zshenv"
+    "${HOME}/.zprofile"
     "${HOME}/.zlogin"
     "${HOME}/.zpreztorc"
     "${HOME}/.zprezto/modules/prompt/functions/prompt_svyatov_setup"
