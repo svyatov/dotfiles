@@ -97,6 +97,6 @@
   "gitlens.currentLine.dateFormat": "",
   "json.schemaDownload.enable": true,
   "editor.codeActionsOnSave": {},
-  "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
+  "python.defaultInterpreterPath": "/Users/leonid/.local/share/mise/installs/python/3.14.3/bin/python",
   "git.confirmSync": false,
 }
