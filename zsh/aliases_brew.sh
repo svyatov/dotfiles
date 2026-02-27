@@ -1,10 +1,10 @@
 # MacOS Brew
 safe_alias ew 'brew'
-safe_alias ewu 'brew update'
+safe_alias ewu 'brew upgrade'
 safe_alias ewi 'brew install'
 safe_alias ews 'brew info'
 safe_alias ewd 'brew doctor'
 safe_alias ewo 'brew outdated'
 safe_alias ewc 'brew cleanup'
+safe_alias ewuu 'brew update'
 safe_alias ewuo 'brew update && brew outdated'
-safe_alias ewuu 'brew upgrade'
