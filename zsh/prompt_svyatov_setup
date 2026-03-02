@@ -20,7 +20,7 @@ find_up() {
 
 function prompt_svyatov_current_ruby {
   local version=$(mise current ruby)
-  echo "R/$version"
+  echo "R/${version%.*}"
 }
 
 function prompt_svyatov_current_nodejs {
@@ -28,15 +28,15 @@ function prompt_svyatov_current_nodejs {
   if find_up bun.lock || find_up bun.lockb; then
     # project is using Bun
     version=$(bun --version 2>/dev/null)
-    echo "B/$version"
+    echo "B/${version%.*}"
   elif find_up package-lock.json || find_up yarn.lock || find_up pnpm-lock.yaml; then
     # project is using Node
     version=$(mise current node)
-    echo "N/$version"
+    echo "N/${version%.*}"
   else
     # fallback to Bun
     version=$(bun --version 2>/dev/null)
-    echo "B/$version"
+    echo "B/${version%.*}"
   fi
 }
 
@@ -52,7 +52,12 @@ function prompt_svyatov_current_python {
     # Use system/homebrew Python
     version=$(python3 --version 2>/dev/null | awk '{print $2}')
   fi
-  echo "P/$version"
+  echo "P/${version%.*}"
+}
+
+function prompt_svyatov_current_go {
+  local version=$(mise current go)
+  echo "G/${version%.*}"
 }
 
 function prompt_svyatov_pwd {
@@ -119,7 +124,7 @@ function prompt_svyatov_setup {
 
   # Define prompts.
   PROMPT='%F{yellow}%T%f %F{cyan}${_prompt_svyatov_pwd}%f${git_info:+${(e)git_info[prompt]}}%(!. %B%F{red}#%f%b.)${editor_info[keymap]} '
-  RPROMPT='${editor_info[overwrite]}%(?:: %F{red}⏎%f)${VIM:+" %B%F{green}V%f%b"}${git_info[rprompt]} [%F{magenta}$(prompt_svyatov_current_ruby)%f][%F{cyan}$(prompt_svyatov_current_python)%f][%F{yellow}$(prompt_svyatov_current_nodejs)%f]'
+  RPROMPT='${editor_info[overwrite]}%(?:: %F{red}⏎%f)${VIM:+" %B%F{green}V%f%b"}${git_info[rprompt]} [%F{160}$(prompt_svyatov_current_ruby)%f][%F{33}$(prompt_svyatov_current_python)%f][%F{70}$(prompt_svyatov_current_nodejs)%f][%F{75}$(prompt_svyatov_current_go)%f]'
   SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 }
 
