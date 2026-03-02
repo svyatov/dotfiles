@@ -16,6 +16,9 @@ export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 # Doom Emacs
 export PATH="$PATH:$HOME/.config/emacs/bin"
 
+# Go
+export PATH="$PATH:$HOME/go/bin"
+
 # Postgres.app
 export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/16/bin"
 
