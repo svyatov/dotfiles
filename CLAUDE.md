@@ -112,6 +112,7 @@ Example templates are provided: `aliases_local.sh.example` and `functions_local.
 | `cursor/settings.json` | `~/Library/Application Support/Cursor/User/settings.json` |
 | `cursor/keybindings.json` | `~/Library/Application Support/Cursor/User/keybindings.json` |
 | `cursor/mcp.json` | `~/.cursor/mcp.json` |
+| `ghostty/config` | `~/.config/ghostty/config` |
 
 ### Key Utilities
 
@@ -154,6 +155,7 @@ safe_alias g 'git' 'override'     # Forces creation
 | `cursor/keybindings.json` | Cursor keybindings |
 | `cursor/mcp.json` | Cursor MCP server configuration |
 | `cursor/extensions.txt` | Cursor extension list (one ID per line) |
+| `ghostty/config` | Ghostty terminal configuration |
 | `cursor/install-extensions.sh` | Install Cursor extensions from list |
 | `servers/install.sh` | One-line installer for server shell config |
 | `servers/README.md` | Server shell config documentation |

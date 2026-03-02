@@ -17,6 +17,9 @@ ZSH_LOGIN_FILE="${HOME}/.zlogin"
 # Zsh Prezto
 ZPREZTO_DIR="${HOME}/.zprezto"
 ZPREZTO_RC_FILE="${HOME}/.zpreztorc"
+# Ghostty
+GHOSTTY_CONFIG_DIR="${HOME}/.config/ghostty"
+GHOSTTY_CONFIG_FILE="${GHOSTTY_CONFIG_DIR}/config"
 # Others
 TMUX_CONFIG_FILE="${HOME}/.tmux.conf"
 NEOVIM_CONFIG_DIR="${HOME}/.config/nvim"
@@ -85,6 +88,7 @@ Files that will be symlinked:
     ~/Library/Application Support/Cursor/User/settings.json <- cursor/settings.json
     ~/Library/Application Support/Cursor/User/keybindings.json <- cursor/keybindings.json
     ~/.cursor/mcp.json <- cursor/mcp.json
+    ~/.config/ghostty/config <- ghostty/config
 EOF
     exit 0
 fi
@@ -256,6 +260,16 @@ symlink_from_dotfiles "cursor/keybindings.json" "${CURSOR_CONFIG_DIR}/keybinding
 backup_file "${CURSOR_DOT_DIR}/mcp.json"
 symlink_from_dotfiles "cursor/mcp.json" "${CURSOR_DOT_DIR}/mcp.json"
 
+### Setting up Ghostty
+######################
+echo ""
+echo "Setting up Ghostty..."
+if [[ "$DRY_RUN" != true ]]; then
+    mkdir -p "${GHOSTTY_CONFIG_DIR}"
+fi
+backup_file "${GHOSTTY_CONFIG_FILE}"
+symlink_from_dotfiles "ghostty/config" "${GHOSTTY_CONFIG_FILE}"
+
 ### Setting up others
 ######################
 # backup_file "${TMUX_CONFIG_FILE}"
@@ -313,6 +327,7 @@ if [[ "$DRY_RUN" != true ]]; then
     verify_symlink "${CURSOR_CONFIG_DIR}/settings.json" "${DOTFILES_DIR}/cursor/settings.json" || VERIFY_FAILED=1
     verify_symlink "${CURSOR_CONFIG_DIR}/keybindings.json" "${DOTFILES_DIR}/cursor/keybindings.json" || VERIFY_FAILED=1
     verify_symlink "${CURSOR_DOT_DIR}/mcp.json" "${DOTFILES_DIR}/cursor/mcp.json" || VERIFY_FAILED=1
+    verify_symlink "${GHOSTTY_CONFIG_FILE}" "${DOTFILES_DIR}/ghostty/config" || VERIFY_FAILED=1
     for skill_dir in "${DOTFILES_DIR}"/claude/skills/*/; do
         skill_name=$(basename "$skill_dir")
         verify_symlink "${CLAUDE_SKILLS_DIR}/${skill_name}" "${DOTFILES_DIR}/claude/skills/${skill_name}" || VERIFY_FAILED=1

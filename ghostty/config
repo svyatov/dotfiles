@@ -1,0 +1,8 @@
+theme = Deep
+shell-integration-features = no-cursor
+cursor-style = underline
+# cursor-style-blink = false
+copy-on-select = clipboard
+macos-titlebar-style = tabs
+auto-update = check
+

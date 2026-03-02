@@ -23,6 +23,7 @@ SYMLINKS=(
     "${HOME}/Library/Application Support/Cursor/User/settings.json"
     "${HOME}/Library/Application Support/Cursor/User/keybindings.json"
     "${HOME}/.cursor/mcp.json"
+    "${HOME}/.config/ghostty/config"
 )
 
 ### Options
