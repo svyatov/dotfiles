@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-Personal dotfiles for macOS web development (Ruby/Rails, Node.js, Docker). Uses Zsh with Prezto framework, symlink-based configuration management.
+Personal dotfiles for macOS web development (Ruby/Rails, Node.js, Go, Elixir, Docker). Uses Zsh with Prezto framework, symlink-based configuration management.
 
 ## Installation
 
@@ -141,7 +141,7 @@ safe_alias g 'git' 'override'     # Forces creation
 | `uninstall.sh` | Remove symlinks and restore backups |
 | `Brewfile` | Homebrew dependencies (install with `brew bundle`) |
 | `zsh/.zpreztorc` | Prezto modules and theme configuration |
-| `zsh/prompt_svyatov_setup` | Custom prompt with Ruby/Node/Python versions |
+| `zsh/prompt_svyatov_setup` | Custom prompt with Ruby/Node/Python/Go versions |
 | `zsh/aliases_local.sh.example` | Template for machine-specific aliases |
 | `zsh/functions_local.sh.example` | Template for machine-specific functions |
 | `git/.gitconfig` | 90+ git aliases, 1Password SSH signing, diff tools |

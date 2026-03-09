@@ -4,7 +4,7 @@
 
 ## 📋 Overview
 
-A curated collection of shell configurations, aliases, and functions optimized for Ruby/Rails, Node.js, and Docker development workflows. Built around Zsh with Prezto, featuring 100+ productivity aliases and seamless integration with modern tools like Graphite, 1Password commit signing, and Claude Code.
+A curated collection of shell configurations, aliases, and functions optimized for Ruby/Rails, Node.js, Go, Elixir, and Docker development workflows. Built around Zsh with Prezto, featuring 100+ productivity aliases and seamless integration with modern tools like Graphite, 1Password commit signing, and Claude Code.
 
 ## ✨ Features at a Glance
 
@@ -12,10 +12,12 @@ A curated collection of shell configurations, aliases, and functions optimized f
 |----------|------------|
 | **Shell** | Zsh + Prezto, jump shortcuts, FZF fuzzy finding |
 | **Git** | 90+ aliases, Graphite stacked diffs, 1Password SSH signing |
-| **Editor** | Neovim with built-in cheatsheet, Claude Code integration |
+| **Editor** | Neovim with built-in cheatsheet, Cursor, Claude Code integration |
 | **Ruby/Rails** | 80+ aliases for Bundler, Rails, Rake, Rubocop, Capistrano |
-| **JavaScript** | npm, pnpm, Bun aliases |
-| **DevOps** | Docker, Docker Compose, Heroku, Homebrew |
+| **Go** | Run, build, test, install, fmt aliases |
+| **Elixir** | IEx, Mix aliases |
+| **JavaScript** | npm, pnpm, Yarn, Bun aliases |
+| **DevOps** | Docker, Docker Compose, Heroku, Homebrew, mise |
 
 ## 📁 Repository Structure
 
@@ -25,16 +27,18 @@ A curated collection of shell configurations, aliases, and functions optimized f
 │   ├── .zshrc                  # Main Zsh configuration
 │   ├── .zpreztorc              # Prezto framework settings
 │   ├── aliases.sh              # Common aliases
-│   ├── aliases_*.sh            # Domain-specific aliases (git, ruby, docker, etc.)
+│   ├── aliases_*.sh            # Domain-specific aliases (git, ruby, docker, go, etc.)
 │   ├── aliases_local.sh.example  # Template for local aliases
 │   ├── functions.sh            # Custom shell functions
 │   └── functions_local.sh.example # Template for local functions
 ├── git/                        # Git config and global gitignore
 ├── ruby/                       # Ruby, Rails, IRB configuration
 ├── nvim/                       # Neovim configuration with cheatsheet
+├── claude/                     # Claude Code settings, plugins, skills
+├── cursor/                     # Cursor editor settings, keybindings, MCP
+├── ghostty/                    # Ghostty terminal configuration
 ├── bin/                        # Helper scripts (alias_stats)
-├── claude/                     # Claude Code settings and scripts
-├── bash/                       # Legacy/server bash config
+├── servers/                    # Lightweight shell config for remote Linux servers
 ├── Brewfile                    # Homebrew dependencies
 ├── setup.sh                    # Installation script
 ├── uninstall.sh                # Uninstallation script
@@ -112,6 +116,12 @@ brew bundle --file=~/.dotfiles/Brewfile  # Install dependencies
 | `nvim/init.vim` | `~/.config/nvim/init.vim` | Neovim configuration |
 | `claude/settings.json` | `~/.claude/settings.json` | Claude Code settings |
 | `claude/statusline-command.sh` | `~/.claude/statusline-command.sh` | Claude Code status line |
+| `claude/CLAUDE.md` | `~/.claude/CLAUDE.md` | Global Claude Code preferences |
+| `claude/skills/*` | `~/.claude/skills/*` | Claude Code skills |
+| `cursor/settings.json` | `~/Library/.../Cursor/User/settings.json` | Cursor editor settings |
+| `cursor/keybindings.json` | `~/Library/.../Cursor/User/keybindings.json` | Cursor keybindings |
+| `cursor/mcp.json` | `~/.cursor/mcp.json` | Cursor MCP server config |
+| `ghostty/config` | `~/.config/ghostty/config` | Ghostty terminal config |
 
 **Tooling scripts (not symlinked):**
 
@@ -122,6 +132,7 @@ brew bundle --file=~/.dotfiles/Brewfile  # Install dependencies
 | `Brewfile` | Homebrew dependencies (`brew bundle`) |
 | `claude/install-plugins.sh` | Install Claude Code plugins |
 | `claude/install-skills.sh` | Install Claude Code skills (with `--force`) |
+| `cursor/install-extensions.sh` | Install Cursor extensions from list |
 | `bin/alias_stats` | Alias usage stats with colorful grouped output |
 
 ## ⚡ Jump Shortcuts
@@ -244,6 +255,40 @@ Bookmarks persist across sessions (stored as symlinks in `~/.jump_shortcuts`) an
 | `bb` | `bun` | Bun shortcut |
 | `bbi` | `bun install` | Bun install |
 
+### Go Aliases
+
+| Alias | Command | Description |
+|-------|---------|-------------|
+| `gor` | `go run .` | Run current package |
+| `gob` | `go build .` | Build current package |
+| `got` | `go test ./...` | Run all tests |
+| `gotr` | `go test -race ./...` | Run tests with race detector |
+| `gotv` | `go test -v ./...` | Run tests verbose |
+| `gom` | `go mod tidy` | Tidy modules |
+| `gog` | `go get` | Get package |
+| `goi` | `go install` | Install package |
+| `gof` | `go fmt ./...` | Format all files |
+
+### Elixir Aliases
+
+| Alias | Command | Description |
+|-------|---------|-------------|
+| `ie` | `iex` | Interactive Elixir |
+| `im` | `iex -S mix` | IEx with Mix project |
+| `mt` | `mix test` | Run tests |
+| `mtt` | `mix test --trace` | Run tests with trace |
+
+### Yarn Aliases
+
+| Alias | Command | Description |
+|-------|---------|-------------|
+| `y` | `yarn` | Yarn shortcut |
+| `ya` | `yarn add` | Add package |
+| `yu` | `yarn upgrade` | Upgrade packages |
+| `yr` | `yarn run` | Run script |
+| `yrb` | `yarn run build` | Build project |
+| `yt` | `yarn test` | Run tests |
+
 ### Docker Aliases
 
 | Alias | Command | Description |
@@ -254,6 +299,31 @@ Bookmarks persist across sessions (stored as symlinks in `~/.jump_shortcuts`) an
 | `dcm` | `docker-compose` | Compose shortcut |
 | `dcu` | `docker-compose up` | Start services |
 | `dce` | `docker-compose exec` | Exec in container |
+
+### Homebrew Aliases
+
+| Alias | Command | Description |
+|-------|---------|-------------|
+| `ew` | `brew` | Brew shortcut |
+| `ewi` | `brew install` | Install package |
+| `ewu` | `brew upgrade` | Upgrade packages |
+| `ewuu` | `brew update` | Update formulae |
+| `ewo` | `brew outdated` | List outdated |
+| `ewd` | `brew doctor` | Run diagnostics |
+| `ewc` | `brew cleanup` | Clean up |
+
+### mise Aliases
+
+| Alias | Command | Description |
+|-------|---------|-------------|
+| `m` | `mise` | mise shortcut |
+| `mi` | `mise install` | Install runtime |
+| `mu` | `mise use` | Set version locally |
+| `mug` | `mise use -g` | Set version globally |
+| `mls` | `mise ls` | List installed |
+| `mo` | `mise outdated` | Check outdated |
+| `mup` | `mise upgrade` | Upgrade runtimes |
+| `mr` | `mise run` | Run task |
 
 ## 🔐 Secrets
 
