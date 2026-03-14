@@ -11,3 +11,4 @@ brew "mise"         # Version manager
 brew "yt-dlp"       # Video downloader
 brew "mosh"         # Mobile shell (better SSH)
 brew "ngrok"        # Secure tunnels
+brew "markdownlint-cli2" # Markdown linter

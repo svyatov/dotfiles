@@ -99,4 +99,7 @@
   "editor.codeActionsOnSave": {},
   "python.defaultInterpreterPath": "/Users/leonid/.local/share/mise/installs/python/3.14.3/bin/python",
   "git.confirmSync": false,
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+  },
 }
