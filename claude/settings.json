@@ -38,12 +38,22 @@
       "Bash(ls:*)",
       "Bash(find:*)",
       "Bash(cat:*)",
+      "Bash(grep:*)",
+      "Bash(wc:*)",
       "Bash(pwd:*)",
       "Bash(which:*)",
       "Bash(echo:*)",
       "Bash(mkdir:*)",
       "Bash(touch:*)",
-      "Bash(docker:*)"
+      "Bash(docker:*)",
+      "Bash(go build:*)",
+      "Bash(golangci-lint linters:*)",
+      "Bash(golangci-lint run:*)",
+      "Bash(task lint:*)",
+      "Bash(task test:*)",
+      "Bash(oz:*)",
+      "Bash(./oz:*)",
+      "Bash(for dir:*)"
     ],
     "deny": [
       "Read(./.env)",
@@ -76,7 +86,26 @@
     "pr-review-toolkit@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
     "claude-md-management@claude-plugins-official": true,
-    "claude-code-setup@claude-plugins-official": true
+    "claude-code-setup@claude-plugins-official": true,
+    "ruby-lsp@claude-plugins-official": true,
+    "chrome-devtools-mcp@claude-plugins-official": true
   },
-  "effortLevel": "high"
+  "spinnerTipsEnabled": false,
+  "effortLevel": "high",
+  "prefersReducedMotion": true,
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "filepath=$(echo $CLAUDE_TOOL_INPUT | jq -r '.file_path // empty'); if [ -n \"$filepath\" ] && echo \"$filepath\" | grep -qE '\\.md$'; then markdownlint-cli2 \"$filepath\" 2>&1 | tail -20; fi",
+            "timeout": 15,
+            "statusMessage": "Markdown lint..."
+          }
+        ]
+      }
+    ]
+  }
 }
