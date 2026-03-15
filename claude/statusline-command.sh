@@ -41,8 +41,11 @@ C_BOLD_WHITE='\033[1;37m'        # git untracked
 # Read JSON input from stdin
 input=$(cat)
 
+# Extract version
+cc_version=$(echo "$input" | jq -r '.version // empty')
+
 # Extract model display name
-model_name=$(echo "$input" | jq -r '.model.display_name')
+model_name=$(echo "$input" | jq -r '.model.display_name' | sed 's/ (\([0-9]*[KMG]\) context)/ \1/')
 
 # Calculate context usage percentage and tokens
 context_info=""
@@ -128,6 +131,22 @@ else
     # No usage data yet - show empty braille bar (8 cells) with zone colors
     bar="${C_GREEN_EMPTY}⣀⣀⣀⣀⣀⣀${C_RESET}${C_YELLOW_EMPTY}⣀⣀${C_RESET}${C_RED_EMPTY}⣀⣀${C_RESET}"
     context_info="${bar}"
+fi
+
+# Rate limit window countdown (resets every 5h from fixed schedule)
+window=18000
+now=$(date +%s)
+anchor=$(TZ=Europe/Moscow date -j -f "%Y-%m-%d %H:%M:%S" "2026-03-15 20:59:00" +%s)
+diff=$(( (now - anchor) % window ))
+if [ "$diff" -lt 0 ]; then
+    remaining=$(( -diff ))
+else
+    remaining=$(( window - diff ))
+fi
+if [ "$remaining" -ge 3600 ]; then
+    rate_display=" ${C_GOLD_DIM}$((remaining / 3600))h${C_RESET}"
+else
+    rate_display=" ${C_GOLD_DIM}$((remaining / 60))m${C_RESET}"
 fi
 
 # Get current directory and apply zsh-style shortening
@@ -288,7 +307,7 @@ if [ -f "$workspace_dir/CLAUDE.md" ]; then
 fi
 
 # Build status line
-output="${C_GOLD}${current_time}${C_RESET} ${C_SEPARATOR}│${C_RESET} ${C_TEAL}${model_name}${C_RESET}${memory_indicator} ${C_SEPARATOR}│${C_RESET} ${context_info} ${C_SEPARATOR}│${C_RESET} ${C_TEAL_SOFT}${short_path}${C_RESET}${git_info}"
+output="${C_GOLD}${current_time}${C_RESET} ${C_SEPARATOR}│${C_RESET} ${C_MUTED}v${cc_version}${C_RESET} ${C_SEPARATOR}│${C_RESET} ${C_TEAL}${model_name}${C_RESET}${memory_indicator} ${C_SEPARATOR}│${C_RESET} ${context_info} ${C_SEPARATOR}│${C_RESET}${rate_display} ${C_TEAL_SOFT}${short_path}${C_RESET}${git_info}"
 
 # Print the status line
 printf "%b" "$output"
