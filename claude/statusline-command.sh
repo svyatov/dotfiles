@@ -309,7 +309,7 @@ fi
 
 # Build status line
 model_display="${C_CYAN}${model_letter}${C_RESET}${C_SEPARATOR}:${C_RESET}${C_CYAN}${model_ver}${C_RESET}${C_SEPARATOR}/${C_RESET}${C_CYAN}${model_ctx}${C_RESET}"
-output="${C_GOLD}${current_time}${C_RESET} ${C_SEPARATOR}│${C_RESET} ${C_CLAUDE}${cc_version}${C_RESET} ${C_SEPARATOR}│${C_RESET} ${model_display}${memory_indicator} ${C_SEPARATOR}│${C_RESET} ${context_info} ${C_SEPARATOR}│${C_RESET} ${rate_display} ${C_SEPARATOR}│${C_RESET} ${C_TEAL_SOFT}󰝰 ${short_path}${C_RESET}${git_info}"
+output="${C_GOLD}${current_time}${C_RESET} ${C_SEPARATOR}│${C_RESET} ${C_CLAUDE}${cc_version}${C_RESET} ${C_SEPARATOR}│${C_RESET} ${model_display}${memory_indicator} ${C_SEPARATOR}│${C_RESET} ${context_info} ${C_SEPARATOR}│${C_RESET} ${rate_display} ${C_SEPARATOR}│${C_RESET} ${C_TEAL_SOFT}${short_path}${C_RESET}${git_info}"
 
 # Print the status line
 printf "%b" "$output"
