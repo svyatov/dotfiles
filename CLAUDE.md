@@ -147,7 +147,7 @@ safe_alias g 'git' 'override'     # Forces creation
 | `git/.gitconfig` | 90+ git aliases, 1Password SSH signing, diff tools |
 | `nvim/init.vim` | Neovim config with Claude Code integration |
 | `claude/settings.json` | Claude Code permissions and plugins |
-| `claude/statusline-command.sh` | Custom status line showing git, Ruby, Node versions |
+| `claude/statusline-command.sh` | Custom status line showing model, context, rate limits, git status |
 | `claude/CLAUDE.md` | Global Claude Code preferences (loaded in every conversation) |
 | `claude/install-plugins.sh` | Install Claude Code plugins from settings |
 | `claude/install-skills.sh` | Install Claude Code skills from superpowers repo |
