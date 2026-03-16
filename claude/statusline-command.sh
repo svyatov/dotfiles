@@ -6,34 +6,23 @@
 C_RESET='\033[0m'
 
 # Primary (bright)
-C_SAGE='\033[38;5;71m'           # muted sage green - git branch, clean status, added files
-C_GOLD='\033[38;5;179m'          # muted gold - unmerged, ahead/behind
-C_MAGENTA='\033[38;5;205m'       # hot magenta - time
+C_SAGE='\033[38;5;71m'           # muted sage green - git branch, clean status
+C_GOLD='\033[38;5;179m'          # muted gold - time, unmerged, ahead/behind
 C_CORAL='\033[38;5;167m'         # muted coral-red - dirty status, deleted files
 
 # Teal variants
-C_TEAL='\033[38;5;66m'           # muted teal - model name
 C_TEAL_SOFT='\033[38;5;73m'      # soft teal - path
 C_TEAL_MID='\033[38;5;109m'      # mid teal - modified files, stashed
 
 # Dim variants
-C_SAGE_DIM='\033[38;5;65m'       # dim sage - token count (safe zone)
-C_GOLD_DIM='\033[38;5;136m'      # dim gold - token count (caution zone)
-C_CORAL_DIM='\033[38;5;131m'     # dim coral - token count (danger zone)
-
-# Olive tones
-C_OLIVE_DIM='\033[38;5;59m'      # dim olive-grey - context size
-
-# Progress bar empty states
-C_GREEN_EMPTY='\033[38;5;22m'    # dim green
-C_YELLOW_EMPTY='\033[38;5;94m'   # dim yellow/brown
-C_RED_EMPTY='\033[38;5;52m'      # dim red
+C_SAGE_DIM='\033[38;5;65m'       # dim sage - threshold (safe zone)
+C_GOLD_DIM='\033[38;5;136m'      # dim gold - threshold (caution zone)
+C_CORAL_DIM='\033[38;5;131m'     # dim coral - threshold (danger zone)
 
 # UI chrome
 C_SEPARATOR='\033[38;5;237m'     # dark grey - separators
-C_CLAUDE='\033[38;5;243m'        # muted grey - version
-C_CYAN='\033[38;5;74m'           # muted cyan - model name
-C_MUTED='\033[38;5;243m'         # muted grey - memory indicator
+C_DUSTY_BLUE='\033[38;5;67m'     # dusty blue - model name
+C_MUTED='\033[38;5;243m'         # muted grey - version, memory indicator
 C_MUTED_BRIGHT='\033[38;5;250m' # bright grey - C/S/W prefixes
 
 # Bold colors
@@ -308,8 +297,8 @@ if [ -f "$workspace_dir/CLAUDE.md" ]; then
 fi
 
 # Build status line
-model_display="${C_CYAN}${model_letter}${C_RESET}${C_SEPARATOR}:${C_RESET}${C_CYAN}${model_ver}${C_RESET}${C_SEPARATOR}/${C_RESET}${C_CYAN}${model_ctx}${C_RESET}"
-output="${C_GOLD}${current_time}${C_RESET} ${C_SEPARATOR}•${C_RESET} ${C_CLAUDE}${cc_version}${C_RESET} ${C_SEPARATOR}•${C_RESET} ${model_display}${memory_indicator} ${C_SEPARATOR}•${C_RESET} ${context_info} ${C_SEPARATOR}•${C_RESET} ${rate_display} ${C_SEPARATOR}•${C_RESET} ${C_TEAL_SOFT}${short_path}${C_RESET}${git_info}"
+model_display="${C_DUSTY_BLUE}${model_letter}${C_RESET}${C_SEPARATOR}:${C_RESET}${C_DUSTY_BLUE}${model_ver}${C_RESET}${C_SEPARATOR}/${C_RESET}${C_DUSTY_BLUE}${model_ctx}${C_RESET}"
+output="${C_GOLD}${current_time}${C_RESET} ${C_SEPARATOR}•${C_RESET} ${C_MUTED}${cc_version}${C_RESET} ${C_SEPARATOR}•${C_RESET} ${model_display}${memory_indicator} ${C_SEPARATOR}•${C_RESET} ${context_info} ${C_SEPARATOR}•${C_RESET} ${rate_display} ${C_SEPARATOR}•${C_RESET} ${C_TEAL_SOFT}${short_path}${C_RESET}${git_info}"
 
 # Print the status line
 printf "%b" "$output"
