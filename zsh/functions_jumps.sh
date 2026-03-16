@@ -9,7 +9,7 @@ safe_alias jb 'jump-back'
 _jumps_usage_help() {
     echo "You can use following commands:"
     echo " j [shortcut] - jump to shortcutted directory"
-    echo "ja [shortcut] - add shortcut for current directory"
+    echo "ja [shortcut] - add shortcut for current directory (-f to overwrite)"
     echo "jd [shortcut] - delete shortcut"
     echo "jl            - list all available jump shortcuts"
     echo "jb            - return to previous directory (before the last jump)"
@@ -43,17 +43,26 @@ jump-back() {
 }
 
 jump-add() {
+    local force=0
+    if [[ $1 == '--force' || $1 == '-f' ]]; then
+        force=1
+        shift
+    fi
     if [[ -z $1 ]]; then _jumps_usage_help; return 1; fi
     if [[ ! -d $JUMPS_PATH ]]; then
         mkdir -p $JUMPS_PATH;
     fi
     if [[ -L $JUMPS_PATH/$1 ]]; then
-        local jump_destination=$(readlink $JUMPS_PATH/$1)
-        echo "${FX[none]}${FG[196]}Shortcut \"${FX[none]}${FG[9]}${1}${FX[none]}${FG[196]}\" already exists and points to: ${FX[none]}${FG[9]}${jump_destination}${FX[none]}"
-    else
-        ln -s "$(pwd)" $JUMPS_PATH/$1 && \
-            echo "${FX[none]}${FG[76]}Shortcut \"${FX[none]}${FG[14]}${1}${FX[none]}${FG[76]}\" pointing to ${FX[none]}${FG[14]}$(pwd)${FX[none]}${FG[76]} successfully added${FX[none]}"
+        if (( force )); then
+            rm $JUMPS_PATH/$1
+        else
+            local jump_destination=$(readlink $JUMPS_PATH/$1)
+            echo "${FX[none]}${FG[196]}Shortcut \"${FX[none]}${FG[9]}${1}${FX[none]}${FG[196]}\" already exists and points to: ${FX[none]}${FG[9]}${jump_destination}${FX[none]}"
+            return 1
+        fi
     fi
+    ln -s "$(pwd)" $JUMPS_PATH/$1 && \
+        echo "${FX[none]}${FG[76]}Shortcut \"${FX[none]}${FG[14]}${1}${FX[none]}${FG[76]}\" pointing to ${FX[none]}${FG[14]}$(pwd)${FX[none]}${FG[76]} successfully added${FX[none]}"
 }
 
 jump-del() {
