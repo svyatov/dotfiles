@@ -7,7 +7,8 @@ C_RESET='\033[0m'
 
 # Primary (bright)
 C_SAGE='\033[38;5;71m'           # muted sage green - git branch, clean status, added files
-C_GOLD='\033[38;5;179m'          # muted gold - time, unmerged, ahead/behind
+C_GOLD='\033[38;5;179m'          # muted gold - unmerged, ahead/behind
+C_MAGENTA='\033[38;5;205m'       # hot magenta - time
 C_CORAL='\033[38;5;167m'         # muted coral-red - dirty status, deleted files
 
 # Teal variants
@@ -30,7 +31,10 @@ C_RED_EMPTY='\033[38;5;52m'      # dim red
 
 # UI chrome
 C_SEPARATOR='\033[38;5;237m'     # dark grey - separators
+C_CLAUDE='\033[38;5;243m'        # muted grey - version
+C_CYAN='\033[38;5;74m'           # muted cyan - model name
 C_MUTED='\033[38;5;243m'         # muted grey - memory indicator
+C_MUTED_BRIGHT='\033[38;5;250m' # bright grey - C/S/W prefixes
 
 # Bold colors
 C_BOLD_MAGENTA='\033[1;35m'      # git renamed
@@ -44,93 +48,29 @@ input=$(cat)
 # Extract version
 cc_version=$(echo "$input" | jq -r '.version // empty')
 
-# Extract model display name
-model_name=$(echo "$input" | jq -r '.model.display_name' | sed 's/ (\([0-9]*[KMG]\) context)/ \1/')
+# Extract model: first letter, version, context size -> O:4.6/1M
+model_letter=$(echo "$input" | jq -r '.model.display_name' | sed 's/^\(.\).*/\1/')
+model_ver=$(echo "$input" | jq -r '.model.display_name' | sed -n 's/^[A-Za-z]* \([0-9.]*\).*/\1/p')
+model_ctx=$(echo "$input" | jq -r '.model.display_name' | sed -n 's/.*(\([0-9]*[KMG]\) context).*/\1/p')
 
-# Calculate context usage percentage and tokens
+# Context remaining percentage
 context_info=""
 usage=$(echo "$input" | jq '.context_window.current_usage')
 size=$(echo "$input" | jq '.context_window.context_window_size')
 
-# Format size (e.g., 200000 -> 200k)
-if [ "$size" -ge 1000 ]; then
-    size_display="$((size / 1000))k"
-else
-    size_display="${size}"
-fi
-
 if [ "$usage" != "null" ]; then
     current=$(echo "$usage" | jq '.input_tokens + .output_tokens + .cache_creation_input_tokens + .cache_read_input_tokens')
-    pct=$((current * 100 / size))
-
-# Format current token count (e.g., 50000 -> 50k)
-    # Right-align to 4 characters to prevent jumping (max 999k)
-    # Always show 'k' suffix for consistency (0k, 1k, 50k, etc.)
-    tokens_num=$((current / 1000))
-    current_display=$(printf "%3sk" "$tokens_num")
-
-# Braille Density progress bar with 7-level smooth gradient (8 cells)
-    # Gradient: ⣀ → ⣄ → ⣤ → ⣦ → ⣶ → ⣷ → ⣿ (0-6 dots, empty shows ⣀)
-    # Zone-based coloring:
-    #   - Green zone: cells 0-5 (0-60%) - safe
-    #   - Yellow zone: cells 6-7 (60-80%) - caution
-    #   - Red zone: cells 8-9 (80-100%) - danger, compaction imminent
-    braille_gradient=("⣀" "⣄" "⣤" "⣦" "⣶" "⣷" "⣿")
-    bar_width=10
-    levels_per_cell=7
-    total_steps=$((bar_width * levels_per_cell))
-
-    # Calculate current step based on percentage (0 to total_steps)
-    current_step=$((pct * total_steps / 100))
-
-    # Zone colors - use palette variables
-    green_filled=$C_SAGE
-    yellow_filled=$C_GOLD
-    red_filled=$C_CORAL
-    green_empty=$C_GREEN_EMPTY
-    yellow_empty=$C_YELLOW_EMPTY
-    red_empty=$C_RED_EMPTY
-
-    # Build braille progress bar with zone-based coloring
-    bar=""
-    for ((i=0; i<bar_width; i++)); do
-        # Determine zone colors based on cell position
-        if [ "$i" -lt 6 ]; then
-            # Green zone (cells 0-5, 0-60%)
-            filled_color=$green_filled
-            empty_color=$green_empty
-        elif [ "$i" -lt 8 ]; then
-            # Yellow zone (cells 6-7, 60-80%)
-            filled_color=$yellow_filled
-            empty_color=$yellow_empty
-        else
-            # Red zone (cells 8-9, 80-100%)
-            filled_color=$red_filled
-            empty_color=$red_empty
-        fi
-
-        # Calculate the step range for this cell
-        cell_start=$((i * levels_per_cell))
-        cell_end=$(((i + 1) * levels_per_cell))
-
-        if [ "$current_step" -ge "$cell_end" ]; then
-            # Cell is fully filled
-            bar="${bar}${filled_color}${braille_gradient[6]}${C_RESET}"
-        elif [ "$current_step" -le "$cell_start" ]; then
-            # Cell is empty - use dimmed zone color (heat map visible)
-            bar="${bar}${empty_color}${braille_gradient[0]}${C_RESET}"
-        else
-            # Cell is partially filled - calculate gradient level (0-6)
-            steps_into_cell=$((current_step - cell_start))
-            bar="${bar}${filled_color}${braille_gradient[$steps_into_cell]}${C_RESET}"
-        fi
-    done
-
-    context_info="${bar}"
+    ctx_remaining=$((100 - current * 100 / size))
+    if [ "$ctx_remaining" -ge 40 ]; then
+        ctx_color=$C_SAGE
+    elif [ "$ctx_remaining" -ge 20 ]; then
+        ctx_color=$C_GOLD
+    else
+        ctx_color=$C_CORAL
+    fi
+    context_info="${C_MUTED_BRIGHT}C${C_RESET}${C_SEPARATOR}:${C_RESET}${ctx_color}${ctx_remaining}%${C_RESET}"
 else
-    # No usage data yet - show empty braille bar (8 cells) with zone colors
-    bar="${C_GREEN_EMPTY}⣀⣀⣀⣀⣀⣀${C_RESET}${C_YELLOW_EMPTY}⣀⣀${C_RESET}${C_RED_EMPTY}⣀⣀${C_RESET}"
-    context_info="${bar}"
+    context_info="${C_MUTED_BRIGHT}C${C_RESET}${C_SEPARATOR}:${C_RESET}${C_GOLD_DIM}?${C_RESET}"
 fi
 
 # Rate limit usage from Anthropic OAuth API (cached)
@@ -186,7 +126,7 @@ format_rate_window() {
         threshold_color=$C_CORAL_DIM
     fi
 
-    printf "%b" "${C_TEAL_MID}${label}${C_RESET}${C_SEPARATOR}:${C_RESET}${pct_color}${remaining_pct}%${C_RESET}${C_SEPARATOR}/${C_RESET}${threshold_color}${threshold_pct}%${C_RESET}"
+    printf "%b" "${C_MUTED_BRIGHT}${label}${C_RESET}${C_SEPARATOR}:${C_RESET}${pct_color}${remaining_pct}%${C_RESET}${C_SEPARATOR}/${C_RESET}${threshold_color}${threshold_pct}%${C_RESET}"
 }
 
 # Parse cached data and build rate display
@@ -368,7 +308,8 @@ if [ -f "$workspace_dir/CLAUDE.md" ]; then
 fi
 
 # Build status line
-output="${C_GOLD}${current_time}${C_RESET} ${C_SEPARATOR}│${C_RESET} ${C_MUTED}v${cc_version}${C_RESET} ${C_SEPARATOR}│${C_RESET} ${C_TEAL}${model_name}${C_RESET}${memory_indicator} ${C_SEPARATOR}│${C_RESET} ${context_info} ${C_SEPARATOR}│${C_RESET} ${rate_display} ${C_SEPARATOR}│${C_RESET} ${C_TEAL_SOFT}${short_path}${C_RESET}${git_info}"
+model_display="${C_CYAN}${model_letter}${C_RESET}${C_SEPARATOR}:${C_RESET}${C_CYAN}${model_ver}${C_RESET}${C_SEPARATOR}/${C_RESET}${C_CYAN}${model_ctx}${C_RESET}"
+output="${C_GOLD}${current_time}${C_RESET} ${C_SEPARATOR}│${C_RESET} ${C_CLAUDE}${cc_version}${C_RESET} ${C_SEPARATOR}│${C_RESET} ${model_display}${memory_indicator} ${C_SEPARATOR}│${C_RESET} ${context_info} ${C_SEPARATOR}│${C_RESET} ${rate_display} ${C_SEPARATOR}│${C_RESET} ${C_TEAL_SOFT}󰝰 ${short_path}${C_RESET}${git_info}"
 
 # Print the status line
 printf "%b" "$output"
