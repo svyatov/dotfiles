@@ -133,22 +133,88 @@ else
     context_info="${bar}"
 fi
 
-# Rate limit window countdown (resets every 5h from fixed schedule)
-window=18000
+# Rate limit usage from Anthropic OAuth API (cached)
+usage_cache="/tmp/claude-usage-cache.json"
+cache_ttl=600
 now=$(date +%s)
-anchor=$(TZ=Europe/Moscow date -j -f "%Y-%m-%d %H:%M:%S" "2026-03-15 21:00:00" +%s)
-diff=$(( (now - anchor) % window ))
-if [ "$diff" -lt 0 ]; then
-    remaining=$(( -diff ))
-else
-    remaining=$(( window - diff ))
+
+# Background refresh if cache is stale or missing
+cache_mtime=$(stat -f "%m" "$usage_cache" 2>/dev/null || echo 0)
+if [ $((now - cache_mtime)) -gt $cache_ttl ]; then
+    (
+        token=$(security find-generic-password -s "Claude Code-credentials" -a "$(whoami)" -w 2>/dev/null | jq -r '.claudeAiOauth.accessToken')
+        [ -z "$token" ] || [ "$token" = "null" ] && exit 1
+        tmp="${usage_cache}.tmp.$$"
+        http_code=$(curl -s --max-time 3 "https://api.anthropic.com/api/oauth/usage" \
+            -H "Authorization: Bearer $token" \
+            -H "anthropic-beta: oauth-2025-04-20" \
+            -H "Accept: application/json" \
+            -o "$tmp" -w "%{http_code}")
+        [ "$http_code" = "200" ] && mv "$tmp" "$usage_cache" || rm -f "$tmp"
+    ) &>/dev/null &
+    disown 2>/dev/null
 fi
-if [ "$remaining" -ge 3600 ]; then
-    tenths=$((remaining * 10 / 3600))
-    rate_display=" ${C_GOLD_DIM}$((tenths / 10)).$((tenths % 10))h${C_RESET}"
-else
-    rate_display=" ${C_GOLD_DIM}$((remaining / 60))m${C_RESET}"
+
+# Format a single rate limit window
+# Args: $1=utilization $2=resets_at_epoch $3=window_seconds $4=label
+format_rate_window() {
+    local util="$1" reset_at="$2" window_dur="$3" label="$4"
+    local remaining_s elapsed_pct ratio_x100 pct_color remaining_pct
+
+    remaining_s=$((reset_at - now))
+    [ "$remaining_s" -lt 0 ] && remaining_s=0
+
+    remaining_pct=$((100 - ${util%.*}))
+    [ "$remaining_pct" -lt 0 ] && remaining_pct=0
+
+    # Burn rate ratio: utilization / elapsed_pct (x100 for integer math)
+    elapsed_pct=$(( (window_dur - remaining_s) * 100 / window_dur ))
+    [ "$elapsed_pct" -lt 10 ] && elapsed_pct=10
+    ratio_x100=$(( ${util%.*} * 100 / elapsed_pct ))
+
+    if [ "$ratio_x100" -lt 100 ]; then
+        pct_color=$C_SAGE
+    elif [ "$ratio_x100" -lt 150 ]; then
+        pct_color=$C_GOLD
+    else
+        pct_color=$C_CORAL
+    fi
+
+    # Format countdown
+    local countdown=""
+    if [ "$remaining_s" -ge 86400 ]; then
+        local tenths=$((remaining_s * 10 / 86400))
+        countdown="$((tenths / 10)).$((tenths % 10))d"
+    elif [ "$remaining_s" -ge 3600 ]; then
+        local tenths=$((remaining_s * 10 / 3600))
+        countdown="$((tenths / 10)).$((tenths % 10))h"
+    else
+        countdown="$((remaining_s / 60))m"
+    fi
+
+    printf "%b" "${C_TEAL_MID}${label}${C_RESET}${C_SEPARATOR}:${C_RESET}${pct_color}${remaining_pct}%${C_RESET} ${C_TEAL}${countdown}${C_RESET}"
+}
+
+# Parse cached data and build rate display
+rate_display=""
+if [ -f "$usage_cache" ]; then
+    read -r util5 reset5 util7 reset7 <<< $(jq -r '[
+        .five_hour.utilization // empty,
+        (.five_hour.resets_at // empty | .[0:19] + "Z" | fromdateiso8601),
+        .seven_day.utilization // empty,
+        (.seven_day.resets_at // empty | .[0:19] + "Z" | fromdateiso8601)
+    ] | @tsv' "$usage_cache" 2>/dev/null)
+
+    if [ -n "$util5" ] && [ -n "$reset5" ]; then
+        five_h=$(format_rate_window "$util5" "$reset5" 18000 "S")
+        seven_d=""
+        if [ -n "$util7" ] && [ -n "$reset7" ]; then
+            seven_d=" $(format_rate_window "$util7" "$reset7" 604800 "W")"
+        fi
+        rate_display="${five_h}${seven_d}"
+    fi
 fi
+[ -z "$rate_display" ] && rate_display="${C_GOLD_DIM}?${C_RESET}"
 
 # Get current directory and apply zsh-style shortening
 raw_cwd=$(echo "$input" | jq -r '.workspace.current_dir')
@@ -308,7 +374,7 @@ if [ -f "$workspace_dir/CLAUDE.md" ]; then
 fi
 
 # Build status line
-output="${C_GOLD}${current_time}${C_RESET} ${C_SEPARATOR}│${C_RESET} ${C_MUTED}v${cc_version}${C_RESET} ${C_SEPARATOR}│${C_RESET} ${C_TEAL}${model_name}${C_RESET}${memory_indicator} ${C_SEPARATOR}│${C_RESET} ${context_info} ${C_SEPARATOR}│${C_RESET}${rate_display} ${C_TEAL_SOFT}${short_path}${C_RESET}${git_info}"
+output="${C_GOLD}${current_time}${C_RESET} ${C_SEPARATOR}│${C_RESET} ${C_MUTED}v${cc_version}${C_RESET} ${C_SEPARATOR}│${C_RESET} ${C_TEAL}${model_name}${C_RESET}${memory_indicator} ${C_SEPARATOR}│${C_RESET} ${context_info} ${C_SEPARATOR}│${C_RESET} ${rate_display} ${C_SEPARATOR}│${C_RESET} ${C_TEAL_SOFT}${short_path}${C_RESET}${git_info}"
 
 # Print the status line
 printf "%b" "$output"
