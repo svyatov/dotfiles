@@ -128,7 +128,7 @@ safe_alias g 'git' 'override'     # Forces creation
 | Command | Action |
 |---------|--------|
 | `j name` | Jump to bookmark |
-| `ja name` | Add bookmark for cwd |
+| `ja name` | Add bookmark for cwd (`-f` to overwrite) |
 | `jd name` | Delete bookmark |
 | `jl` | List all bookmarks |
 | `jb` | Jump back to previous |

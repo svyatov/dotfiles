@@ -142,7 +142,7 @@ One of the most useful features: **persistent directory bookmarks** with tab com
 | Command | Description |
 |---------|-------------|
 | `j name` | Jump to bookmarked directory |
-| `ja name` | Add bookmark for current directory |
+| `ja name [-f]` | Add bookmark for current directory (`-f` to overwrite) |
 | `jd name` | Delete a bookmark |
 | `jl` | List all bookmarks |
 | `jb` | Jump back to previous location |
