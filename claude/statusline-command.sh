@@ -136,7 +136,7 @@ fi
 # Rate limit window countdown (resets every 5h from fixed schedule)
 window=18000
 now=$(date +%s)
-anchor=$(TZ=Europe/Moscow date -j -f "%Y-%m-%d %H:%M:%S" "2026-03-15 20:59:00" +%s)
+anchor=$(TZ=Europe/Moscow date -j -f "%Y-%m-%d %H:%M:%S" "2026-03-15 21:00:00" +%s)
 diff=$(( (now - anchor) % window ))
 if [ "$diff" -lt 0 ]; then
     remaining=$(( -diff ))
@@ -144,7 +144,8 @@ else
     remaining=$(( window - diff ))
 fi
 if [ "$remaining" -ge 3600 ]; then
-    rate_display=" ${C_GOLD_DIM}$((remaining / 3600))h${C_RESET}"
+    tenths=$((remaining * 10 / 3600))
+    rate_display=" ${C_GOLD_DIM}$((tenths / 10)).$((tenths % 10))h${C_RESET}"
 else
     rate_display=" ${C_GOLD_DIM}$((remaining / 60))m${C_RESET}"
 fi
