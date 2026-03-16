@@ -172,27 +172,21 @@ format_rate_window() {
     [ "$elapsed_pct" -lt 10 ] && elapsed_pct=10
     ratio_x100=$(( ${util%.*} * 100 / elapsed_pct ))
 
+    # Threshold: remaining % with perfectly even usage
+    local threshold_pct=$((100 - elapsed_pct))
+
     if [ "$ratio_x100" -lt 100 ]; then
         pct_color=$C_SAGE
+        threshold_color=$C_SAGE_DIM
     elif [ "$ratio_x100" -lt 150 ]; then
         pct_color=$C_GOLD
+        threshold_color=$C_GOLD_DIM
     else
         pct_color=$C_CORAL
+        threshold_color=$C_CORAL_DIM
     fi
 
-    # Format countdown
-    local countdown=""
-    if [ "$remaining_s" -ge 86400 ]; then
-        local tenths=$((remaining_s * 10 / 86400))
-        countdown="$((tenths / 10)).$((tenths % 10))d"
-    elif [ "$remaining_s" -ge 3600 ]; then
-        local tenths=$((remaining_s * 10 / 3600))
-        countdown="$((tenths / 10)).$((tenths % 10))h"
-    else
-        countdown="$((remaining_s / 60))m"
-    fi
-
-    printf "%b" "${C_TEAL_MID}${label}${C_RESET}${C_SEPARATOR}:${C_RESET}${pct_color}${remaining_pct}%${C_RESET} ${C_TEAL}${countdown}${C_RESET}"
+    printf "%b" "${C_TEAL_MID}${label}${C_RESET}${C_SEPARATOR}:${C_RESET}${pct_color}${remaining_pct}%${C_RESET}${C_SEPARATOR}/${C_RESET}${threshold_color}${threshold_pct}%${C_RESET}"
 }
 
 # Parse cached data and build rate display
