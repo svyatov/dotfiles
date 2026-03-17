@@ -66,7 +66,6 @@
       "Bash(git commit:*)",
       "Bash(git push:*)",
       "Bash(rm:*)",
-      "Bash(curl:*)",
       "Bash(wget:*)"
     ],
     "defaultMode": "default"
@@ -92,7 +91,6 @@
   },
   "enabledPlugins": {
     "feature-dev@claude-plugins-official": true,
-    "commit-commands@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true,
@@ -102,7 +100,32 @@
     "claude-md-management@claude-plugins-official": true,
     "claude-code-setup@claude-plugins-official": true,
     "ruby-lsp@claude-plugins-official": true,
-    "chrome-devtools-mcp@claude-plugins-official": true
+    "chrome-devtools-mcp@claude-plugins-official": true,
+    "hookify@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true,
+    "impeccable@impeccable": true,
+    "ui-ux-pro-max@ui-ux-pro-max-skill": true,
+    "leo@leo-toolkit": true
+  },
+  "extraKnownMarketplaces": {
+    "impeccable": {
+      "source": {
+        "source": "github",
+        "repo": "pbakaus/impeccable"
+      }
+    },
+    "ui-ux-pro-max-skill": {
+      "source": {
+        "source": "github",
+        "repo": "nextlevelbuilder/ui-ux-pro-max-skill"
+      }
+    },
+    "leo-toolkit": {
+      "source": {
+        "source": "github",
+        "repo": "svyatov/agent-toolkit"
+      }
+    }
   },
   "spinnerTipsEnabled": false,
   "effortLevel": "high",
