@@ -59,7 +59,7 @@ if [ "$usage" != "null" ]; then
     fi
     context_info="${C_MUTED_BRIGHT}C${C_RESET}${C_SEPARATOR}:${C_RESET}${ctx_color}${ctx_remaining}%${C_RESET}"
 else
-    context_info="${C_MUTED_BRIGHT}C${C_RESET}${C_SEPARATOR}:${C_RESET}${C_GOLD_DIM}?${C_RESET}"
+    context_info="${C_MUTED_BRIGHT}C${C_RESET}${C_SEPARATOR}:${C_RESET}${C_SAGE}100%${C_RESET}"
 fi
 
 # Rate limit usage from Anthropic OAuth API (cached)
