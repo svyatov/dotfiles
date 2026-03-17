@@ -31,6 +31,8 @@ C_BOLD_WHITE='\033[1;37m'        # git untracked
 
 # =============================================================================
 
+source "$HOME/.dotfiles/zsh/shorten_path.sh"
+
 # Read JSON input from stdin
 input=$(cat)
 
@@ -143,55 +145,6 @@ fi
 raw_cwd=$(echo "$input" | jq -r '.workspace.current_dir')
 # Replace home directory with ~
 cwd="${raw_cwd/#$HOME/~}"
-
-# Shorten directory path: ~/Projects/My/something -> ~/P/M/something
-shorten_path() {
-    local path="$1"
-    local prefix=""
-    local rest=""
-
-    # Check if path starts with ~/
-    if [[ "$path" == "~/"* ]]; then
-        prefix="~"
-        rest="${path:2}"  # Remove "~/"
-    elif [[ "$path" == "~" ]]; then
-        echo "~"
-        return
-    elif [[ "$path" == /* ]]; then
-        prefix=""
-        rest="${path:1}"  # Remove leading /
-    else
-        echo "$path"
-        return
-    fi
-
-    # Split by / into array
-    IFS='/' read -ra parts <<< "$rest"
-
-    # If only one part, no shortening needed
-    if [ ${#parts[@]} -le 1 ]; then
-        echo "$path"
-        return
-    fi
-
-    # Build shortened path
-    local result="$prefix"
-    local last_idx=$((${#parts[@]} - 1))
-    for i in "${!parts[@]}"; do
-        if [ $i -eq $last_idx ]; then
-            # Keep last part full
-            result="${result}/${parts[$i]}"
-        else
-            # Shorten to first letter (2 chars for dot-prefixed dirs)
-            if [[ "${parts[$i]}" == .* ]]; then
-                result="${result}/${parts[$i]:0:2}"
-            else
-                result="${result}/${parts[$i]:0:1}"
-            fi
-        fi
-    done
-    echo "$result"
-}
 
 short_path=$(shorten_path "$cwd")
 
