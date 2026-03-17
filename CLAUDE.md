@@ -21,10 +21,9 @@ Setup script options:
 - `--dry-run` - Preview changes without modifying anything
 - `--confirm` - Ask before creating each symlink
 
-After setup, install Claude plugins and skills:
+After setup, install Claude plugins:
 ```bash
 ~/.dotfiles/claude/install-plugins.sh
-~/.dotfiles/claude/install-skills.sh
 ```
 
 To uninstall (removes symlinks, restores backups):
@@ -108,7 +107,6 @@ Example templates are provided: `aliases_local.sh.example` and `functions_local.
 | `claude/settings.json` | `~/.claude/settings.json` |
 | `claude/statusline-command.sh` | `~/.claude/statusline-command.sh` |
 | `claude/CLAUDE.md` | `~/.claude/CLAUDE.md` |
-| `claude/skills/*` | `~/.claude/skills/*` (auto-discovered) |
 | `cursor/settings.json` | `~/Library/Application Support/Cursor/User/settings.json` |
 | `cursor/keybindings.json` | `~/Library/Application Support/Cursor/User/keybindings.json` |
 | `cursor/mcp.json` | `~/.cursor/mcp.json` |
@@ -150,7 +148,7 @@ safe_alias g 'git' 'override'     # Forces creation
 | `claude/statusline-command.sh` | Custom status line showing model, context, rate limits, git status |
 | `claude/CLAUDE.md` | Global Claude Code preferences (loaded in every conversation) |
 | `claude/install-plugins.sh` | Install Claude Code plugins from settings |
-| `claude/install-skills.sh` | Install Claude Code skills from superpowers repo |
+| `claude/install-skills.sh` | Install global Claude Code skills via npx |
 | `cursor/settings.json` | Cursor editor settings |
 | `cursor/keybindings.json` | Cursor keybindings |
 | `cursor/mcp.json` | Cursor MCP server configuration |

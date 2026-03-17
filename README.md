@@ -117,7 +117,6 @@ brew bundle --file=~/.dotfiles/Brewfile  # Install dependencies
 | `claude/settings.json` | `~/.claude/settings.json` | Claude Code settings |
 | `claude/statusline-command.sh` | `~/.claude/statusline-command.sh` | Claude Code status line |
 | `claude/CLAUDE.md` | `~/.claude/CLAUDE.md` | Global Claude Code preferences |
-| `claude/skills/*` | `~/.claude/skills/*` | Claude Code skills |
 | `cursor/settings.json` | `~/Library/.../Cursor/User/settings.json` | Cursor editor settings |
 | `cursor/keybindings.json` | `~/Library/.../Cursor/User/keybindings.json` | Cursor keybindings |
 | `cursor/mcp.json` | `~/.cursor/mcp.json` | Cursor MCP server config |

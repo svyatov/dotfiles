@@ -84,7 +84,6 @@ Files that will be symlinked:
     ~/.claude/settings.json <- claude/settings.json
     ~/.claude/statusline-command.sh <- claude/statusline-command.sh
     ~/.claude/CLAUDE.md <- claude/CLAUDE.md
-    ~/.claude/skills/*  <- claude/skills/* (auto-discovered)
     ~/Library/Application Support/Cursor/User/settings.json <- cursor/settings.json
     ~/Library/Application Support/Cursor/User/keybindings.json <- cursor/keybindings.json
     ~/.cursor/mcp.json <- cursor/mcp.json
@@ -294,16 +293,6 @@ symlink_from_dotfiles "claude/statusline-command.sh" "${CLAUDE_CONFIG_DIR}/statu
 backup_file "${CLAUDE_CONFIG_DIR}/CLAUDE.md"
 symlink_from_dotfiles "claude/CLAUDE.md" "${CLAUDE_CONFIG_DIR}/CLAUDE.md"
 
-# Symlink skills
-CLAUDE_SKILLS_DIR="${CLAUDE_CONFIG_DIR}/skills"
-if [[ "$DRY_RUN" != true ]]; then
-    mkdir -p "${CLAUDE_SKILLS_DIR}"
-fi
-for skill_dir in "${DOTFILES_DIR}"/claude/skills/*/; do
-    skill_name=$(basename "$skill_dir")
-    symlink_from_dotfiles "claude/skills/${skill_name}" "${CLAUDE_SKILLS_DIR}/${skill_name}"
-done
-
 ### Verification
 ################
 if [[ "$DRY_RUN" != true ]]; then
@@ -328,11 +317,6 @@ if [[ "$DRY_RUN" != true ]]; then
     verify_symlink "${CURSOR_CONFIG_DIR}/keybindings.json" "${DOTFILES_DIR}/cursor/keybindings.json" || VERIFY_FAILED=1
     verify_symlink "${CURSOR_DOT_DIR}/mcp.json" "${DOTFILES_DIR}/cursor/mcp.json" || VERIFY_FAILED=1
     verify_symlink "${GHOSTTY_CONFIG_FILE}" "${DOTFILES_DIR}/ghostty/config" || VERIFY_FAILED=1
-    for skill_dir in "${DOTFILES_DIR}"/claude/skills/*/; do
-        skill_name=$(basename "$skill_dir")
-        verify_symlink "${CLAUDE_SKILLS_DIR}/${skill_name}" "${DOTFILES_DIR}/claude/skills/${skill_name}" || VERIFY_FAILED=1
-    done
-
     if [[ $VERIFY_FAILED -eq 1 ]]; then
         echo ""
         echo "WARNING: Some symlinks could not be verified."
@@ -346,6 +330,5 @@ else
     echo "Setup complete."
     echo ""
     echo "To install Claude Code plugins, run: ~/.dotfiles/claude/install-plugins.sh"
-    echo "To install Claude Code skills, run: ~/.dotfiles/claude/install-skills.sh"
     echo "To install Cursor extensions, run: ~/.dotfiles/cursor/install-extensions.sh"
 fi
