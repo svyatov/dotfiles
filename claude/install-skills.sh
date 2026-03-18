@@ -5,6 +5,7 @@ set -e
 
 # Skills this script will install (for comparison)
 SCRIPT_SKILLS=(
+  "gh-cli"
   "vercel-react-best-practices"
   "vercel-composition-patterns"
   "web-design-guidelines"
@@ -52,6 +53,9 @@ npx skills remove -g --all -y 2>/dev/null || true
 echo ""
 echo "Installing skills..."
 echo ""
+
+# GitHub
+npx skills add github/awesome-copilot -s gh-cli -g -a claude-code cursor codex -y
 
 # Vercel Labs
 npx skills add vercel-labs/agent-skills -s vercel-react-best-practices -g -a claude-code cursor codex -y
