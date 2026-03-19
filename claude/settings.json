@@ -46,14 +46,9 @@
       "Bash(mkdir:*)",
       "Bash(touch:*)",
       "Bash(docker:*)",
-      "Bash(go build:*)",
-      "Bash(golangci-lint linters:*)",
-      "Bash(golangci-lint run:*)",
-      "Bash(task lint:*)",
-      "Bash(task test:*)",
-      "Bash(oz:*)",
-      "Bash(./oz:*)",
-      "Bash(for dir:*)"
+      "Bash(golangci-lint:*)",
+      "Bash(task:*)",
+      "Skill(leo:commit)"
     ],
     "deny": [
       "Read(./.env)",
