@@ -3,14 +3,23 @@
 shorten_path() {
     local p="${1:-$PWD}"
     p="${p/#$HOME/~}"
-    echo "$p" | awk -F/ '{
-        for (i=1; i<NF; i++) {
-            if ($i == "~") printf "~"
-            else if ($i == "") printf ""
-            else if (substr($i,1,1) == ".") printf "%s", substr($i,1,2)
-            else printf "%s", substr($i,1,1)
-            printf "/"
-        }
-        print $NF
-    }'
+    local result="" segment="" rest="$p"
+
+    while [[ "$rest" == */* ]]; do
+        segment="${rest%%/*}"
+        rest="${rest#*/}"
+        if [[ "$segment" == "~" ]]; then
+            result+="~/"
+        elif [[ -n "$segment" ]]; then
+            if [[ "$segment" == .* ]]; then
+                result+="${segment:0:2}/"
+            else
+                result+="${segment:0:1}/"
+            fi
+        else
+            result+="/"
+        fi
+    done
+    result+="$rest"
+    echo "$result"
 }
