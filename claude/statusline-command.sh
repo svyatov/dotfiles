@@ -64,27 +64,7 @@ else
     context_info="${C_MUTED_BRIGHT}C${C_RESET}${C_SEPARATOR}:${C_RESET}${C_SAGE}100%${C_RESET}"
 fi
 
-# Rate limit usage from Anthropic OAuth API (cached)
-usage_cache="/tmp/claude-usage-cache.json"
-cache_ttl=600
 now=$(date +%s)
-
-# Background refresh if cache is stale or missing
-cache_mtime=$(stat -f "%m" "$usage_cache" 2>/dev/null || echo 0)
-if [ $((now - cache_mtime)) -gt $cache_ttl ]; then
-    (
-        token=$(security find-generic-password -s "Claude Code-credentials" -a "$(whoami)" -w 2>/dev/null | jq -r '.claudeAiOauth.accessToken')
-        [ -z "$token" ] || [ "$token" = "null" ] && exit 1
-        tmp="${usage_cache}.tmp.$$"
-        http_code=$(curl -s --max-time 3 "https://api.anthropic.com/api/oauth/usage" \
-            -H "Authorization: Bearer $token" \
-            -H "anthropic-beta: oauth-2025-04-20" \
-            -H "Accept: application/json" \
-            -o "$tmp" -w "%{http_code}")
-        [ "$http_code" = "200" ] && mv "$tmp" "$usage_cache" || rm -f "$tmp"
-    ) &>/dev/null &
-    disown 2>/dev/null
-fi
 
 # Format a single rate limit window
 # Args: $1=utilization $2=resets_at_epoch $3=window_seconds $4=label
@@ -120,24 +100,22 @@ format_rate_window() {
     printf "%b" "${C_MUTED_BRIGHT}${label}${C_RESET}${C_SEPARATOR}:${C_RESET}${pct_color}${remaining_pct}%${C_RESET}${C_SEPARATOR}/${C_RESET}${threshold_color}${threshold_pct}%${C_RESET}"
 }
 
-# Parse cached data and build rate display
+# Parse rate limits from input JSON
 rate_display=""
-if [ -f "$usage_cache" ]; then
-    read -r util5 reset5 util7 reset7 <<< $(jq -r '[
-        .five_hour.utilization // empty,
-        (.five_hour.resets_at // empty | .[0:19] + "Z" | fromdateiso8601),
-        .seven_day.utilization // empty,
-        (.seven_day.resets_at // empty | .[0:19] + "Z" | fromdateiso8601)
-    ] | @tsv' "$usage_cache" 2>/dev/null)
+read -r util5 reset5 util7 reset7 <<< $(echo "$input" | jq -r '[
+    .rate_limits.five_hour.used_percentage // empty,
+    .rate_limits.five_hour.resets_at // empty,
+    .rate_limits.seven_day.used_percentage // empty,
+    .rate_limits.seven_day.resets_at // empty
+] | @tsv' 2>/dev/null)
 
-    if [ -n "$util5" ] && [ -n "$reset5" ]; then
-        five_h=$(format_rate_window "$util5" "$reset5" 18000 "S")
-        seven_d=""
-        if [ -n "$util7" ] && [ -n "$reset7" ]; then
-            seven_d=" $(format_rate_window "$util7" "$reset7" 604800 "W")"
-        fi
-        rate_display="${five_h}${seven_d}"
+if [ -n "$util5" ] && [ -n "$reset5" ]; then
+    five_h=$(format_rate_window "$util5" "$reset5" 18000 "S")
+    seven_d=""
+    if [ -n "$util7" ] && [ -n "$reset7" ]; then
+        seven_d=" $(format_rate_window "$util7" "$reset7" 604800 "W")"
     fi
+    rate_display="${five_h}${seven_d}"
 fi
 [ -z "$rate_display" ] && rate_display="${C_GOLD_DIM}?${C_RESET}"
 
