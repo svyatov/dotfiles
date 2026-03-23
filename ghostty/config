@@ -5,4 +5,6 @@ cursor-style = underline
 copy-on-select = clipboard
 macos-titlebar-style = tabs
 auto-update = check
+window-new-tab-position = end
+tab-inherit-working-directory = false
 
