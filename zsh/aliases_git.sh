@@ -26,3 +26,14 @@ safe_alias gtd 'gt down'
 safe_alias gtco 'gt checkout'
 safe_alias gtdl 'gt delete'
 safe_alias gty 'gt sync'
+
+
+# Code archaeology (https://piechowski.io/post/git-commands-before-reading-code/)
+safe_alias gchurn 'git log --format=format: --name-only --since="1 year ago" | sort | uniq -c | sort -nr | head -20'
+safe_alias gcontrib 'git shortlog -sn --no-merges'
+safe_alias gbugs 'git log -i -E --grep="fix|bug|broken" --name-only --format= | sort | uniq -c | sort -nr | head -20'
+safe_alias gvel 'git log --format="%ad" --date=format:"%Y-%m" | sort | uniq -c'
+safe_alias gfire 'git log --oneline --since="1 year ago" | grep -iE "revert|hotfix|emergency|rollback"'
+safe_alias gfocus 'git log --format=format: --name-only --since="2 weeks ago" | sort | uniq -c | sort -nr | head -20'
+safe_alias gdchurn 'git log --format=format: --name-only --since="1 year ago" | sed "s|/[^/]*$||" | sort | uniq -c | sort -nr | head -15'
+safe_alias gstale 'git log --format=format: --name-only --diff-filter=AMRC | sort -u | while read f; do [ -f "$f" ] && echo "$(git log -1 --format="%ai" -- "$f" | cut -d" " -f1) $f"; done | sort | head -20'
