@@ -97,7 +97,11 @@ jump-list() {
     for pair in $pairs; do
         target=${pair%%|*}
         shortcut=${pair#*|}
-        printf "  ${FG[14]}%-${max_len}s${FX[none]}  -->  ${FG[242]}%s${FX[none]}\n" "${shortcut:t}" "$target"
+        if [[ -e $target ]]; then
+            printf "  ${FG[14]}%-${max_len}s${FX[none]}  -->  ${FG[242]}%s${FX[none]}\n" "${shortcut:t}" "$target"
+        else
+            printf "  ${FG[14]}%-${max_len}s${FX[none]}  -->  ${FG[196]}%s${FX[none]}\n" "${shortcut:t}" "$target"
+        fi
     done
 }
 
