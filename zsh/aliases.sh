@@ -30,6 +30,7 @@ safe_alias wh 'which'
 safe_alias ws 'whois'
 safe_alias n 'ngrok'
 safe_alias ai 'claude --name "CC ($(shorten_path))"'
+safe_alias aiy 'claude --dangerously-skip-permissions --name "CC ($(shorten_path))"'
 safe_alias astats 'alias_stats'
 
 # Update ZPrezto
