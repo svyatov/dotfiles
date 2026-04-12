@@ -99,7 +99,8 @@
     "skill-creator@claude-plugins-official": true,
     "impeccable@impeccable": true,
     "ui-ux-pro-max@ui-ux-pro-max-skill": true,
-    "leo@leo-toolkit": true
+    "leo@leo-toolkit": true,
+    "caveman@caveman": true
   },
   "extraKnownMarketplaces": {
     "impeccable": {
@@ -118,6 +119,12 @@
       "source": {
         "source": "github",
         "repo": "svyatov/agent-toolkit"
+      }
+    },
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
       }
     }
   },

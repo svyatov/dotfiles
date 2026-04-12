@@ -227,9 +227,19 @@ if [ -f "$workspace_dir/CLAUDE.md" ]; then
     memory_indicator=" ${C_MUTED}󰈙${C_RESET}"
 fi
 
+# Caveman mode indicator - shown when ~/.claude/.caveman-active flag exists
+caveman_info=""
+caveman_flag="$HOME/.claude/.caveman-active"
+if [ -f "$caveman_flag" ]; then
+    cvm_mode=$(cat "$caveman_flag" 2>/dev/null)
+    [ -z "$cvm_mode" ] && cvm_mode="full"
+    cvm_letter=$(printf '%s' "${cvm_mode:0:1}" | tr '[:lower:]' '[:upper:]')
+    caveman_info=" ${C_SEPARATOR}•${C_RESET} ${C_MUTED_BRIGHT}CVM${C_RESET}${C_SEPARATOR}:${C_RESET}${C_GOLD}${cvm_letter}${C_RESET}"
+fi
+
 # Build status line
 model_display="${C_DUSTY_BLUE}${model_letter}${C_RESET}${C_SEPARATOR}:${C_RESET}${C_DUSTY_BLUE}${model_ver}${C_RESET}${C_SEPARATOR}/${C_RESET}${C_DUSTY_BLUE}${model_ctx}${C_RESET}"
-output="${C_GOLD}${current_time}${C_RESET} ${C_SEPARATOR}•${C_RESET} ${C_MUTED}${cc_version}${C_RESET} ${C_SEPARATOR}•${C_RESET} ${model_display}${memory_indicator} ${C_SEPARATOR}•${C_RESET} ${context_info} ${C_SEPARATOR}•${C_RESET} ${rate_display} ${C_SEPARATOR}•${C_RESET} ${C_TEAL_SOFT}${short_path}${C_RESET}${git_info}"
+output="${C_GOLD}${current_time}${C_RESET} ${C_SEPARATOR}•${C_RESET} ${C_MUTED}${cc_version}${C_RESET} ${C_SEPARATOR}•${C_RESET} ${model_display}${memory_indicator}${caveman_info} ${C_SEPARATOR}•${C_RESET} ${context_info} ${C_SEPARATOR}•${C_RESET} ${rate_display} ${C_SEPARATOR}•${C_RESET} ${C_TEAL_SOFT}${short_path}${C_RESET}${git_info}"
 
 # Print the status line
 printf "%b" "$output"
