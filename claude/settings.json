@@ -129,7 +129,7 @@
     }
   },
   "spinnerTipsEnabled": false,
-  "effortLevel": "high",
+  "effortLevel": "medium",
   "voiceEnabled": true,
   "prefersReducedMotion": false
 }
