@@ -1,6 +1,7 @@
 safe_alias bb 'bun -b'
 safe_alias bbx 'bunx -b'
 safe_alias bbr 'bun -b run'
+safe_alias bbd 'bbr deploy'
 safe_alias bbi 'bun install'
 safe_alias bba 'bun add'
 safe_alias bbrm 'bun remove'
