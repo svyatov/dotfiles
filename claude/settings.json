@@ -98,9 +98,12 @@
     "hookify@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
     "impeccable@impeccable": true,
-    "ui-ux-pro-max@ui-ux-pro-max-skill": true,
+    "ui-ux-pro-max@ui-ux-pro-max-skill": false,
     "leo@leo-toolkit": true,
-    "caveman@caveman": true
+    "caveman@caveman": true,
+    "sentry@claude-plugins-official": false,
+    "remember@claude-plugins-official": false,
+    "ai-firstify@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "impeccable": {
@@ -134,6 +137,6 @@
   },
   "spinnerTipsEnabled": false,
   "effortLevel": "medium",
-  "voiceEnabled": true,
-  "prefersReducedMotion": false
+  "prefersReducedMotion": true,
+  "voiceEnabled": true
 }
