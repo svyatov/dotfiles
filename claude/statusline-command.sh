@@ -52,9 +52,9 @@ size=$(echo "$input" | jq '.context_window.context_window_size')
 if [ "$usage" != "null" ]; then
     current=$(echo "$usage" | jq '.input_tokens + .output_tokens + .cache_creation_input_tokens + .cache_read_input_tokens')
     ctx_remaining=$((100 - current * 100 / size))
-    if [ "$ctx_remaining" -ge 40 ]; then
+    if [ "$ctx_remaining" -ge 80 ]; then
         ctx_color=$C_SAGE
-    elif [ "$ctx_remaining" -ge 20 ]; then
+    elif [ "$ctx_remaining" -ge 60 ]; then
         ctx_color=$C_GOLD
     else
         ctx_color=$C_CORAL
