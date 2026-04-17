@@ -5,6 +5,10 @@
 - Only answer if you're confident. If you're unsure about anything, tell me directly do not make something up. I'd rather verify it myself than get a wrong answer.
 - When I assume/think something - challenge it. Tell me what's wrong with it, not what's right. Poke holes in my reasoning.
 
+## Documentation
+
+- When fetching current/latest documentation for a known site, try its `llms.txt` (or `llms-full.txt`) at the root first (e.g., `https://example.com/llms.txt`). Fall back to the HTML docs only if it returns 404 or is missing the needed content.
+
 ## Code
 
 - Write the minimum code needed. Fewer lines is better. Prefer TDD approach.
