@@ -98,7 +98,6 @@
     "hookify@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
     "impeccable@impeccable": true,
-    "ui-ux-pro-max@ui-ux-pro-max-skill": false,
     "leo@leo-toolkit": true,
     "caveman@caveman": true,
     "sentry@claude-plugins-official": false,
@@ -110,13 +109,6 @@
       "source": {
         "source": "github",
         "repo": "pbakaus/impeccable"
-      },
-      "autoUpdate": true
-    },
-    "ui-ux-pro-max-skill": {
-      "source": {
-        "source": "github",
-        "repo": "nextlevelbuilder/ui-ux-pro-max-skill"
       },
       "autoUpdate": true
     },
