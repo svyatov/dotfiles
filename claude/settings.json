@@ -62,7 +62,7 @@
       "Bash(git push:*)",
       "Bash(rm:*)"
     ],
-    "defaultMode": "default"
+    "defaultMode": "auto"
   },
   "hooks": {
     "PostToolUse": [
@@ -130,5 +130,6 @@
   "spinnerTipsEnabled": false,
   "effortLevel": "medium",
   "prefersReducedMotion": true,
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "skipAutoPermissionPrompt": true
 }
