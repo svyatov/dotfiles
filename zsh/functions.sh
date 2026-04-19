@@ -19,17 +19,11 @@ mkcd() { mkdir -p "$1" && cd "$1" }
 
 _directories_list() { print -l "$1"/*(/N:t) }
 
-u() { cd ../${1:+$1} }
+u() { cd "../$1" }
 _u() { reply=("${(@f)$(_directories_list ..)}") }
 compctl -M 'm:{a-z}={A-Z}' -K _u u
 
-uu() {
-    if [[ -n $1 ]]; then
-        cd ../../$1
-    else
-        cd ../..
-    fi
-}
+uu() { cd "../../$1" }
 _uu() { reply=("${(@f)$(_directories_list ../..)}") }
 compctl -M 'm:{a-z}={A-Z}' -K _uu uu
 
