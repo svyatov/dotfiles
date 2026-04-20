@@ -85,24 +85,20 @@
   },
   "enabledPlugins": {
     "feature-dev@claude-plugins-official": false,
-    "typescript-lsp@claude-plugins-official": true,
-    "pyright-lsp@claude-plugins-official": true,
-    "gopls-lsp@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
     "pr-review-toolkit@claude-plugins-official": false,
-    "superpowers@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": false,
     "claude-md-management@claude-plugins-official": true,
     "claude-code-setup@claude-plugins-official": true,
-    "ruby-lsp@claude-plugins-official": true,
     "chrome-devtools-mcp@claude-plugins-official": true,
     "hookify@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
     "impeccable@impeccable": true,
-    "leo@leo-toolkit": true,
-    "caveman@caveman": true,
+    "caveman@caveman": false,
     "sentry@claude-plugins-official": false,
     "remember@claude-plugins-official": false,
-    "ai-firstify@claude-plugins-official": true
+    "ai-firstify@claude-plugins-official": false,
+    "compound-engineering@compound-engineering-plugin": true
   },
   "extraKnownMarketplaces": {
     "impeccable": {
@@ -125,11 +121,17 @@
         "repo": "JuliusBrussee/caveman"
       },
       "autoUpdate": true
+    },
+    "compound-engineering-plugin": {
+      "source": {
+        "source": "github",
+        "repo": "EveryInc/compound-engineering-plugin"
+      }
     }
   },
   "spinnerTipsEnabled": false,
   "effortLevel": "medium",
   "prefersReducedMotion": true,
-  "voiceEnabled": true,
-  "skipAutoPermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "voiceEnabled": true
 }
