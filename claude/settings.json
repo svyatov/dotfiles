@@ -77,6 +77,17 @@
           }
         ]
       }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "rtk hook claude"
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
@@ -98,20 +109,14 @@
     "sentry@claude-plugins-official": false,
     "remember@claude-plugins-official": false,
     "ai-firstify@claude-plugins-official": false,
-    "compound-engineering@compound-engineering-plugin": true
+    "compound-engineering@compound-engineering-plugin": true,
+    "ralph-loop@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "impeccable": {
       "source": {
         "source": "github",
         "repo": "pbakaus/impeccable"
-      },
-      "autoUpdate": true
-    },
-    "leo-toolkit": {
-      "source": {
-        "source": "github",
-        "repo": "svyatov/agent-toolkit"
       },
       "autoUpdate": true
     },
@@ -127,10 +132,16 @@
         "source": "github",
         "repo": "EveryInc/compound-engineering-plugin"
       }
+    },
+    "leo-toolkit": {
+      "source": {
+        "source": "github",
+        "repo": "svyatov/agent-toolkit"
+      }
     }
   },
   "spinnerTipsEnabled": false,
-  "effortLevel": "medium",
+  "effortLevel": "high",
   "prefersReducedMotion": true,
   "skipAutoPermissionPrompt": true,
   "voiceEnabled": true

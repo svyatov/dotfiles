@@ -23,3 +23,5 @@
 - Format: `type(scope): description` (e.g., `feat(auth): add JWT refresh token rotation`, `fix(api): handle null response from payments endpoint`).
 - Common types: feat, fix, refactor, docs, test, chore, perf, ci, build, style.
 - When merging pull requests, prefer squash merge as the default strategy.
+
+@RTK.md
