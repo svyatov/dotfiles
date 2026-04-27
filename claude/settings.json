@@ -133,7 +133,8 @@
       "source": {
         "source": "github",
         "repo": "EveryInc/compound-engineering-plugin"
-      }
+      },
+      "autoUpdate": true
     },
     "leo-toolkit": {
       "source": {
