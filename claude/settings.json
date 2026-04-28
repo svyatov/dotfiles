@@ -62,7 +62,7 @@
       "Bash(git push:*)",
       "Bash(rm:*)"
     ],
-    "defaultMode": "auto"
+    "defaultMode": "default"
   },
   "hooks": {
     "PostToolUse": [
@@ -152,6 +152,8 @@
   "spinnerTipsEnabled": false,
   "effortLevel": "xhigh",
   "prefersReducedMotion": true,
+  "preferredNotifChannel": "ghostty",
+  "agentPushNotifEnabled": false,
   "skipAutoPermissionPrompt": true,
   "voiceEnabled": true
 }
