@@ -35,6 +35,7 @@
       "Bash(go:*)",
       "Bash(make:*)",
       "Bash(just:*)",
+      "Bash(rtk:*)",
       "Bash(ls:*)",
       "Bash(find:*)",
       "Bash(cat:*)",
@@ -47,9 +48,7 @@
       "Bash(touch:*)",
       "Bash(docker:*)",
       "Bash(golangci-lint:*)",
-      "Bash(task:*)",
-      "Skill(leo:commit)",
-      "Bash(git commit:*)"
+      "Skill(commit:commit)"
     ],
     "deny": [
       "Read(./.env)",
@@ -118,7 +117,7 @@
     "caveman@caveman": true,
     "sentry@claude-plugins-official": false,
     "remember@claude-plugins-official": false,
-    "compound-engineering@compound-engineering-plugin": false,
+    "compound-engineering@compound-engineering-plugin": true,
     "commit@leo-toolkit": true,
     "grill-me@leo-toolkit": true
   },
