@@ -193,7 +193,9 @@ Bookmarks persist across sessions (stored as symlinks in `~/.jump_shortcuts`) an
 | `shrl` | `exec $SHELL -l` | Reload shell |
 | `myip` | `dig +short myip.opendns.com...` | Show public IP |
 | `ai` | `claude` | Launch Claude Code |
+| `aiy` | `claude --dangerously-skip-permissions` | Launch Claude Code, skip permission prompts |
 | `astats` | `alias_stats` | Alias usage statistics |
+| `syu` | `brew upgrade && mise upgrade && bun upgrade` | System tool updates |
 
 ### Git Aliases (from `.gitconfig`)
 
@@ -221,8 +223,38 @@ Bookmarks persist across sessions (stored as symlinks in `~/.jump_shortcuts`) an
 | `gtc` | `gt create` | Create stacked branch |
 | `gts` | `gt submit` | Submit PR |
 | `gtss` | `gt submit --stack` | Submit entire stack |
+| `gtm` | `gt modify` | Amend current branch |
 | `gtre` | `gt restack` | Restack branches |
+| `gtl` | `gt log` | Show stack log |
+| `gtu` | `gt up` | Move up the stack |
+| `gtd` | `gt down` | Move down the stack |
+| `gtco` | `gt checkout` | Checkout branch |
+| `gtdl` | `gt delete` | Delete branch |
 | `gty` | `gt sync` | Sync with remote |
+
+### Code Archaeology Aliases
+
+| Alias | Description |
+|-------|-------------|
+| `gchurn` | Top 20 most-changed files in the past year |
+| `gcontrib` | Contributor commit counts |
+| `gbugs` | Files most often touched by fix/bug commits |
+| `gvel` | Commit velocity by month |
+| `gfire` | Firefighting commits (revert/hotfix/emergency) |
+| `gfocus` | Most-changed files in the last two weeks |
+| `gdchurn` | Top 15 most-changed directories in the past year |
+| `gstale` | Files least recently touched |
+
+### Skills Aliases (`npx skills`)
+
+| Alias | Command | Description |
+|-------|---------|-------------|
+| `ska` | `npx skills add` | Add a skill |
+| `skrm` | `npx skills remove` | Remove a skill |
+| `sku` | `npx skills update` | Update skills |
+| `skl` | `npx skills list` | List installed skills |
+| `skf` | `npx skills find` | Find available skills |
+| `skc` | `npx skills check` | Check skill status |
 
 ### Ruby/Rails Aliases
 
@@ -251,8 +283,16 @@ Bookmarks persist across sessions (stored as symlinks in `~/.jump_shortcuts`) an
 | `nrb` | `npm run build` | Build project |
 | `mm` | `pnpm` | pnpm shortcut |
 | `mmd` | `pnpm dev` | pnpm dev server |
-| `bb` | `bun` | Bun shortcut |
+| `bb` | `bun -b` | Bun shortcut (bun-as-node) |
+| `bbx` | `bunx -b` | bunx shortcut |
+| `bbr` | `bun -b run` | Bun run script |
+| `bbd` | `bbr deploy` | Bun run deploy |
 | `bbi` | `bun install` | Bun install |
+| `bba` | `bun add` | Bun add package |
+| `bbrm` | `bun remove` | Bun remove package |
+| `bbo` | `bun outdated` | Bun outdated |
+| `bbu` | `bun update` | Bun update |
+| `bbc` | `bun create` | Bun scaffold project |
 
 ### Go Aliases
 

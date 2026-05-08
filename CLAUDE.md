@@ -2,6 +2,16 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## ⚠️ Public Repository — Secrets Safety
+
+**This repo is public on GitHub.** Before staging, committing, or pushing any change:
+
+- Never commit `~/.secrets`, API keys, tokens, credentials, private SSH keys, or anything machine-specific that wasn't already in the repo.
+- Local-only configuration belongs in gitignored files: `zsh/aliases_local.sh`, `zsh/functions_local.sh`, `~/.zshrc.local`, `~/.secrets`.
+- Inspect `git diff --cached` before every commit. If a diff contains an email beyond `leonid@svyatov.com`, an absolute path with another username, a host name, an IP, a token-shaped string, or any value that looks like a secret — stop and ask the user.
+- Prefer `git add <specific paths>` over `git add -A` / `git add .` to avoid sweeping in untracked files by accident.
+- If a secret slips through, treat it as compromised: rotate the credential first, then rewrite history.
+
 ## Repository Overview
 
 Personal dotfiles for macOS web development (Ruby/Rails, Node.js, Go, Elixir, Docker). Uses Zsh with Prezto framework, symlink-based configuration management.
@@ -65,12 +75,12 @@ To uninstall (removes symlinks, restores backups):
 Domain-specific configuration uses auto-discovery via glob expansion:
 
 ```bash
-# In functions.sh - loads functions_jumps.sh, functions_git.sh, functions_ruby.sh
+# In functions.sh - loads functions_jumps.sh, functions_git.sh, functions_ruby.sh, functions_aliases.sh
 for function_file in $HOME/.dotfiles/zsh/functions_*.sh(N); do
   source "$function_file"
 done
 
-# In aliases.sh - loads aliases_git.sh, aliases_ruby.sh, aliases_docker.sh, etc.
+# In aliases.sh - loads aliases_git.sh, aliases_ruby.sh, aliases_docker.sh, aliases_skills.sh, etc.
 for alias_file in $HOME/.dotfiles/zsh/aliases_*.sh(N); do
   source "$alias_file"
 done
@@ -149,6 +159,8 @@ safe_alias g 'git' 'override'     # Forces creation
 | `claude/CLAUDE.md` | Global Claude Code preferences (loaded in every conversation) |
 | `claude/install-plugins.sh` | Install Claude Code plugins from settings |
 | `claude/install-skills.sh` | Install global Claude Code skills via npx |
+| `bin/alias_stats` | Alias usage stats (used/unused, grouped by file) |
+| `zsh/aliases_skills.sh` | npx skills aliases (`ska`/`skrm`/`sku`/`skl`/`skf`/`skc`) |
 | `cursor/settings.json` | Cursor editor settings |
 | `cursor/keybindings.json` | Cursor keybindings |
 | `cursor/mcp.json` | Cursor MCP server configuration |
