@@ -88,7 +88,8 @@
           }
         ]
       }
-    ]
+    ],
+    "SessionStart": []
   },
   "statusLine": {
     "type": "command",
@@ -112,7 +113,9 @@
     "compound-engineering@compound-engineering-plugin": true,
     "ralph-loop@claude-plugins-official": true,
     "context-mode@context-mode": true,
-    "commit@leo-toolkit": true
+    "commit@leo-toolkit": true,
+    "import-skill@leo-toolkit": true,
+    "grill-me@leo-toolkit": true
   },
   "extraKnownMarketplaces": {
     "impeccable": {
@@ -140,13 +143,15 @@
       "source": {
         "source": "github",
         "repo": "svyatov/agent-toolkit"
-      }
+      },
+      "autoUpdate": true
     },
     "context-mode": {
       "source": {
         "source": "github",
         "repo": "mksglu/context-mode"
-      }
+      },
+      "autoUpdate": true
     }
   },
   "spinnerTipsEnabled": false,
