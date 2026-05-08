@@ -118,11 +118,8 @@
     "caveman@caveman": true,
     "sentry@claude-plugins-official": false,
     "remember@claude-plugins-official": false,
-    "compound-engineering@compound-engineering-plugin": true,
-    "ralph-loop@claude-plugins-official": true,
-    "context-mode@context-mode": true,
+    "compound-engineering@compound-engineering-plugin": false,
     "commit@leo-toolkit": true,
-    "import-skill@leo-toolkit": true,
     "grill-me@leo-toolkit": true
   },
   "extraKnownMarketplaces": {
