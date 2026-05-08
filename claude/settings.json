@@ -118,7 +118,6 @@
     "caveman@caveman": true,
     "sentry@claude-plugins-official": false,
     "remember@claude-plugins-official": false,
-    "ai-firstify@claude-plugins-official": false,
     "compound-engineering@compound-engineering-plugin": true,
     "ralph-loop@claude-plugins-official": true,
     "context-mode@context-mode": true,
