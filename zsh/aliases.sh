@@ -32,7 +32,7 @@ safe_alias n 'ngrok'
 safe_alias ai 'claude --name "CC ($(shorten_path))"'
 safe_alias aiy 'claude --dangerously-skip-permissions --name "CC ($(shorten_path))"'
 safe_alias astats 'alias_stats'
-safe_alias syu 'ewu mise && mup && bun upgrade'
+safe_alias syu 'ewu mise rtk && mup && bun upgrade && uv tool upgrade graphifyy'
 
 # Update ZPrezto
 safe_alias zpu 'pushd ~/.zprezto && git pull && git submodule update --init --recursive && popd'
