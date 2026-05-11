@@ -31,9 +31,10 @@ Setup script options:
 - `--dry-run` - Preview changes without modifying anything
 - `--confirm` - Ask before creating each symlink
 
-After setup, install Claude plugins:
+After setup, install Claude plugins and skills:
 ```bash
 ~/.dotfiles/claude/install-plugins.sh
+~/.dotfiles/claude/install-skills.sh
 ```
 
 To uninstall (removes symlinks, restores backups):

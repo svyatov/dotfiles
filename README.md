@@ -192,10 +192,10 @@ Bookmarks persist across sessions (stored as symlinks in `~/.jump_shortcuts`) an
 | `edf` | `nvim ~/.dotfiles` | Edit dotfiles |
 | `shrl` | `exec $SHELL -l` | Reload shell |
 | `myip` | `dig +short myip.opendns.com...` | Show public IP |
-| `ai` | `claude` | Launch Claude Code |
-| `aiy` | `claude --dangerously-skip-permissions` | Launch Claude Code, skip permission prompts |
+| `ai` | `claude --name "CC ($(shorten_path))"` | Launch Claude Code (titled by cwd) |
+| `aiy` | `claude --dangerously-skip-permissions --name ...` | Launch Claude Code, skip permission prompts |
 | `astats` | `alias_stats` | Alias usage statistics |
-| `syu` | `brew upgrade && mise upgrade && bun upgrade` | System tool updates |
+| `syu` | `ewu mise rtk && mup && bun upgrade && uv self update && uv tool upgrade graphifyy` | System tool updates |
 
 ### Git Aliases (from `.gitconfig`)
 
