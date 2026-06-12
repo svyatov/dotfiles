@@ -39,15 +39,25 @@ input=$(cat)
 # Extract version
 cc_version=$(echo "$input" | jq -r '.version // empty')
 
-# Extract model: first letter, version, context size -> O:4.6/1M
-model_letter=$(echo "$input" | jq -r '.model.display_name' | sed 's/^\(.\).*/\1/')
-model_ver=$(echo "$input" | jq -r '.model.display_name' | sed -n 's/^[A-Za-z]* \([0-9.]*\).*/\1/p')
-model_ctx=$(echo "$input" | jq -r '.model.display_name' | sed -n 's/.*(\([0-9]*[KMG]\) context).*/\1/p')
+# Extract model: first letter, version -> O:4.8
+model_name=$(echo "$input" | jq -r '.model.display_name')
+model_letter="${model_name:0:1}"
+model_ver=$(echo "$model_name" | sed -n 's/^[A-Za-z]* \([0-9.]*\).*/\1/p')
 
 # Context remaining percentage
 context_info=""
 usage=$(echo "$input" | jq '.context_window.current_usage')
 size=$(echo "$input" | jq '.context_window.context_window_size')
+
+# Context size from context_window_size -> 1M / 200K
+model_ctx=""
+if [ "$size" != "null" ] && [ "$size" -gt 0 ] 2>/dev/null; then
+    if [ $((size % 1000000)) -eq 0 ]; then
+        model_ctx="$((size / 1000000))M"
+    else
+        model_ctx="$((size / 1000))K"
+    fi
+fi
 
 if [ "$usage" != "null" ]; then
     current=$(echo "$usage" | jq '.input_tokens + .output_tokens + .cache_creation_input_tokens + .cache_read_input_tokens')
@@ -227,19 +237,10 @@ if [ -f "$workspace_dir/CLAUDE.md" ]; then
     memory_indicator=" ${C_MUTED}󰈙${C_RESET}"
 fi
 
-# Caveman mode indicator - shown when ~/.claude/.caveman-active flag exists
-caveman_info=""
-caveman_flag="$HOME/.claude/.caveman-active"
-if [ -f "$caveman_flag" ]; then
-    cvm_mode=$(cat "$caveman_flag" 2>/dev/null)
-    [ -z "$cvm_mode" ] && cvm_mode="full"
-    cvm_letter=$(printf '%s' "${cvm_mode:0:1}" | tr '[:lower:]' '[:upper:]')
-    caveman_info=" ${C_SEPARATOR}•${C_RESET} ${C_MUTED_BRIGHT}CVM${C_RESET}${C_SEPARATOR}:${C_RESET}${C_GOLD}${cvm_letter}${C_RESET}"
-fi
-
 # Build status line
-model_display="${C_DUSTY_BLUE}${model_letter}${C_RESET}${C_SEPARATOR}:${C_RESET}${C_DUSTY_BLUE}${model_ver}${C_RESET}${C_SEPARATOR}/${C_RESET}${C_DUSTY_BLUE}${model_ctx}${C_RESET}"
-output="${C_GOLD}${current_time}${C_RESET} ${C_SEPARATOR}•${C_RESET} ${C_MUTED}${cc_version}${C_RESET} ${C_SEPARATOR}•${C_RESET} ${model_display}${memory_indicator}${caveman_info} ${C_SEPARATOR}•${C_RESET} ${context_info} ${C_SEPARATOR}•${C_RESET} ${rate_display} ${C_SEPARATOR}•${C_RESET} ${C_TEAL_SOFT}${short_path}${C_RESET}${git_info}"
+model_display="${C_DUSTY_BLUE}${model_letter}${C_RESET}${C_SEPARATOR}:${C_RESET}${C_DUSTY_BLUE}${model_ver}${C_RESET}"
+[ -n "$model_ctx" ] && model_display="${model_display}${C_SEPARATOR}/${C_RESET}${C_DUSTY_BLUE}${model_ctx}${C_RESET}"
+output="${C_GOLD}${current_time}${C_RESET} ${C_SEPARATOR}•${C_RESET} ${C_MUTED}${cc_version}${C_RESET} ${C_SEPARATOR}•${C_RESET} ${model_display}${memory_indicator} ${C_SEPARATOR}•${C_RESET} ${context_info} ${C_SEPARATOR}•${C_RESET} ${rate_display} ${C_SEPARATOR}•${C_RESET} ${C_TEAL_SOFT}${short_path}${C_RESET}${git_info}"
 
 # Print the status line
 printf "%b" "$output"

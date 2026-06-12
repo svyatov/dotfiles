@@ -48,12 +48,14 @@
       "Bash(touch:*)",
       "Bash(docker:*)",
       "Bash(golangci-lint:*)",
-      "Skill(commit:commit)"
+      "Skill(commit:commit)",
+      "Read(env.ts)",
+      "Read(*.example)"
     ],
     "deny": [
-      "Read(./.env)",
-      "Read(./env.*)",
-      "Read(./secrets/**)",
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(./secrets/**/*)",
       "Read(~/.ssh/**)",
       "Read(~/.secrets)"
     ],
@@ -107,32 +109,26 @@
     "feature-dev@claude-plugins-official": false,
     "security-guidance@claude-plugins-official": true,
     "pr-review-toolkit@claude-plugins-official": false,
-    "superpowers@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": false,
     "claude-md-management@claude-plugins-official": true,
     "claude-code-setup@claude-plugins-official": true,
     "chrome-devtools-mcp@claude-plugins-official": true,
     "hookify@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
-    "impeccable@impeccable": true,
-    "caveman@caveman": true,
+    "impeccable@impeccable": false,
     "sentry@claude-plugins-official": false,
     "remember@claude-plugins-official": false,
-    "compound-engineering@compound-engineering-plugin": true,
-    "commit@leo-toolkit": true,
-    "grill-me@leo-toolkit": true
+    "compound-engineering@compound-engineering-plugin": false,
+    "commit@leo-toolkit": false,
+    "grill-me@leo-toolkit": true,
+    "ruby-lsp@claude-plugins-official": false,
+    "typescript-lsp@claude-plugins-official": false
   },
   "extraKnownMarketplaces": {
     "impeccable": {
       "source": {
         "source": "github",
         "repo": "pbakaus/impeccable"
-      },
-      "autoUpdate": true
-    },
-    "caveman": {
-      "source": {
-        "source": "github",
-        "repo": "JuliusBrussee/caveman"
       },
       "autoUpdate": true
     },
@@ -156,6 +152,13 @@
         "repo": "mksglu/context-mode"
       },
       "autoUpdate": true
+    },
+    "palkan-skills": {
+      "source": {
+        "source": "github",
+        "repo": "palkan/skills"
+      },
+      "autoUpdate": true
     }
   },
   "spinnerTipsEnabled": false,
@@ -164,5 +167,6 @@
   "preferredNotifChannel": "ghostty",
   "agentPushNotifEnabled": false,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "model": "claude-fable-5[1m]"
 }

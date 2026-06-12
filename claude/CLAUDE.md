@@ -2,6 +2,7 @@
 
 ## General
 
+- Be brief.
 - Only answer if you're confident. If you're unsure about anything, tell me directly do not make something up. I'd rather verify it myself than get a wrong answer.
 - When I assume/think something - challenge it. Tell me what's wrong with it, not what's right. Poke holes in my reasoning.
 
@@ -13,8 +14,7 @@
 
 - Write the minimum code needed. Fewer lines is better. Prefer TDD approach.
 - Bias toward deletion. Remove dead code, unused imports, unnecessary abstractions.
-- Before claiming work is complete, verify it actually works (run tests, lint, check output). Use the `verification-before-completion` approach.
-- When reviewing or writing UI code, consider using `web-design-guidelines` for accessibility compliance.
+- Before claiming work is complete, verify it actually works (run tests, lint, check output).
 - Prefer bun over nodejs
 
 ## Git
@@ -25,8 +25,6 @@
 - When merging pull requests, prefer squash merge as the default strategy.
 
 @RTK.md
-
 # graphify
-
 - **graphify** (`~/.claude/skills/graphify/SKILL.md`) - any input to knowledge graph. Trigger: `/graphify`
 When the user types `/graphify`, invoke the Skill tool with `skill: "graphify"` before doing anything else.
