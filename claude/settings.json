@@ -112,7 +112,7 @@
     "superpowers@claude-plugins-official": false,
     "claude-md-management@claude-plugins-official": true,
     "claude-code-setup@claude-plugins-official": true,
-    "chrome-devtools-mcp@claude-plugins-official": true,
+    "chrome-devtools-mcp@claude-plugins-official": false,
     "hookify@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
     "impeccable@impeccable": false,
@@ -120,7 +120,7 @@
     "remember@claude-plugins-official": false,
     "compound-engineering@compound-engineering-plugin": false,
     "commit@leo-toolkit": false,
-    "grill-me@leo-toolkit": true,
+    "grill-me@leo-toolkit": false,
     "ruby-lsp@claude-plugins-official": false,
     "typescript-lsp@claude-plugins-official": false
   },
@@ -168,5 +168,5 @@
   "agentPushNotifEnabled": false,
   "skipAutoPermissionPrompt": true,
   "voiceEnabled": true,
-  "model": "claude-fable-5[1m]"
+  "skipWorkflowUsageWarning": true
 }
