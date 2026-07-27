@@ -23,14 +23,14 @@
     "pr-review-toolkit@claude-plugins-official": false,
     "pyright-lsp@claude-plugins-official": false,
     "remember@claude-plugins-official": false,
-    "repo-prose@leo-toolkit": true,
+    "repo-prose@leo-toolkit": false,
     "ruby-lsp@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
     "sentry@claude-plugins-official": false,
     "skill-creator@claude-plugins-official": true,
     "superpowers@claude-plugins-official": false,
     "typescript-lsp@claude-plugins-official": false,
-    "writing-clearly-and-concisely@leo-toolkit": true
+    "writing-clearly-and-concisely@leo-toolkit": false
   },
   "env": {
     "ENABLE_LSP_TOOL": "1"
@@ -40,13 +40,6 @@
       "autoUpdate": true,
       "source": {
         "repo": "EveryInc/compound-engineering-plugin",
-        "source": "github"
-      }
-    },
-    "context-mode": {
-      "autoUpdate": true,
-      "source": {
-        "repo": "mksglu/context-mode",
         "source": "github"
       }
     },
@@ -101,16 +94,6 @@
           }
         ],
         "matcher": "Bash"
-      }
-    ],
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "command": "\"/Users/leonid/.claude/hooks/context-mode-cache-heal.mjs\"",
-            "type": "command"
-          }
-        ]
       }
     ]
   },
@@ -176,6 +159,73 @@
   },
   "preferredNotifChannel": "ghostty",
   "prefersReducedMotion": true,
+  "skillOverrides": {
+    "agent-browser": "user-invocable-only",
+    "ast-grep": "user-invocable-only",
+    "claude-code-setup:claude-automation-recommender": "user-invocable-only",
+    "claude-md-management:claude-md-improver": "user-invocable-only",
+    "claude-md-management:revise-claude-md": "user-invocable-only",
+    "compound-engineering:ce-babysit-pr": "user-invocable-only",
+    "compound-engineering:ce-code-review": "user-invocable-only",
+    "compound-engineering:ce-commit": "user-invocable-only",
+    "compound-engineering:ce-compound": "user-invocable-only",
+    "compound-engineering:ce-debug": "user-invocable-only",
+    "compound-engineering:ce-dogfood": "user-invocable-only",
+    "compound-engineering:ce-explain": "user-invocable-only",
+    "compound-engineering:ce-handoff": "user-invocable-only",
+    "compound-engineering:ce-optimize": "user-invocable-only",
+    "compound-engineering:ce-polish": "user-invocable-only",
+    "compound-engineering:ce-pov": "user-invocable-only",
+    "compound-engineering:ce-product-pulse": "user-invocable-only",
+    "compound-engineering:ce-promote": "user-invocable-only",
+    "compound-engineering:ce-proof": "user-invocable-only",
+    "compound-engineering:ce-resolve-pr-feedback": "user-invocable-only",
+    "compound-engineering:ce-riffrec-feedback-analysis": "user-invocable-only",
+    "compound-engineering:ce-setup": "user-invocable-only",
+    "compound-engineering:ce-simplify-code": "user-invocable-only",
+    "compound-engineering:ce-strategy": "user-invocable-only",
+    "compound-engineering:ce-sweep": "user-invocable-only",
+    "compound-engineering:ce-test-browser": "user-invocable-only",
+    "compound-engineering:ce-test-xcode": "user-invocable-only",
+    "compound-engineering:ce-worktree": "user-invocable-only",
+    "compound-engineering:lfg": "user-invocable-only",
+    "computer-use": "user-invocable-only",
+    "graphify": "user-invocable-only",
+    "hookify:configure": "user-invocable-only",
+    "hookify:help": "user-invocable-only",
+    "hookify:hookify": "user-invocable-only",
+    "hookify:list": "user-invocable-only",
+    "hookify:writing-rules": "user-invocable-only",
+    "humanizer-ru": "user-invocable-only",
+    "impeccable": "user-invocable-only",
+    "layered-rails:layered-rails": "user-invocable-only",
+    "orca-cli": "user-invocable-only",
+    "orchestration": "user-invocable-only",
+    "oss-kit:oss-audit": "user-invocable-only",
+    "oss-kit:oss-changelog": "user-invocable-only",
+    "oss-kit:oss-ci": "user-invocable-only",
+    "oss-kit:oss-community": "user-invocable-only",
+    "oss-kit:oss-harden": "user-invocable-only",
+    "oss-kit:oss-publish": "user-invocable-only",
+    "oss-kit:oss-readme": "user-invocable-only",
+    "oss-kit:oss-skill": "user-invocable-only",
+    "pishi": "user-invocable-only",
+    "plugin-dev:agent-development": "user-invocable-only",
+    "plugin-dev:command-development": "user-invocable-only",
+    "plugin-dev:create-plugin": "user-invocable-only",
+    "plugin-dev:hook-development": "user-invocable-only",
+    "plugin-dev:mcp-integration": "user-invocable-only",
+    "plugin-dev:plugin-settings": "user-invocable-only",
+    "plugin-dev:plugin-structure": "user-invocable-only",
+    "plugin-dev:skill-development": "user-invocable-only",
+    "ponytail:ponytail-audit": "user-invocable-only",
+    "ponytail:ponytail-debt": "user-invocable-only",
+    "ponytail:ponytail-gain": "user-invocable-only",
+    "ponytail:ponytail-help": "user-invocable-only",
+    "ponytail:ponytail-review": "user-invocable-only",
+    "skill-creator:skill-creator": "user-invocable-only",
+    "style-profile": "user-invocable-only"
+  },
   "skipAutoPermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
   "spinnerTipsEnabled": false,
