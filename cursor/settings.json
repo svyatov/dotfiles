@@ -97,10 +97,18 @@
   "gitlens.currentLine.dateFormat": "",
   "json.schemaDownload.enable": true,
   "editor.codeActionsOnSave": {},
-  "python.defaultInterpreterPath": "/Users/leonid/.local/share/mise/installs/python/3.14.3/bin/python",
+  "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
   "git.confirmSync": false,
   "[yaml]": {
     "editor.defaultFormatter": "redhat.vscode-yaml",
   },
   "window.autoDetectColorScheme": false,
+  "yaml.disableSchemaDetection": [
+    "**/.github/workflows/*.yml",
+    "**/.github/workflows/*.yaml",
+    "**/.gitea/workflows/*.yml",
+    "**/.gitea/workflows/*.yaml",
+    "**/.forgejo/workflows/*.yml",
+    "**/.forgejo/workflows/*.yaml",
+  ],
 }
