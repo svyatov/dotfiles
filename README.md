@@ -77,9 +77,13 @@ Or install individually:
 git clone git://github.com/svyatov/dotfiles.git ~/.dotfiles
 brew bundle --file=~/.dotfiles/Brewfile  # Install dependencies
 ~/.dotfiles/setup.sh
-~/.dotfiles/claude/install-plugins.sh    # Install Claude Code plugins
-~/.dotfiles/claude/install-skills.sh     # Install Claude Code skills
 ```
+
+Claude Code plugins are not installed by a script. `claude/settings.json` is the
+manifest: install each `true` entry of `enabledPlugins` with
+`claude plugin install <plugin>@<marketplace>`, then run `csync --push` to apply the
+settings, including the `skillOverrides` map that controls which skills the model
+sees.
 
 **Setup script options:**
 
@@ -140,8 +144,6 @@ Claude Code rewrites `~/.claude/settings.json` at runtime (`/config`, `/model`, 
 | `setup.sh` | Install dotfiles (with `--help`, `--dry-run`, `--confirm`) |
 | `uninstall.sh` | Remove dotfiles (with `--help`, `--dry-run`) |
 | `Brewfile` | Homebrew dependencies (`brew bundle`) |
-| `claude/install-plugins.sh` | Install Claude Code plugins |
-| `claude/install-skills.sh` | Install Claude Code skills (with `--force`) |
 | `claude/settings-sync.sh` | Reconcile Claude settings (`--status`, `--pull`, `--push`, `--dry-run`) |
 | `cursor/install-extensions.sh` | Install Cursor extensions from list |
 | `bin/alias_stats` | Alias usage stats with colorful grouped output |

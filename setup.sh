@@ -370,6 +370,7 @@ if [[ "$DRY_RUN" == true ]]; then
 else
     echo "Setup complete."
     echo ""
-    echo "To install Claude Code plugins, run: ~/.dotfiles/claude/install-plugins.sh"
+    echo "To install Claude Code plugins, run 'claude plugin install <plugin>@<marketplace>'"
+    echo "for each true entry in enabledPlugins in claude/settings.json, then 'csync --push'."
     echo "To install Cursor extensions, run: ~/.dotfiles/cursor/install-extensions.sh"
 fi
