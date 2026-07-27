@@ -2,191 +2,58 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## ⚠️ Public Repository — Secrets Safety
+## ⚠️ Public Repository: Secrets Safety
 
 **This repo is public on GitHub.** Before staging, committing, or pushing any change:
 
 - Never commit `~/.secrets`, API keys, tokens, credentials, private SSH keys, or anything machine-specific that wasn't already in the repo.
 - Local-only configuration belongs in gitignored files: `zsh/aliases_local.sh`, `zsh/functions_local.sh`, `~/.zshrc.local`, `~/.secrets`.
-- Inspect `git diff --cached` before every commit. If a diff contains an email beyond `leonid@svyatov.com`, an absolute path with another username, a host name, an IP, a token-shaped string, or any value that looks like a secret — stop and ask the user.
+- Inspect `git diff --cached` before every commit. If a diff contains an email beyond `leonid@svyatov.com`, an absolute path with another username, a host name, an IP, a token-shaped string, or any value that looks like a secret, stop and ask the user.
 - Prefer `git add <specific paths>` over `git add -A` / `git add .` to avoid sweeping in untracked files by accident.
 - If a secret slips through, treat it as compromised: rotate the credential first, then rewrite history.
 
 ## Repository Overview
 
-Personal dotfiles for macOS web development (Ruby/Rails, Node.js, Go, Elixir, Docker). Uses Zsh with Prezto framework, symlink-based configuration management.
+Personal dotfiles for macOS web development (Ruby/Rails, Node.js, Go, Elixir, Docker). Zsh with the Prezto framework, symlink-based configuration management.
 
-## Installation
+Installation steps, setup script options, the full symlink table, and the alias/function reference all live in `README.md`. Read it there rather than duplicating it here, and update it when you change any of them.
 
-```bash
-git clone git://github.com/svyatov/dotfiles.git ~/.dotfiles
-brew bundle --file=~/.dotfiles/Brewfile  # Install dependencies
-~/.dotfiles/setup.sh
-```
+## Local Customizations
 
-The setup script creates symlinks from `~/.dotfiles/*` to home directory locations, backs up existing files with `.orig` extension, and clones Prezto if needed.
-
-Setup script options:
-- `--help` - Show usage and list of symlinks
-- `--dry-run` - Preview changes without modifying anything
-- `--confirm` - Ask before creating each symlink
-
-After setup, install Claude plugins and skills:
-```bash
-~/.dotfiles/claude/install-plugins.sh
-~/.dotfiles/claude/install-skills.sh
-```
-
-To uninstall (removes symlinks, restores backups):
-```bash
-~/.dotfiles/uninstall.sh          # Run uninstall
-~/.dotfiles/uninstall.sh --dry-run # Preview what would be removed
-```
-
-## Common Commands
-
-| Command | Description |
-|---------|-------------|
-| `shrl` | Reload shell (`exec $SHELL -l`) |
-| `edf` | Edit dotfiles in nvim |
-| `sca` | Source aliases after editing |
-| `scf` | Source functions after editing |
-| `zpu` | Update Prezto framework |
-
-## Architecture
-
-### Loading Order
-
-```
-.zshenv (environment: PATH, Homebrew, Postgres, secrets)
-    ↓
-.zshrc (interactive)
-    ├── Prezto framework
-    ├── set_terminal_titles.sh
-    ├── unalias_prezto.sh
-    ├── functions.sh → sources all functions_*.sh (incl. functions_local.sh)
-    ├── aliases.sh → sources all aliases_*.sh (incl. aliases_local.sh)
-    ├── fzf/fd configuration (guarded, warns if missing)
-    ├── mise activation
-    └── ~/.zshrc.local (machine-specific, optional)
-```
-
-### Modular File Pattern
-
-Domain-specific configuration uses auto-discovery via glob expansion:
-
-```bash
-# In functions.sh - loads functions_jumps.sh, functions_git.sh, functions_ruby.sh, functions_aliases.sh
-for function_file in $HOME/.dotfiles/zsh/functions_*.sh(N); do
-  source "$function_file"
-done
-
-# In aliases.sh - loads aliases_git.sh, aliases_ruby.sh, aliases_docker.sh, aliases_skills.sh, etc.
-for alias_file in $HOME/.dotfiles/zsh/aliases_*.sh(N); do
-  source "$alias_file"
-done
-```
-
-To add new domain: create `aliases_newdomain.sh` or `functions_newdomain.sh` - it will be auto-sourced.
-
-### Local Customizations
-
-Machine-specific configuration that shouldn't be committed:
+Machine-specific configuration that must not be committed:
 
 | File | Purpose |
 |------|---------|
 | `~/.zshrc.local` | Machine-specific shell config (sourced at end of .zshrc) |
 | `zsh/aliases_local.sh` | Local aliases (auto-sourced, gitignored) |
 | `zsh/functions_local.sh` | Local functions (auto-sourced, gitignored) |
-| `~/.secrets` | Environment variables with secrets (permission-checked) |
+| `~/.secrets` | Environment variables with secrets (permission-checked, must be 600) |
 
-Example templates are provided: `aliases_local.sh.example` and `functions_local.sh.example`.
+Templates: `aliases_local.sh.example`, `functions_local.sh.example`.
 
-### Symlink Structure
+## Non-obvious Facts
 
-| Source | Destination |
-|--------|-------------|
-| `zsh/.zshrc` | `~/.zshrc` |
-| `zsh/.zshenv` | `~/.zshenv` |
-| `zsh/.zprofile` | `~/.zprofile` |
-| `zsh/.zpreztorc` | `~/.zpreztorc` |
-| `zsh/prompt_svyatov_setup` | `~/.zprezto/modules/prompt/functions/prompt_svyatov_setup` |
-| `git/.gitconfig` | `~/.gitconfig` |
-| `ruby/.gemrc`, `.irbrc`, `.railsrc` | `~/.*` |
-| `zsh/.zlogin` | `~/.zlogin` |
-| `nvim/init.vim` | `~/.config/nvim/init.vim` |
-| `claude/settings.json` | `~/.claude/settings.json` |
-| `claude/statusline-command.sh` | `~/.claude/statusline-command.sh` |
-| `claude/CLAUDE.md` | `~/.claude/CLAUDE.md` |
-| `cursor/settings.json` | `~/Library/Application Support/Cursor/User/settings.json` |
-| `cursor/keybindings.json` | `~/Library/Application Support/Cursor/User/keybindings.json` |
-| `cursor/mcp.json` | `~/.cursor/mcp.json` |
-| `ghostty/config` | `~/.config/ghostty/config` |
-
-### Key Utilities
-
-**`safe_alias()`** (in `functions.sh`): Prevents clobbering existing commands. Use third arg `'override'` to force.
-
-```bash
-safe_alias l 'ls -lhAG'           # Only creates if 'l' doesn't exist
-safe_alias g 'git' 'override'     # Forces creation
-```
-
-**Jump shortcuts** (in `functions_jumps.sh`): Persistent directory bookmarks stored as symlinks in `~/.jump_shortcuts/`.
-
-| Command | Action |
-|---------|--------|
-| `j name` | Jump to bookmark |
-| `ja name` | Add bookmark for cwd (`-f` to overwrite) |
-| `jd name` | Delete bookmark |
-| `jl` | List all bookmarks |
-| `jb` | Jump back to previous |
-
-## Key Files
-
-| File | Purpose |
-|------|---------|
-| `setup.sh` | Bootstrap script with --help, --dry-run, --confirm options |
-| `uninstall.sh` | Remove symlinks and restore backups |
-| `Brewfile` | Homebrew dependencies (install with `brew bundle`) |
-| `zsh/.zpreztorc` | Prezto modules and theme configuration |
-| `zsh/prompt_svyatov_setup` | Custom prompt with Ruby/Node/Python/Go versions |
-| `zsh/aliases_local.sh.example` | Template for machine-specific aliases |
-| `zsh/functions_local.sh.example` | Template for machine-specific functions |
-| `git/.gitconfig` | 90+ git aliases, 1Password SSH signing, diff tools |
-| `nvim/init.vim` | Neovim config with Claude Code integration |
-| `claude/settings.json` | Claude Code permissions and plugins |
-| `claude/statusline-command.sh` | Custom status line showing model, context, rate limits, git status |
-| `claude/CLAUDE.md` | Global Claude Code preferences (loaded in every conversation) |
-| `claude/install-plugins.sh` | Install Claude Code plugins from settings |
-| `claude/install-skills.sh` | Install global Claude Code skills via npx |
-| `bin/alias_stats` | Alias usage stats (used/unused, grouped by file) |
-| `zsh/aliases_skills.sh` | npx skills aliases (`ska`/`skrm`/`sku`/`skl`/`skf`/`skc`) |
-| `cursor/settings.json` | Cursor editor settings |
-| `cursor/keybindings.json` | Cursor keybindings |
-| `cursor/mcp.json` | Cursor MCP server configuration |
-| `cursor/extensions.txt` | Cursor extension list (one ID per line) |
-| `ghostty/config` | Ghostty terminal configuration |
-| `cursor/install-extensions.sh` | Install Cursor extensions from list |
-| `servers/install.sh` | One-line installer for server shell config |
-| `servers/README.md` | Server shell config documentation |
-
-## Server Shell Configuration
-
-Lightweight shell configs for remote Linux servers (separate from macOS Zsh config).
-
-**Install on a server:**
-```bash
-curl -fsSL https://raw.githubusercontent.com/svyatov/dotfiles/master/servers/install.sh | bash
-```
-
-See `servers/README.md` for full documentation.
+- `aliases.sh` and `functions.sh` glob-source every `aliases_*.sh` / `functions_*.sh` sibling. A new domain file is picked up automatically, so never register it in a list anywhere. This is also how the gitignored `*_local.sh` files load.
+- `archive/` holds deprecated vim and tmux configs. Do not use or update it.
+- `mise/config.toml` pins `node = "latest"`, which tracks Node **Current**, not LTS. This is deliberate.
+- `claude/skills/` holds repo-hosted Claude Code skills. `setup.sh` links each one individually into `~/.claude/skills/`, because that directory also holds skills installed by `npx skills` and other tools, so it cannot be a whole-directory symlink. `setup.sh` also prunes symlinks there that point at skills no longer in the repo.
+- `claude/CLAUDE.md` imports `claude/RTK.md` via `@RTK.md`. Both must be symlinked into `~/.claude/` or the import silently fails to expand.
+- `claude/install-skills.sh` removes **all** global `npx skills` before reinstalling its own list. Adding a skill outside that script means it gets wiped on the next run, hence the confirmation prompt.
+- Jump shortcuts (`functions_jumps.sh`) store bookmarks as symlinks in `~/.jump_shortcuts/`.
+- `bin/alias_stats` reports which aliases are actually used, grouped by file. Useful before pruning.
 
 ## Conventions
 
-- Use `safe_alias()` instead of raw `alias` to avoid overwriting commands
-- Keep domain-specific aliases in separate `aliases_*.sh` files
-- Keep domain-specific functions in separate `functions_*.sh` files
-- Keep machine/project-specific config in local files (`aliases_local.sh`, `functions_local.sh`, `~/.zshrc.local`)
-- Secrets go in `~/.secrets` (not tracked, auto-sourced, must have 600 permissions)
-- The `archive/` directory contains deprecated configs (vim, tmux) - do not use
+- Use `safe_alias()` (in `functions.sh`) rather than raw `alias`; it refuses to clobber an existing command unless you pass `'override'` as the third arg.
+- Keep domain-specific aliases and functions in their own `aliases_*.sh` / `functions_*.sh` files.
+- Keep machine-specific config in the local files listed above.
+- Secrets go in `~/.secrets`, never in the repo.
+- `setup.sh` lists each symlink in **three** places: the `--help` heredoc, a `symlink_from_dotfiles` call, and a `verify_symlink` call. `uninstall.sh` keeps a fourth list. Adding a symlink means touching all four.
+
+## Verifying a Change
+
+- Edited a `zsh/*.sh` file: `zsh -n <file>` to syntax check, then `sca` (aliases) or `scf` (functions) to reload, then run the affected alias or function.
+- Edited `setup.sh` or `uninstall.sh`: `bash -n <file>` (both are bash, not zsh, so zsh glob qualifiers will not work), then `./setup.sh --dry-run` and `./uninstall.sh --dry-run`. Read the output and confirm only the intended lines changed.
+- Edited a symlinked config: check the live target picked it up, e.g. `readlink ~/.claude/CLAUDE.md`.
+- Broad shell changes: `shrl` for a full login-shell reload.
+- Before committing: `git diff --cached`, per the secrets rule above.

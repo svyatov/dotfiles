@@ -20,6 +20,9 @@ ZPREZTO_RC_FILE="${HOME}/.zpreztorc"
 # Ghostty
 GHOSTTY_CONFIG_DIR="${HOME}/.config/ghostty"
 GHOSTTY_CONFIG_FILE="${GHOSTTY_CONFIG_DIR}/config"
+# mise
+MISE_CONFIG_DIR="${HOME}/.config/mise"
+MISE_CONFIG_FILE="${MISE_CONFIG_DIR}/config.toml"
 # Others
 TMUX_CONFIG_FILE="${HOME}/.tmux.conf"
 NEOVIM_CONFIG_DIR="${HOME}/.config/nvim"
@@ -84,10 +87,13 @@ Files that will be symlinked:
     ~/.claude/settings.json <- claude/settings.json
     ~/.claude/statusline-command.sh <- claude/statusline-command.sh
     ~/.claude/CLAUDE.md <- claude/CLAUDE.md
+    ~/.claude/RTK.md <- claude/RTK.md
+    ~/.claude/skills/dependency-vetting <- claude/skills/dependency-vetting
     ~/Library/Application Support/Cursor/User/settings.json <- cursor/settings.json
     ~/Library/Application Support/Cursor/User/keybindings.json <- cursor/keybindings.json
     ~/.cursor/mcp.json <- cursor/mcp.json
     ~/.config/ghostty/config <- ghostty/config
+    ~/.config/mise/config.toml <- mise/config.toml
 EOF
     exit 0
 fi
@@ -269,6 +275,16 @@ fi
 backup_file "${GHOSTTY_CONFIG_FILE}"
 symlink_from_dotfiles "ghostty/config" "${GHOSTTY_CONFIG_FILE}"
 
+### Setting up mise
+###################
+echo ""
+echo "Setting up mise..."
+if [[ "$DRY_RUN" != true ]]; then
+    mkdir -p "${MISE_CONFIG_DIR}"
+fi
+backup_file "${MISE_CONFIG_FILE}"
+symlink_from_dotfiles "mise/config.toml" "${MISE_CONFIG_FILE}"
+
 ### Setting up others
 ######################
 # backup_file "${TMUX_CONFIG_FILE}"
@@ -282,8 +298,9 @@ fi
 echo ""
 echo "Setting up Claude Code..."
 CLAUDE_CONFIG_DIR="${HOME}/.claude"
+CLAUDE_SKILLS_DIR="${CLAUDE_CONFIG_DIR}/skills"
 if [[ "$DRY_RUN" != true ]]; then
-    mkdir -p "${CLAUDE_CONFIG_DIR}"
+    mkdir -p "${CLAUDE_SKILLS_DIR}"
 fi
 
 # Symlink settings and statusline
@@ -292,6 +309,23 @@ symlink_from_dotfiles "claude/settings.json" "${CLAUDE_CONFIG_DIR}/settings.json
 symlink_from_dotfiles "claude/statusline-command.sh" "${CLAUDE_CONFIG_DIR}/statusline-command.sh"
 backup_file "${CLAUDE_CONFIG_DIR}/CLAUDE.md"
 symlink_from_dotfiles "claude/CLAUDE.md" "${CLAUDE_CONFIG_DIR}/CLAUDE.md"
+# RTK.md is imported by CLAUDE.md via @RTK.md, so it must sit next to it
+backup_file "${CLAUDE_CONFIG_DIR}/RTK.md"
+symlink_from_dotfiles "claude/RTK.md" "${CLAUDE_CONFIG_DIR}/RTK.md"
+
+# Repo-hosted skills are linked individually: ~/.claude/skills also holds
+# skills installed by other tools, so it can't be a whole-directory symlink
+symlink_from_dotfiles "claude/skills/dependency-vetting" "${CLAUDE_SKILLS_DIR}/dependency-vetting"
+
+# Drop symlinks left behind by skills that no longer exist in the repo
+if [[ "$DRY_RUN" != true ]]; then
+    for skill_link in "${CLAUDE_SKILLS_DIR}"/*; do
+        if [[ -L "$skill_link" && ! -e "$skill_link" ]]; then
+            /bin/rm "$skill_link"
+            echo "Removed dangling skill symlink: $skill_link"
+        fi
+    done
+fi
 
 ### Verification
 ################
@@ -313,10 +347,13 @@ if [[ "$DRY_RUN" != true ]]; then
     verify_symlink "${CLAUDE_CONFIG_DIR}/settings.json" "${DOTFILES_DIR}/claude/settings.json" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_CONFIG_DIR}/statusline-command.sh" "${DOTFILES_DIR}/claude/statusline-command.sh" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_CONFIG_DIR}/CLAUDE.md" "${DOTFILES_DIR}/claude/CLAUDE.md" || VERIFY_FAILED=1
+    verify_symlink "${CLAUDE_CONFIG_DIR}/RTK.md" "${DOTFILES_DIR}/claude/RTK.md" || VERIFY_FAILED=1
+    verify_symlink "${CLAUDE_SKILLS_DIR}/dependency-vetting" "${DOTFILES_DIR}/claude/skills/dependency-vetting" || VERIFY_FAILED=1
     verify_symlink "${CURSOR_CONFIG_DIR}/settings.json" "${DOTFILES_DIR}/cursor/settings.json" || VERIFY_FAILED=1
     verify_symlink "${CURSOR_CONFIG_DIR}/keybindings.json" "${DOTFILES_DIR}/cursor/keybindings.json" || VERIFY_FAILED=1
     verify_symlink "${CURSOR_DOT_DIR}/mcp.json" "${DOTFILES_DIR}/cursor/mcp.json" || VERIFY_FAILED=1
     verify_symlink "${GHOSTTY_CONFIG_FILE}" "${DOTFILES_DIR}/ghostty/config" || VERIFY_FAILED=1
+    verify_symlink "${MISE_CONFIG_FILE}" "${DOTFILES_DIR}/mise/config.toml" || VERIFY_FAILED=1
     if [[ $VERIFY_FAILED -eq 1 ]]; then
         echo ""
         echo "WARNING: Some symlinks could not be verified."

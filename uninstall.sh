@@ -20,10 +20,13 @@ SYMLINKS=(
     "${HOME}/.claude/settings.json"
     "${HOME}/.claude/statusline-command.sh"
     "${HOME}/.claude/CLAUDE.md"
+    "${HOME}/.claude/RTK.md"
+    "${HOME}/.claude/skills/dependency-vetting"
     "${HOME}/Library/Application Support/Cursor/User/settings.json"
     "${HOME}/Library/Application Support/Cursor/User/keybindings.json"
     "${HOME}/.cursor/mcp.json"
     "${HOME}/.config/ghostty/config"
+    "${HOME}/.config/mise/config.toml"
 )
 
 ### Options

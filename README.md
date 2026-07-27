@@ -37,6 +37,7 @@ A curated collection of shell configurations, aliases, and functions optimized f
 ├── claude/                     # Claude Code settings, plugins, skills
 ├── cursor/                     # Cursor editor settings, keybindings, MCP
 ├── ghostty/                    # Ghostty terminal configuration
+├── mise/                       # mise global tool versions
 ├── bin/                        # Helper scripts (alias_stats)
 ├── servers/                    # Lightweight shell config for remote Linux servers
 ├── Brewfile                    # Homebrew dependencies
@@ -117,10 +118,13 @@ brew bundle --file=~/.dotfiles/Brewfile  # Install dependencies
 | `claude/settings.json` | `~/.claude/settings.json` | Claude Code settings |
 | `claude/statusline-command.sh` | `~/.claude/statusline-command.sh` | Claude Code status line |
 | `claude/CLAUDE.md` | `~/.claude/CLAUDE.md` | Global Claude Code preferences |
+| `claude/RTK.md` | `~/.claude/RTK.md` | RTK reference, imported by `CLAUDE.md` via `@RTK.md` |
+| `claude/skills/dependency-vetting` | `~/.claude/skills/dependency-vetting` | Repo-hosted Claude Code skill |
 | `cursor/settings.json` | `~/Library/.../Cursor/User/settings.json` | Cursor editor settings |
 | `cursor/keybindings.json` | `~/Library/.../Cursor/User/keybindings.json` | Cursor keybindings |
 | `cursor/mcp.json` | `~/.cursor/mcp.json` | Cursor MCP server config |
 | `ghostty/config` | `~/.config/ghostty/config` | Ghostty terminal config |
+| `mise/config.toml` | `~/.config/mise/config.toml` | mise global tool versions |
 
 **Tooling scripts (not symlinked):**
 
@@ -194,8 +198,10 @@ Bookmarks persist across sessions (stored as symlinks in `~/.jump_shortcuts`) an
 | `myip` | `dig +short myip.opendns.com...` | Show public IP |
 | `ai` | `claude --name "CC ($(shorten_path))"` | Launch Claude Code (titled by cwd) |
 | `aiy` | `claude --dangerously-skip-permissions --name ...` | Launch Claude Code, skip permission prompts |
+| `ailocal` | _(function)_ | Scaffold `.claude/settings.local.json` with all plugins disabled, for per-repo opt-in |
 | `astats` | `alias_stats` | Alias usage statistics |
-| `syu` | `ewu mise rtk && mup && bun upgrade && uv self update && uv tool upgrade graphifyy` | System tool updates |
+| `cx` | `codex` | Launch Codex CLI |
+| `syu` | `ewu mise rtk && mup && npm install -g npm@latest && bun upgrade && uv self update && npm install -g codegraph@latest` | System tool updates |
 
 ### Git Aliases (from `.gitconfig`)
 
