@@ -115,7 +115,6 @@ brew bundle --file=~/.dotfiles/Brewfile  # Install dependencies
 | `ruby/.irbrc` | `~/.irbrc` | IRB configuration |
 | `ruby/.railsrc` | `~/.railsrc` | Rails generator defaults |
 | `nvim/init.vim` | `~/.config/nvim/init.vim` | Neovim configuration |
-| `claude/settings.json` | `~/.claude/settings.json` | Claude Code settings |
 | `claude/statusline-command.sh` | `~/.claude/statusline-command.sh` | Claude Code status line |
 | `claude/CLAUDE.md` | `~/.claude/CLAUDE.md` | Global Claude Code preferences |
 | `claude/RTK.md` | `~/.claude/RTK.md` | RTK reference, imported by `CLAUDE.md` via `@RTK.md` |
@@ -126,6 +125,14 @@ brew bundle --file=~/.dotfiles/Brewfile  # Install dependencies
 | `ghostty/config` | `~/.config/ghostty/config` | Ghostty terminal config |
 | `mise/config.toml` | `~/.config/mise/config.toml` | mise global tool versions |
 
+**Synced, not symlinked:**
+
+| Source | Syncs with | Purpose |
+|--------|------------|---------|
+| `claude/settings.json` | `~/.claude/settings.json` | Claude Code settings |
+
+Claude Code rewrites `~/.claude/settings.json` at runtime (`/config`, `/model`, plugin toggles) and supacode injects its own hooks into it. supacode writes atomically, which replaces a symlink with a regular file, so this one file is reconciled by `claude/settings-sync.sh` instead. Run `csync --pull` before committing.
+
 **Tooling scripts (not symlinked):**
 
 | File | Purpose |
@@ -135,6 +142,7 @@ brew bundle --file=~/.dotfiles/Brewfile  # Install dependencies
 | `Brewfile` | Homebrew dependencies (`brew bundle`) |
 | `claude/install-plugins.sh` | Install Claude Code plugins |
 | `claude/install-skills.sh` | Install Claude Code skills (with `--force`) |
+| `claude/settings-sync.sh` | Reconcile Claude settings (`--status`, `--pull`, `--push`, `--dry-run`) |
 | `cursor/install-extensions.sh` | Install Cursor extensions from list |
 | `bin/alias_stats` | Alias usage stats with colorful grouped output |
 
@@ -199,6 +207,7 @@ Bookmarks persist across sessions (stored as symlinks in `~/.jump_shortcuts`) an
 | `ai` | `claude --name "CC ($(shorten_path))"` | Launch Claude Code (titled by cwd) |
 | `aiy` | `claude --dangerously-skip-permissions --name ...` | Launch Claude Code, skip permission prompts |
 | `ailocal` | _(function)_ | Scaffold `.claude/settings.local.json` with all plugins disabled, for per-repo opt-in |
+| `csync` | `claude/settings-sync.sh` | Reconcile Claude settings; `--pull` before committing, `--push` to apply |
 | `astats` | `alias_stats` | Alias usage statistics |
 | `cx` | `codex` | Launch Codex CLI |
 | `syu` | `ewu mise rtk && mup && npm install -g npm@latest && bun upgrade && uv self update && npm install -g codegraph@latest` | System tool updates |

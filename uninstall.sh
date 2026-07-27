@@ -17,7 +17,6 @@ SYMLINKS=(
     "${HOME}/.irbrc"
     "${HOME}/.railsrc"
     "${HOME}/.config/nvim/init.vim"
-    "${HOME}/.claude/settings.json"
     "${HOME}/.claude/statusline-command.sh"
     "${HOME}/.claude/CLAUDE.md"
     "${HOME}/.claude/RTK.md"
@@ -113,4 +112,6 @@ if [[ "$DRY_RUN" == true ]]; then
 else
     echo "Uninstall complete."
     echo "Note: Prezto directory (~/.zprezto) was not removed."
+    echo "Note: ~/.claude/settings.json was not touched. It is runtime-owned"
+    echo "      and synced rather than symlinked, so removing it is not ours to do."
 fi

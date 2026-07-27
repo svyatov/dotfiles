@@ -84,7 +84,6 @@ Files that will be symlinked:
     ~/.irbrc         <- ruby/.irbrc
     ~/.railsrc       <- ruby/.railsrc
     ~/.config/nvim/init.vim <- nvim/init.vim
-    ~/.claude/settings.json <- claude/settings.json
     ~/.claude/statusline-command.sh <- claude/statusline-command.sh
     ~/.claude/CLAUDE.md <- claude/CLAUDE.md
     ~/.claude/RTK.md <- claude/RTK.md
@@ -94,6 +93,9 @@ Files that will be symlinked:
     ~/.cursor/mcp.json <- cursor/mcp.json
     ~/.config/ghostty/config <- ghostty/config
     ~/.config/mise/config.toml <- mise/config.toml
+
+Synced rather than symlinked:
+    ~/.claude/settings.json <- claude/settings.json (see claude/settings-sync.sh)
 EOF
     exit 0
 fi
@@ -303,9 +305,12 @@ if [[ "$DRY_RUN" != true ]]; then
     mkdir -p "${CLAUDE_SKILLS_DIR}"
 fi
 
-# Symlink settings and statusline
-backup_file "${CLAUDE_CONFIG_DIR}/settings.json"
-symlink_from_dotfiles "claude/settings.json" "${CLAUDE_CONFIG_DIR}/settings.json"
+# settings.json is synced, not symlinked: Claude Code and supacode both write
+# to it, and supacode's atomic write replaces a symlink with a regular file
+SYNC_ARGS=(--push)
+[[ "$DRY_RUN" == true ]] && SYNC_ARGS+=(--dry-run)
+"${DOTFILES_DIR}/claude/settings-sync.sh" "${SYNC_ARGS[@]}"
+
 symlink_from_dotfiles "claude/statusline-command.sh" "${CLAUDE_CONFIG_DIR}/statusline-command.sh"
 backup_file "${CLAUDE_CONFIG_DIR}/CLAUDE.md"
 symlink_from_dotfiles "claude/CLAUDE.md" "${CLAUDE_CONFIG_DIR}/CLAUDE.md"
@@ -344,7 +349,6 @@ if [[ "$DRY_RUN" != true ]]; then
     verify_symlink "${IRB_CONFIG_FILE}" "${DOTFILES_DIR}/ruby/.irbrc" || VERIFY_FAILED=1
     verify_symlink "${RAILS_CONFIG_FILE}" "${DOTFILES_DIR}/ruby/.railsrc" || VERIFY_FAILED=1
     verify_symlink "${NEOVIM_CONFIG_FILE}" "${DOTFILES_DIR}/nvim/init.vim" || VERIFY_FAILED=1
-    verify_symlink "${CLAUDE_CONFIG_DIR}/settings.json" "${DOTFILES_DIR}/claude/settings.json" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_CONFIG_DIR}/statusline-command.sh" "${DOTFILES_DIR}/claude/statusline-command.sh" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_CONFIG_DIR}/CLAUDE.md" "${DOTFILES_DIR}/claude/CLAUDE.md" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_CONFIG_DIR}/RTK.md" "${DOTFILES_DIR}/claude/RTK.md" || VERIFY_FAILED=1

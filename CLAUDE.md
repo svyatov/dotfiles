@@ -38,6 +38,8 @@ Templates: `aliases_local.sh.example`, `functions_local.sh.example`.
 - `mise/config.toml` pins `node = "latest"`, which tracks Node **Current**, not LTS. This is deliberate.
 - `claude/skills/` holds repo-hosted Claude Code skills. `setup.sh` links each one individually into `~/.claude/skills/`, because that directory also holds skills installed by `npx skills` and other tools, so it cannot be a whole-directory symlink. `setup.sh` also prunes symlinks there that point at skills no longer in the repo.
 - `claude/CLAUDE.md` imports `claude/RTK.md` via `@RTK.md`. Both must be symlinked into `~/.claude/` or the import silently fails to expand.
+- `~/.claude/settings.json` is the one config that is **synced, not symlinked**. Claude Code rewrites it at runtime and supacode injects hooks into it; supacode writes atomically, which replaces a symlink with a regular file. `claude/settings-sync.sh` reconciles instead: `--pull` snapshots live into the repo minus foreign hooks, `--push` applies the repo copy while keeping the foreign hooks that are live. `setup.sh` calls `--push`.
+- Claude Code drops `enabledPlugins` entries for plugins it cannot resolve, so a missing key there is never a decision (disabling writes `false`). `settings-sync.sh --pull` re-adds repo-only entries rather than committing the loss.
 - `claude/install-skills.sh` removes **all** global `npx skills` before reinstalling its own list. Adding a skill outside that script means it gets wiped on the next run, hence the confirmation prompt.
 - Jump shortcuts (`functions_jumps.sh`) store bookmarks as symlinks in `~/.jump_shortcuts/`.
 - `bin/alias_stats` reports which aliases are actually used, grouped by file. Useful before pruning.
@@ -49,6 +51,7 @@ Templates: `aliases_local.sh.example`, `functions_local.sh.example`.
 - Keep machine-specific config in the local files listed above.
 - Secrets go in `~/.secrets`, never in the repo.
 - `setup.sh` lists each symlink in **three** places: the `--help` heredoc, a `symlink_from_dotfiles` call, and a `verify_symlink` call. `uninstall.sh` keeps a fourth list. Adding a symlink means touching all four.
+- `README.md` documents symlinks and synced files in separate tables. Moving a file between them means updating both.
 
 ## Verifying a Change
 
