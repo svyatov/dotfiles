@@ -1,11 +1,113 @@
 {
-  "env": {
-    "ENABLE_LSP_TOOL": "1"
-  },
+  "agentPushNotifEnabled": false,
   "attribution": {
     "commit": "",
     "pr": ""
   },
+  "effortLevel": "high",
+  "enabledPlugins": {
+    "chrome-devtools-mcp@claude-plugins-official": false,
+    "claude-code-setup@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "commit@leo-toolkit": false,
+    "compound-engineering@compound-engineering-plugin": true,
+    "feature-dev@claude-plugins-official": false,
+    "gopls-lsp@claude-plugins-official": false,
+    "grill-me@leo-toolkit": true,
+    "hookify@claude-plugins-official": true,
+    "humanizer@leo-toolkit": true,
+    "layered-rails@palkan-skills": true,
+    "plugin-dev@claude-plugins-official": true,
+    "ponytail@ponytail": true,
+    "pr-review-toolkit@claude-plugins-official": false,
+    "pyright-lsp@claude-plugins-official": false,
+    "remember@claude-plugins-official": false,
+    "repo-prose@leo-toolkit": true,
+    "ruby-lsp@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true,
+    "sentry@claude-plugins-official": false,
+    "skill-creator@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": false,
+    "typescript-lsp@claude-plugins-official": false,
+    "writing-clearly-and-concisely@leo-toolkit": true
+  },
+  "env": {
+    "ENABLE_LSP_TOOL": "1"
+  },
+  "extraKnownMarketplaces": {
+    "compound-engineering-plugin": {
+      "autoUpdate": true,
+      "source": {
+        "repo": "EveryInc/compound-engineering-plugin",
+        "source": "github"
+      }
+    },
+    "context-mode": {
+      "autoUpdate": true,
+      "source": {
+        "repo": "mksglu/context-mode",
+        "source": "github"
+      }
+    },
+    "leo-toolkit": {
+      "autoUpdate": true,
+      "source": {
+        "repo": "svyatov/agent-toolkit",
+        "source": "github"
+      }
+    },
+    "palkan-skills": {
+      "autoUpdate": true,
+      "source": {
+        "repo": "palkan/skills",
+        "source": "github"
+      }
+    },
+    "ponytail": {
+      "autoUpdate": true,
+      "source": {
+        "repo": "DietrichGebert/ponytail",
+        "source": "github"
+      }
+    }
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "filepath=$(jq -r '.tool_input.file_path // empty'); if [ -n \"$filepath\" ] && echo \"$filepath\" | grep -qE '\\.md$'; then markdownlint-cli2 \"$filepath\" 2>&1 | tail -20; fi",
+            "statusMessage": "Markdown lint...",
+            "timeout": 15,
+            "type": "command"
+          }
+        ],
+        "matcher": "Edit|Write"
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "rtk hook claude",
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash"
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "\"/Users/leonid/.claude/hooks/context-mode-cache-heal.mjs\"",
+            "type": "command"
+          }
+        ]
+      }
+    ]
+  },
+  "model": "opus[1m]",
   "permissions": {
     "allow": [
       "Read",
@@ -52,121 +154,31 @@
       "Read(env.ts)",
       "Read(*.example)"
     ],
+    "ask": [
+      "Bash(git push:*)",
+      "Bash(rm:*)"
+    ],
+    "defaultMode": "auto",
     "deny": [
       "Read(.env)",
       "Read(.env.*)",
       "Read(./secrets/**/*)",
       "Read(~/.ssh/**)",
       "Read(~/.secrets)"
-    ],
-    "ask": [
-      "Bash(git push:*)",
-      "Bash(rm:*)"
-    ],
-    "defaultMode": "default"
-  },
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Edit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "filepath=$(jq -r '.tool_input.file_path // empty'); if [ -n \"$filepath\" ] && echo \"$filepath\" | grep -qE '\\.md$'; then markdownlint-cli2 \"$filepath\" 2>&1 | tail -20; fi",
-            "timeout": 15,
-            "statusMessage": "Markdown lint..."
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "rtk hook claude"
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"/Users/leonid/.claude/hooks/context-mode-cache-heal.mjs\""
-          }
-        ]
-      }
     ]
   },
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
-  },
-  "enabledPlugins": {
-    "feature-dev@claude-plugins-official": false,
-    "security-guidance@claude-plugins-official": true,
-    "pr-review-toolkit@claude-plugins-official": false,
-    "superpowers@claude-plugins-official": false,
-    "claude-md-management@claude-plugins-official": true,
-    "claude-code-setup@claude-plugins-official": true,
-    "chrome-devtools-mcp@claude-plugins-official": false,
-    "hookify@claude-plugins-official": true,
-    "skill-creator@claude-plugins-official": true,
-    "impeccable@impeccable": false,
-    "sentry@claude-plugins-official": false,
-    "remember@claude-plugins-official": false,
-    "compound-engineering@compound-engineering-plugin": false,
-    "commit@leo-toolkit": false,
-    "grill-me@leo-toolkit": false,
-    "ruby-lsp@claude-plugins-official": false,
-    "typescript-lsp@claude-plugins-official": false
-  },
-  "extraKnownMarketplaces": {
-    "impeccable": {
-      "source": {
-        "source": "github",
-        "repo": "pbakaus/impeccable"
-      },
-      "autoUpdate": true
-    },
-    "compound-engineering-plugin": {
-      "source": {
-        "source": "github",
-        "repo": "EveryInc/compound-engineering-plugin"
-      },
-      "autoUpdate": true
-    },
-    "leo-toolkit": {
-      "source": {
-        "source": "github",
-        "repo": "svyatov/agent-toolkit"
-      },
-      "autoUpdate": true
-    },
-    "context-mode": {
-      "source": {
-        "source": "github",
-        "repo": "mksglu/context-mode"
-      },
-      "autoUpdate": true
-    },
-    "palkan-skills": {
-      "source": {
-        "source": "github",
-        "repo": "palkan/skills"
-      },
-      "autoUpdate": true
-    }
-  },
-  "spinnerTipsEnabled": false,
-  "effortLevel": "xhigh",
-  "prefersReducedMotion": true,
   "preferredNotifChannel": "ghostty",
-  "agentPushNotifEnabled": false,
+  "prefersReducedMotion": true,
   "skipAutoPermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
+  "spinnerTipsEnabled": false,
+  "statusLine": {
+    "command": "bash ~/.claude/statusline-command.sh",
+    "type": "command"
+  },
+  "tui": "fullscreen",
   "voiceEnabled": true,
-  "skipWorkflowUsageWarning": true
+  "worktree": {
+    "baseRef": "fresh"
+  }
 }
