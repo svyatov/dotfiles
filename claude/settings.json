@@ -17,6 +17,7 @@
     "hookify@claude-plugins-official": true,
     "humanizer@leo-toolkit": true,
     "layered-rails@palkan-skills": true,
+    "oss-kit@oss-kit": true,
     "plugin-dev@claude-plugins-official": true,
     "ponytail@ponytail": true,
     "pr-review-toolkit@claude-plugins-official": false,
@@ -53,6 +54,12 @@
       "autoUpdate": true,
       "source": {
         "repo": "svyatov/agent-toolkit",
+        "source": "github"
+      }
+    },
+    "oss-kit": {
+      "source": {
+        "repo": "svyatov/oss-kit",
         "source": "github"
       }
     },
