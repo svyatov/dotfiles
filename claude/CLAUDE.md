@@ -36,12 +36,7 @@ Do not install, add, or recommend a package until you have opened the upstream p
 
 ## Git
 
-- Conventional Commits (`type(scope): description`) unless the project documents another convention. Types: feat, fix, refactor, docs, test, chore, perf, ci, build, style.
 - Squash merge is the default strategy for pull requests.
-- Use the /oss-writing skill for commit messages, PR descriptions, and PR comments.
-
-<tone_preference>
-Keep outputs concise. No em-dash, no en-dash.
-</tone_preference>
+- Use the /oss-writing skill for commit messages, PR descriptions, PR comments, docs, README and skills writing.
 
 @RTK.md
