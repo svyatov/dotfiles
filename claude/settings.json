@@ -29,7 +29,7 @@
     "sentry@claude-plugins-official": false,
     "skill-creator@claude-plugins-official": true,
     "superpowers@claude-plugins-official": false,
-    "typescript-lsp@claude-plugins-official": false,
+    "typescript-lsp@claude-plugins-official": true,
     "writing-clearly-and-concisely@leo-toolkit": false
   },
   "env": {
@@ -51,6 +51,7 @@
       }
     },
     "oss-kit": {
+      "autoUpdate": true,
       "source": {
         "repo": "svyatov/oss-kit",
         "source": "github"
@@ -159,6 +160,7 @@
   },
   "preferredNotifChannel": "ghostty",
   "prefersReducedMotion": true,
+  "remoteControlAtStartup": false,
   "skillOverrides": {
     "agent-browser": "user-invocable-only",
     "ast-grep": "user-invocable-only",
