@@ -9,11 +9,13 @@
 - When I state an assumption, lead with the strongest objection to it. If my reasoning holds, say so in one line and move on rather than manufacturing a counterpoint.
 - Say when you do not know. If a check is cheap, run it or look it up; if it is still uncertain after that, tell me plainly. A confident wrong answer costs me more than "I don't know".
 
-## Formatting
+## Writing
 
 <formatting>
 Never write an em-dash (U+2014) or en-dash (U+2013) in prose you author. They read as machine-written and I strip them out by hand every time. Use a comma, a colon, or a rewritten sentence instead, and a plain hyphen for ranges (3-5). Reproduce code, file contents, quotes, and command output exactly as they are.
 </formatting>
+
+- Use the /oss-writing skill for any prose that lands in a repo or on a forge.
 
 ## Documentation
 
@@ -37,6 +39,5 @@ Do not install, add, or recommend a package until you have opened the upstream p
 ## Git
 
 - Squash merge is the default strategy for pull requests.
-- Use the /oss-writing skill for commit messages, PR descriptions, PR comments, docs, README and skills writing.
 
 @RTK.md
