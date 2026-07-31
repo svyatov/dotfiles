@@ -24,7 +24,7 @@
     "pyright-lsp@claude-plugins-official": false,
     "remember@claude-plugins-official": false,
     "repo-prose@leo-toolkit": false,
-    "ruby-lsp@claude-plugins-official": true,
+    "ruby-lsp@claude-plugins-official": false,
     "security-guidance@claude-plugins-official": true,
     "sentry@claude-plugins-official": false,
     "skill-creator@claude-plugins-official": true,
@@ -98,7 +98,7 @@
       }
     ]
   },
-  "model": "opus[1m]",
+  "model": "claude-fable-5[1m]",
   "permissions": {
     "allow": [
       "Read",
@@ -200,9 +200,15 @@
     "hookify:writing-rules": "user-invocable-only",
     "humanizer-ru": "user-invocable-only",
     "impeccable": "user-invocable-only",
+    "layered-rails": "user-invocable-only",
     "layered-rails:layered-rails": "user-invocable-only",
     "orca-cli": "user-invocable-only",
     "orchestration": "user-invocable-only",
+    "oss-audit": "user-invocable-only",
+    "oss-changelog": "user-invocable-only",
+    "oss-ci": "user-invocable-only",
+    "oss-community": "user-invocable-only",
+    "oss-harden": "user-invocable-only",
     "oss-kit:oss-audit": "user-invocable-only",
     "oss-kit:oss-changelog": "user-invocable-only",
     "oss-kit:oss-ci": "user-invocable-only",
@@ -211,6 +217,9 @@
     "oss-kit:oss-publish": "user-invocable-only",
     "oss-kit:oss-readme": "user-invocable-only",
     "oss-kit:oss-skill": "user-invocable-only",
+    "oss-publish": "user-invocable-only",
+    "oss-readme": "user-invocable-only",
+    "oss-skill": "user-invocable-only",
     "pishi": "user-invocable-only",
     "plugin-dev:agent-development": "user-invocable-only",
     "plugin-dev:command-development": "user-invocable-only",
@@ -226,7 +235,8 @@
     "ponytail:ponytail-help": "user-invocable-only",
     "ponytail:ponytail-review": "user-invocable-only",
     "skill-creator:skill-creator": "user-invocable-only",
-    "style-profile": "user-invocable-only"
+    "style-profile": "user-invocable-only",
+    "supacode-cli": "user-invocable-only"
   },
   "skipAutoPermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
