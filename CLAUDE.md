@@ -14,22 +14,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-Personal dotfiles for macOS web development (Ruby/Rails, Node.js, Go, Elixir, Docker). Zsh with the Prezto framework, symlink-based configuration management.
-
-Installation steps, setup script options, the full symlink table, and the alias/function reference all live in `README.md`. Read it there rather than duplicating it here, and update it when you change any of them.
-
-## Local Customizations
-
-Machine-specific configuration that must not be committed:
-
-| File | Purpose |
-|------|---------|
-| `~/.zshrc.local` | Machine-specific shell config (sourced at end of .zshrc) |
-| `zsh/aliases_local.sh` | Local aliases (auto-sourced, gitignored) |
-| `zsh/functions_local.sh` | Local functions (auto-sourced, gitignored) |
-| `~/.secrets` | Environment variables with secrets (permission-checked, must be 600) |
-
-Templates: `aliases_local.sh.example`, `functions_local.sh.example`.
+Installation steps, setup script options, the full symlink table, the alias/function reference, and the machine-specific files that must never be committed all live in `README.md`. Read it there rather than duplicating it here, and update it when you change any of them.
 
 ## Non-obvious Facts
 
@@ -50,7 +35,7 @@ Templates: `aliases_local.sh.example`, `functions_local.sh.example`.
 
 - Use `safe_alias()` (in `functions.sh`) rather than raw `alias`; it refuses to clobber an existing command unless you pass `'override'` as the third arg.
 - Keep domain-specific aliases and functions in their own `aliases_*.sh` / `functions_*.sh` files.
-- Keep machine-specific config in the local files listed above.
+- Keep machine-specific config in the local files documented in `README.md`.
 - Secrets go in `~/.secrets`, never in the repo.
 - `setup.sh` lists each symlink in **three** places: the `--help` heredoc, a `symlink_from_dotfiles` call, and a `verify_symlink` call. `uninstall.sh` keeps a fourth list. Adding a symlink means touching all four.
 - `README.md` documents symlinks and synced files in separate tables. Moving a file between them means updating both.
