@@ -1,8 +1,10 @@
 [tools]
+erlang = "latest"
 go = "latest"
 node = "latest"
 python = "latest"
 ruby = "latest"
+elixir = "latest"
 
 [settings]
 
