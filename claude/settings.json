@@ -7,7 +7,7 @@
   "effortLevel": "high",
   "enabledPlugins": {
     "chrome-devtools-mcp@claude-plugins-official": false,
-    "claude-code-setup@claude-plugins-official": true,
+    "claude-code-setup@claude-plugins-official": false,
     "claude-md-management@claude-plugins-official": true,
     "commit@leo-toolkit": false,
     "compound-engineering@compound-engineering-plugin": true,
@@ -24,7 +24,7 @@
     "pyright-lsp@claude-plugins-official": false,
     "remember@claude-plugins-official": false,
     "repo-prose@leo-toolkit": false,
-    "ruby-lsp@claude-plugins-official": false,
+    "ruby-lsp@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
     "sentry@claude-plugins-official": false,
     "skill-creator@claude-plugins-official": true,
@@ -98,7 +98,7 @@
       }
     ]
   },
-  "model": "claude-fable-5[1m]",
+  "model": "opus[1m]",
   "permissions": {
     "allow": [
       "Read",
@@ -191,19 +191,19 @@
     "compound-engineering:ce-test-xcode": "user-invocable-only",
     "compound-engineering:ce-worktree": "user-invocable-only",
     "compound-engineering:lfg": "user-invocable-only",
-    "computer-use": "user-invocable-only",
+    "computer-use": "off",
     "graphify": "user-invocable-only",
     "hookify:configure": "user-invocable-only",
     "hookify:help": "user-invocable-only",
     "hookify:hookify": "user-invocable-only",
     "hookify:list": "user-invocable-only",
     "hookify:writing-rules": "user-invocable-only",
-    "humanizer-ru": "user-invocable-only",
+    "humanizer-ru": "off",
     "impeccable": "user-invocable-only",
     "layered-rails": "user-invocable-only",
     "layered-rails:layered-rails": "user-invocable-only",
-    "orca-cli": "user-invocable-only",
-    "orchestration": "user-invocable-only",
+    "orca-cli": "off",
+    "orchestration": "off",
     "oss-audit": "user-invocable-only",
     "oss-changelog": "user-invocable-only",
     "oss-ci": "user-invocable-only",
@@ -220,7 +220,7 @@
     "oss-publish": "user-invocable-only",
     "oss-readme": "user-invocable-only",
     "oss-skill": "user-invocable-only",
-    "pishi": "user-invocable-only",
+    "pishi": "off",
     "plugin-dev:agent-development": "user-invocable-only",
     "plugin-dev:command-development": "user-invocable-only",
     "plugin-dev:create-plugin": "user-invocable-only",
@@ -236,7 +236,7 @@
     "ponytail:ponytail-review": "user-invocable-only",
     "skill-creator:skill-creator": "user-invocable-only",
     "style-profile": "user-invocable-only",
-    "supacode-cli": "user-invocable-only"
+    "supacode-cli": "off"
   },
   "skipAutoPermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
