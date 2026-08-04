@@ -26,6 +26,7 @@ SYMLINKS=(
     "${HOME}/.cursor/mcp.json"
     "${HOME}/.config/ghostty/config"
     "${HOME}/.config/mise/config.toml"
+    "${HOME}/.bunfig.toml"
 )
 
 ### Options

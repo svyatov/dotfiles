@@ -23,6 +23,8 @@ GHOSTTY_CONFIG_FILE="${GHOSTTY_CONFIG_DIR}/config"
 # mise
 MISE_CONFIG_DIR="${HOME}/.config/mise"
 MISE_CONFIG_FILE="${MISE_CONFIG_DIR}/config.toml"
+# bun
+BUN_CONFIG_FILE="${HOME}/.bunfig.toml"
 # Others
 TMUX_CONFIG_FILE="${HOME}/.tmux.conf"
 NEOVIM_CONFIG_DIR="${HOME}/.config/nvim"
@@ -93,6 +95,7 @@ Files that will be symlinked:
     ~/.cursor/mcp.json <- cursor/mcp.json
     ~/.config/ghostty/config <- ghostty/config
     ~/.config/mise/config.toml <- mise/config.toml
+    ~/.bunfig.toml   <- bun/bunfig.toml
 
 Synced rather than symlinked:
     ~/.claude/settings.json <- claude/settings.json (see claude/settings-sync.sh)
@@ -287,6 +290,13 @@ fi
 backup_file "${MISE_CONFIG_FILE}"
 symlink_from_dotfiles "mise/config.toml" "${MISE_CONFIG_FILE}"
 
+### Setting up bun
+##################
+echo ""
+echo "Setting up bun..."
+backup_file "${BUN_CONFIG_FILE}"
+symlink_from_dotfiles "bun/bunfig.toml" "${BUN_CONFIG_FILE}"
+
 ### Setting up others
 ######################
 # backup_file "${TMUX_CONFIG_FILE}"
@@ -358,6 +368,7 @@ if [[ "$DRY_RUN" != true ]]; then
     verify_symlink "${CURSOR_DOT_DIR}/mcp.json" "${DOTFILES_DIR}/cursor/mcp.json" || VERIFY_FAILED=1
     verify_symlink "${GHOSTTY_CONFIG_FILE}" "${DOTFILES_DIR}/ghostty/config" || VERIFY_FAILED=1
     verify_symlink "${MISE_CONFIG_FILE}" "${DOTFILES_DIR}/mise/config.toml" || VERIFY_FAILED=1
+    verify_symlink "${BUN_CONFIG_FILE}" "${DOTFILES_DIR}/bun/bunfig.toml" || VERIFY_FAILED=1
     if [[ $VERIFY_FAILED -eq 1 ]]; then
         echo ""
         echo "WARNING: Some symlinks could not be verified."

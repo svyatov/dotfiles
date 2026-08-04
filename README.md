@@ -38,6 +38,7 @@ A curated collection of shell configurations, aliases, and functions optimized f
 ├── cursor/                     # Cursor editor settings, keybindings, MCP
 ├── ghostty/                    # Ghostty terminal configuration
 ├── mise/                       # mise global tool versions
+├── bun/                        # bun install settings
 ├── bin/                        # Helper scripts (alias_stats)
 ├── servers/                    # Lightweight shell config for remote Linux servers
 ├── Brewfile                    # Homebrew dependencies
@@ -128,6 +129,7 @@ sees.
 | `cursor/mcp.json` | `~/.cursor/mcp.json` | Cursor MCP server config |
 | `ghostty/config` | `~/.config/ghostty/config` | Ghostty terminal config |
 | `mise/config.toml` | `~/.config/mise/config.toml` | mise global tool versions |
+| `bun/bunfig.toml` | `~/.bunfig.toml` | bun install settings |
 
 **Synced, not symlinked:**
 
