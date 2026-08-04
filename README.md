@@ -150,6 +150,23 @@ Claude Code rewrites `~/.claude/settings.json` at runtime (`/config`, `/model`, 
 | `cursor/install-extensions.sh` | Install Cursor extensions from list |
 | `bin/alias_stats` | Alias usage stats with colorful grouped output |
 
+**Release-age floor (not installed by `setup.sh`):**
+
+A freshly published version is where a supply chain compromise lands, so every
+package manager here ignores releases newer than 3 days. Two of these configs
+can hold registry credentials, so they stay out of the repo and must be set by
+hand on a new machine:
+
+| Tool | Where | Setting |
+|------|-------|---------|
+| mise | `mise/config.toml` (symlinked) | `minimum_release_age = "3d"` |
+| bun | `bun/bunfig.toml` (symlinked) | `minimumReleaseAge = 259200` |
+| npm | `~/.npmrc` (local only) | `min-release-age=3` |
+| Bundler | `~/.bundle/config` (local only) | `bundle config set --global cooldown 3` |
+
+RubyGems itself has no equivalent, so `gem install` always takes the newest
+version. Prefer `bundle add` and `bundle install`, which do honour the floor.
+
 ## ⚡ Jump Shortcuts
 
 One of the most useful features: **persistent directory bookmarks** with tab completion. Instead of typing long paths or relying on shell history, bookmark your frequently-used directories once and jump to them instantly.

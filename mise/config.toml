@@ -7,9 +7,9 @@ ruby = "latest"
 elixir = "latest"
 
 [settings]
-# Ignore tool versions published less than 7 days ago, so a compromised
+# Ignore tool versions published less than 3 days ago, so a compromised
 # release has time to be caught before mise will install it
-minimum_release_age = "7d"
+minimum_release_age = "3d"
 
 [settings.ruby]
 compile = false

@@ -1,4 +1,4 @@
 [install]
-# 7 days in seconds. Ignore package versions published more recently than
+# 3 days in seconds. Ignore package versions published more recently than
 # this, so a compromised release has time to be caught before bun installs it.
-minimumReleaseAge = 604800
+minimumReleaseAge = 259200
