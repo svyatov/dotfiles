@@ -133,9 +133,7 @@
       "Bash(touch:*)",
       "Bash(docker:*)",
       "Bash(golangci-lint:*)",
-      "Skill(commit:commit)",
-      "Read(env.ts)",
-      "Read(*.example)"
+      "Skill(commit:commit)"
     ],
     "ask": [
       "Bash(git push:*)",
