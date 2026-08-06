@@ -30,6 +30,7 @@ Installation steps, setup script options, the full symlink table, the alias/func
 - Most plugins are registered with `scope: local` against whatever project directory they were installed from, not user scope. `claude plugin uninstall` therefore refuses without `--scope local`, and the plugin cache is shared, so a plugin disabled globally may still be `true` in a project's `.claude/settings.local.json`. Check every project before deleting anything from `~/.claude/plugins/cache/`.
 - Jump shortcuts (`functions_jumps.sh`) store bookmarks as symlinks in `~/.jump_shortcuts/`.
 - `bin/alias_stats` reports which aliases are actually used, grouped by file. Useful before pruning.
+- The `## Delegation` section in `claude/CLAUDE.md` exists only to satisfy the escape clause in Claude Code's `heron_brook` prompt section, which injects "Do not call the AgentTool unless the user requested it" for `claude-opus-5` only, with no settings key, CLI flag, or env var to disable it (anthropics/claude-code#80988, open since 2.1.219). Delete the section when that issue closes.
 
 ## Conventions
 
