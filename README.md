@@ -124,6 +124,7 @@ sees.
 | `claude/CLAUDE.md` | `~/.claude/CLAUDE.md` | Global Claude Code preferences |
 | `claude/RTK.md` | `~/.claude/RTK.md` | RTK reference, imported by `CLAUDE.md` via `@RTK.md` |
 | `claude/skills/dependency-vetting` | `~/.claude/skills/dependency-vetting` | Repo-hosted Claude Code skill |
+| `claude/skills/track-contrib` | `~/.claude/skills/track-contrib` | Repo-hosted Claude Code skill |
 | `cursor/settings.json` | `~/Library/.../Cursor/User/settings.json` | Cursor editor settings |
 | `cursor/keybindings.json` | `~/Library/.../Cursor/User/keybindings.json` | Cursor keybindings |
 | `cursor/mcp.json` | `~/.cursor/mcp.json` | Cursor MCP server config |

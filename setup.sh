@@ -90,6 +90,7 @@ Files that will be symlinked:
     ~/.claude/CLAUDE.md <- claude/CLAUDE.md
     ~/.claude/RTK.md <- claude/RTK.md
     ~/.claude/skills/dependency-vetting <- claude/skills/dependency-vetting
+    ~/.claude/skills/track-contrib <- claude/skills/track-contrib
     ~/Library/Application Support/Cursor/User/settings.json <- cursor/settings.json
     ~/Library/Application Support/Cursor/User/keybindings.json <- cursor/keybindings.json
     ~/.cursor/mcp.json <- cursor/mcp.json
@@ -331,6 +332,7 @@ symlink_from_dotfiles "claude/RTK.md" "${CLAUDE_CONFIG_DIR}/RTK.md"
 # Repo-hosted skills are linked individually: ~/.claude/skills also holds
 # skills installed by other tools, so it can't be a whole-directory symlink
 symlink_from_dotfiles "claude/skills/dependency-vetting" "${CLAUDE_SKILLS_DIR}/dependency-vetting"
+symlink_from_dotfiles "claude/skills/track-contrib" "${CLAUDE_SKILLS_DIR}/track-contrib"
 
 # Drop symlinks left behind by skills that no longer exist in the repo
 if [[ "$DRY_RUN" != true ]]; then
@@ -363,6 +365,7 @@ if [[ "$DRY_RUN" != true ]]; then
     verify_symlink "${CLAUDE_CONFIG_DIR}/CLAUDE.md" "${DOTFILES_DIR}/claude/CLAUDE.md" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_CONFIG_DIR}/RTK.md" "${DOTFILES_DIR}/claude/RTK.md" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_SKILLS_DIR}/dependency-vetting" "${DOTFILES_DIR}/claude/skills/dependency-vetting" || VERIFY_FAILED=1
+    verify_symlink "${CLAUDE_SKILLS_DIR}/track-contrib" "${DOTFILES_DIR}/claude/skills/track-contrib" || VERIFY_FAILED=1
     verify_symlink "${CURSOR_CONFIG_DIR}/settings.json" "${DOTFILES_DIR}/cursor/settings.json" || VERIFY_FAILED=1
     verify_symlink "${CURSOR_CONFIG_DIR}/keybindings.json" "${DOTFILES_DIR}/cursor/keybindings.json" || VERIFY_FAILED=1
     verify_symlink "${CURSOR_DOT_DIR}/mcp.json" "${DOTFILES_DIR}/cursor/mcp.json" || VERIFY_FAILED=1

@@ -1,0 +1,339 @@
+#!/usr/bin/env python3
+"""track-contrib - local tracker for open-source threads.
+
+Decisions live in ~/Projects/My/open-source/contrib/.scratch/contrib-tracker/.
+Store is items.jsonl at the tracker root, one JSON object per line, hand-editable.
+
+    track-contrib check                    print every tracked thread
+    track-contrib add <ref> [note...]      track a thread, then print the table
+
+<ref> is a GitHub URL, owner/repo#number, a bare number resolved against the
+repository you are standing in, or "." for the current branch's pull request.
+"""
+import json, os, pathlib, re, subprocess, sys
+from datetime import datetime, timezone
+
+ME = "svyatov"
+TRACKER_DIR = pathlib.Path(os.environ.get("CONTRIB_DIR", "~/Projects/My/open-source/contrib")).expanduser()
+STORE = TRACKER_DIR / "items.jsonl"
+FIXTURE = os.environ.get("CONTRIB_FIXTURE")  # canned GraphQL response; gh is not called
+CHUNK = 25  # GitHub's 10s query timeout, not cost
+
+
+def ts(s):
+    return datetime.fromisoformat(s.replace("Z", "+00:00")) if s else None
+
+
+NOW = ts(os.environ["CONTRIB_NOW"]) if os.environ.get("CONTRIB_NOW") else datetime.now(timezone.utc)
+
+if os.environ.get("NO_COLOR"):
+    B = DIM = RESET = ""
+else:
+    B, DIM, RESET = "\033[1m", "\033[2m", "\033[0m"
+
+
+def link(text, url):
+    """OSC 8 terminal hyperlink. A terminal without it prints the text unchanged."""
+    if not url or os.environ.get("NO_COLOR"):
+        return text
+    return f"\033]8;;{url}\033\\{text}\033]8;;\033\\"
+
+
+# --- store ----------------------------------------------------------------
+
+def load():
+    if not STORE.exists():
+        return []
+    return [json.loads(l) for l in STORE.read_text().splitlines() if l.strip()]
+
+
+def save(records):
+    STORE.parent.mkdir(parents=True, exist_ok=True)
+    STORE.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in records))
+
+
+# --- fetch ----------------------------------------------------------------
+
+FRAG = """
+fragment Item on IssueOrPullRequest {
+  __typename
+  ... on Issue {
+    url title state createdAt closedAt
+    author { login }
+    comments(last: 1) { totalCount nodes { author { login } createdAt url } }
+  }
+  ... on PullRequest {
+    url title state createdAt closedAt mergedAt
+    author { login }
+    mergeable reviewDecision
+    comments(last: 1) { totalCount nodes { author { login } createdAt url } }
+    reviewRequests(first: 20) { nodes { requestedReviewer { ... on User { login } } } }
+    reviews(last: 1, states: [APPROVED, CHANGES_REQUESTED, COMMENTED, DISMISSED]) {
+      nodes { author { login } submittedAt url }
+    }
+    commits(last: 1) { nodes { commit { committedDate author { user { login } } } } }
+    statusCheckRollup { state }
+  }
+}
+"""
+
+
+def query(items):
+    lines = []
+    for k, ref in enumerate(items):
+        repo, num = ref.split("#")
+        owner, name = repo.split("/")
+        lines.append(f'  i{k}: repository(owner:"{owner}", name:"{name}") '
+                     f"{{ issueOrPullRequest(number:{num}) {{ ...Item }} }}")
+    return "query {\n" + "\n".join(lines) + "\n}\n" + FRAG
+
+
+def canon(url):
+    """The url GitHub returns, back to ticket 01's identity."""
+    return url.split("github.com/")[1].replace("/issues/", "#").replace("/pull/", "#")
+
+
+def unpack(resp, into):
+    """Matched on identity rather than on alias position, so the response and the
+    store can be in different orders. A missing item stays None: ticket 02, a bad
+    alias fails its own row and leaves the rest intact."""
+    for v in (resp.get("data") or {}).values():
+        node = (v or {}).get("issueOrPullRequest")
+        if node:
+            into[canon(node["url"])] = node
+
+
+def fetch(items):
+    found = {}
+    if FIXTURE:
+        unpack(json.loads(pathlib.Path(FIXTURE).read_text()), found)
+    else:
+        for s in range(0, len(items), CHUNK):
+            r = subprocess.run(["gh", "api", "graphql", "-f", "query=" + query(items[s:s + CHUNK])],
+                               capture_output=True, text=True)
+            try:
+                unpack(json.loads(r.stdout), found)
+            except ValueError:
+                sys.stderr.write(r.stderr)
+    return [found.get(i) for i in items]
+
+
+# --- classify -------------------------------------------------------------
+
+def login(x):
+    return (x or {}).get("login")
+
+
+def last_comment(d):
+    n = d["comments"]["totalCount"]
+    return d["comments"]["nodes"][0] if n and d["comments"]["nodes"] else None
+
+
+def healed(d, participated):
+    """Ticket 01 + 03: participated flips true on authorship or on speaking last,
+    and never flips back."""
+    c = last_comment(d)
+    return bool(participated or login(d["author"]) == ME or (c and login(c["author"]) == ME))
+
+
+def classify(d, participated):
+    """Ticket 03. Every matching state, in the table's priority order."""
+    if d["state"] == "MERGED":  return ["merged"]
+    if d["state"] == "CLOSED":  return ["closed"]
+    pr = d["__typename"] == "PullRequest"
+    mine = login(d["author"]) == ME
+    n = d["comments"]["totalCount"]
+    c = last_comment(d)
+    last = login(c["author"]) if c else None
+    participated = healed(d, participated)
+    s = []
+    if pr and any(login(r["requestedReviewer"]) == ME
+                  for r in d["reviewRequests"]["nodes"]):                  s.append("review requested")
+    if pr and mine and d["reviewDecision"] == "CHANGES_REQUESTED":         s.append("changes requested")
+    if pr and mine and (d.get("statusCheckRollup") or {}).get("state") == "FAILURE": s.append("ci red")
+    if pr and mine and d["mergeable"] == "CONFLICTING":                    s.append("conflict")
+    if participated and n and last != ME:                                  s.append("they replied")
+    if pr and mine and d["reviewDecision"] == "APPROVED":                  s.append("approved")
+    if mine and n == 0:                                                    s.append("no reply ever")
+    if participated and n and last == ME:                                  s.append("you replied")
+    if not participated:                                                   s.append("watching")
+    return s
+
+
+def activity(d):
+    """Ticket 03's max over four timestamps, keeping who did it and what it was.
+    Never updatedAt: it bumps on invisible churn and misses CI finishing."""
+    c = []
+    node = last_comment(d)
+    if node:
+        c.append((ts(node["createdAt"]), login(node["author"]), "commented", node["url"]))
+    for r in d.get("reviews", {}).get("nodes", []):
+        c.append((ts(r["submittedAt"]), login(r["author"]), "reviewed", r["url"]))
+    for cm in d.get("commits", {}).get("nodes", []):
+        pusher = login((cm["commit"].get("author") or {}).get("user")) or login(d["author"])
+        c.append((ts(cm["commit"]["committedDate"]), pusher, "pushed", d["url"]))
+    for f, w in (("mergedAt", "merged"), ("closedAt", "closed")):  # merged wins the tie
+        if d.get(f): c.append((ts(d[f]), None, w, d["url"]))
+    if not c:
+        c.append((ts(d["createdAt"]), login(d["author"]), "opened", d["url"]))
+    return max(c, key=lambda x: x[0])
+
+
+ACTIONABLE = {"review requested", "changes requested", "ci red", "conflict", "they replied"}
+
+
+def row(rec, d):
+    item = rec["item"]
+    if d is None:
+        return dict(item=item, title=None, states=[], when=None, actor=None, url=None,
+                    kind=None, idle=None, unread=False, dropped=False, unreachable=True,
+                    participated=rec.get("participated", False))
+    when, actor, kind, url = activity(d)
+    states = classify(d, rec.get("participated", False))
+    seen = rec.get("seen") or rec.get("added") or "1970-01-01T00:00:00Z"
+    return dict(item=item, title=d["title"], states=states, when=when, actor=actor,
+                kind=kind, idle=(NOW - when).days, unread=when > ts(seen),
+                # ticket 07: the specific thing waiting when the row is actionable,
+                # the thread itself otherwise
+                url=url if set(states) & ACTIONABLE else d["url"],
+                dropped=bool({"merged", "closed"} & set(states)), unreachable=False,
+                participated=healed(d, rec.get("participated", False)))
+
+
+# --- render ---------------------------------------------------------------
+
+def who(l):
+    return "you" if l == ME else l
+
+
+def when_text(r):
+    if r["unreachable"]:
+        return "-"
+    actor = f'{who(r["actor"])} ' if r["actor"] else ""  # merged/closed name no actor
+    return f'{r["when"]:%b %-d} {actor}{r["kind"]}'
+
+
+def status(r):
+    return "unreachable" if r["unreachable"] else ", ".join(r["states"])
+
+
+def tail(r):
+    return status(r) + ("" if r["idle"] is None else f'  ·  idle {r["idle"]}d')
+
+
+def render(rows):
+    """Variant F, ticket 07: repository groups, two lines per item, the number
+    itself is the link."""
+    live = [r for r in rows if not r["dropped"]]
+    going = [r for r in rows if r["dropped"]]
+    repos = {}
+    for r in live:
+        repos.setdefault(r["item"].split("#")[0], []).append(r)
+
+    def key(repo):
+        g = repos[repo]
+        act = any(set(x["states"]) & ACTIONABLE for x in g)
+        newest = max((x["when"].timestamp() for x in g if x["when"]), default=0)
+        return (0 if act else 1, -newest)
+
+    for repo in sorted(repos, key=key):
+        print(f"\n{B}{repo}{RESET}")
+        for r in sorted(repos[repo], key=lambda r: -(r["when"].timestamp() if r["when"] else 0)):
+            watch = r["states"] == ["watching"]
+            d = DIM if watch else ""
+            m = "*" if r["unread"] else " "
+            num = link("#" + r["item"].split("#")[1], r["url"])
+            title = r["title"] or "(cannot be reached)"
+            print(f'{m} {d}{"" if watch else B}{num}{RESET}{d} {title}{RESET}')
+            print(f"    {d}{tail(r)}  ·  {when_text(r)}{RESET}")
+    if going:
+        print(f"\n{B}LEAVING THE TRACKER{RESET}")
+        for r in going:
+            m = "*" if r["unread"] else " "
+            print(f'{m} {B}{link(r["item"], r["url"])}{RESET} {r["title"]}')
+            print(f"    {tail(r)}  ·  {when_text(r)}")
+    print(f"\n{DIM}* new since you last looked{RESET}")
+
+
+# --- commands -------------------------------------------------------------
+
+def check():
+    records = load()
+    rows = [row(rec, d) for rec, d in zip(records, fetch([r["item"] for r in records]))]
+    render(rows)
+    keep = []
+    for rec, r in zip(records, rows):
+        if r["dropped"]:
+            continue  # ticket 05: printed once, then gone
+        if not r["unreachable"]:  # ticket 04: a failed row keeps its old seen
+            rec["participated"] = r["participated"]
+            rec["seen"] = NOW.strftime("%Y-%m-%dT%H:%M:%SZ")
+        keep.append(rec)
+    save(keep)
+
+
+def gh(*args):
+    r = subprocess.run(["gh", *args], capture_output=True, text=True)
+    if r.returncode:
+        sys.exit(r.stderr.strip() or f"gh {' '.join(args)} failed")
+    return r.stdout.strip()
+
+
+def base_repo(v):
+    """The upstream when this checkout is a fork. A fork carries neither the issues
+    nor the pull requests: a contribution to a repository Leonid does not own is the
+    whole point, so the fork is never the answer."""
+    p = v.get("parent")
+    return f'{p["owner"]["login"]}/{p["name"]}' if p else v["nameWithOwner"]
+
+
+def resolve(ref):
+    """Ticket 06's four forms, all to ticket 01's canonical owner/repo#number, so
+    /issues/N and /pull/N cannot enter the store as two items."""
+    m = re.match(r"https?://github\.com/([\w.-]+)/([\w.-]+)/(?:issues|pull)/(\d+)", ref)
+    if m:
+        return f"{m[1]}/{m[2]}#{m[3]}"
+    m = re.fullmatch(r"([\w.-]+/[\w.-]+)#(\d+)", ref)
+    if m:
+        return f"{m[1]}#{m[2]}"
+    if ref == ".":
+        v = json.loads(gh("repo", "view", "--json", "nameWithOwner,parent"))
+        branch = subprocess.run(["git", "branch", "--show-current"],
+                                capture_output=True, text=True).stdout.strip()
+        # gh matches a cross-repo head only as owner:branch, and a same-repo head
+        # only as the bare branch
+        head = f'{v["nameWithOwner"].split("/")[0]}:{branch}' if v.get("parent") else branch
+        return canon(gh("pr", "view", head, "--repo", base_repo(v), "--json", "url", "-q", ".url"))
+    m = re.fullmatch(r"#?(\d+)", ref)
+    if m:
+        v = json.loads(gh("repo", "view", "--json", "nameWithOwner,parent"))
+        return f"{base_repo(v)}#{m[1]}"
+    sys.exit(f"cannot read that as a GitHub item: {ref}")
+
+
+def add(args):
+    """Appends and then checks. No validating query of its own: a typo shows up as
+    an unreachable row, participation heals, a finished item drops. Ticket 06."""
+    item = resolve(args[0])
+    records = load()
+    for r in records:
+        if r["item"] == item:
+            print(f"already tracked:\n{json.dumps(r, ensure_ascii=False)}")
+            return
+    rec = {"item": item, "participated": False, "added": NOW.strftime("%Y-%m-%dT%H:%M:%SZ")}
+    note = " ".join(args[1:]).strip()
+    if note:
+        rec["note"] = note
+    save(records + [rec])
+    print(f"added {item}")
+    check()
+
+
+if __name__ == "__main__":
+    cmd, rest = (sys.argv[1] if len(sys.argv) > 1 else "check"), sys.argv[2:]
+    if cmd == "check":
+        check()
+    elif cmd == "add" and rest:
+        add(rest)
+    else:
+        sys.exit(__doc__)

@@ -1,0 +1,48 @@
+
+rails/rails
+* #55000 Fix mem_cache_store connection pool exhaustion
+    review requested, they replied  ·  idle 0d  ·  Aug 5 byroot commented
+* #55001 Speed up ActiveSupport::Cache key normalisation
+    changes requested, ci red, conflict, they replied  ·  idle 2d  ·  Aug 4 byroot reviewed
+* #55002 Document the cache key size limit
+    approved, no reply ever  ·  idle 5d  ·  Aug 1 you pushed
+
+googleapis/release-please
+* #2790 fix(commit-parser): fall back to header-only parsing when body is unparseable
+    you replied  ·  idle 2d  ·  Aug 4 you commented
+  #2564 commit could not be parsed: ... unexpected token '('
+    you replied  ·  idle 2d  ·  Aug 4 you commented
+
+ruby/ruby
+* #9001 Proposal: frozen string literals by default
+    watching  ·  idle 5d  ·  Aug 1 matz commented
+
+conventional-commits/parser
+  #57 fix(parser): require whitespace after the ":" footer separator
+    no reply ever  ·  idle 15d  ·  Jul 22 you pushed
+  #56 fix(parser): reject whitespace-only scope
+    no reply ever  ·  idle 15d  ·  Jul 22 you pushed
+  #55 fix(parser): return instead of throwing on an unterminated scope
+    no reply ever  ·  idle 15d  ·  Jul 21 you pushed
+* #54 Parser throws "unexpected token '(' ... valid tokens [)]" on nested parentheses in commit body
+    you replied  ·  idle 15d  ·  Jul 21 you commented
+
+abuisman/tail_merge
+  #2 Benchmark: the "uncached" Ruby row is timing Merger construction, not merging
+    no reply ever  ·  idle 16d  ·  Jul 20 you opened
+
+gjtorikian/tailwind_merge
+* #66 Add support for prose/tailwindcss-typography
+    you replied  ·  idle 16d  ·  Jul 20 you commented
+
+deadorg/vanished-repo
+  #12 (cannot be reached)
+    unreachable  ·  -
+
+LEAVING THE TRACKER
+* gjtorikian/tailwind_merge#80 Add support for prose/tailwindcss-typography
+    merged  ·  idle 0d  ·  Aug 6 merged
+* ruby/ruby#9002 Deprecate Object#taint
+    closed  ·  idle 4d  ·  Aug 2 closed
+
+* new since you last looked

@@ -1,0 +1,579 @@
+{
+ "data": {
+  "i0": {
+   "issueOrPullRequest": {
+    "__typename": "Issue",
+    "number": 2564,
+    "url": "https://github.com/googleapis/release-please/issues/2564",
+    "title": "commit could not be parsed: ... unexpected token '('",
+    "state": "OPEN",
+    "stateReason": null,
+    "createdAt": "2025-07-11T12:28:52Z",
+    "updatedAt": "2026-08-04T10:26:05Z",
+    "closedAt": null,
+    "author": {
+     "login": "tekumara"
+    },
+    "comments": {
+     "totalCount": 3,
+     "nodes": [
+      {
+       "author": {
+        "login": "svyatov"
+       },
+       "createdAt": "2026-08-04T10:26:05Z",
+       "url": "https://github.com/googleapis/release-please/issues/2564#issuecomment-5177724961"
+      }
+     ]
+    }
+   }
+  },
+  "i1": {
+   "issueOrPullRequest": {
+    "__typename": "PullRequest",
+    "number": 2790,
+    "url": "https://github.com/googleapis/release-please/pull/2790",
+    "title": "fix(commit-parser): fall back to header-only parsing when body is unparseable",
+    "state": "OPEN",
+    "isDraft": false,
+    "createdAt": "2026-05-28T10:22:33Z",
+    "updatedAt": "2026-08-04T10:26:17Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "author": {
+     "login": "narhen"
+    },
+    "mergeable": "MERGEABLE",
+    "mergeStateStatus": "BLOCKED",
+    "reviewDecision": "REVIEW_REQUIRED",
+    "comments": {
+     "totalCount": 3,
+     "nodes": [
+      {
+       "author": {
+        "login": "svyatov"
+       },
+       "createdAt": "2026-08-04T10:26:17Z",
+       "url": "https://github.com/googleapis/release-please/pull/2790#issuecomment-5177728494"
+      }
+     ]
+    },
+    "reviewRequests": {
+     "totalCount": 2,
+     "nodes": [
+      {
+       "requestedReviewer": null
+      },
+      {
+       "requestedReviewer": null
+      }
+     ]
+    },
+    "latestReviews": {
+     "nodes": []
+    },
+    "reviews": {
+     "nodes": []
+    },
+    "commits": {
+     "nodes": [
+      {
+       "commit": {
+        "committedDate": "2026-05-28T10:21:10Z"
+       }
+      }
+     ]
+    },
+    "statusCheckRollup": {
+     "state": "FAILURE"
+    }
+   }
+  },
+  "i2": {
+   "issueOrPullRequest": {
+    "__typename": "PullRequest",
+    "number": 55,
+    "url": "https://github.com/conventional-commits/parser/pull/55",
+    "title": "fix(parser): return instead of throwing on an unterminated scope",
+    "state": "OPEN",
+    "isDraft": false,
+    "createdAt": "2026-07-21T16:45:29Z",
+    "updatedAt": "2026-07-21T16:54:07Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "author": {
+     "login": "svyatov"
+    },
+    "mergeable": "MERGEABLE",
+    "mergeStateStatus": "BLOCKED",
+    "reviewDecision": "REVIEW_REQUIRED",
+    "comments": {
+     "totalCount": 0,
+     "nodes": []
+    },
+    "reviewRequests": {
+     "totalCount": 0,
+     "nodes": []
+    },
+    "latestReviews": {
+     "nodes": []
+    },
+    "reviews": {
+     "nodes": []
+    },
+    "commits": {
+     "nodes": [
+      {
+       "commit": {
+        "committedDate": "2026-07-21T16:45:16Z"
+       }
+      }
+     ]
+    },
+    "statusCheckRollup": null
+   }
+  },
+  "i3": {
+   "issueOrPullRequest": {
+    "__typename": "Issue",
+    "number": 54,
+    "url": "https://github.com/conventional-commits/parser/issues/54",
+    "title": "Parser throws \"unexpected token '(' ... valid tokens [)]\" on nested parentheses in commit body",
+    "state": "OPEN",
+    "stateReason": null,
+    "createdAt": "2026-06-22T06:26:33Z",
+    "updatedAt": "2026-07-21T16:13:24Z",
+    "closedAt": null,
+    "author": {
+     "login": "benjamineckstein"
+    },
+    "comments": {
+     "totalCount": 2,
+     "nodes": [
+      {
+       "author": {
+        "login": "svyatov"
+       },
+       "createdAt": "2026-07-21T16:13:24Z",
+       "url": "https://github.com/conventional-commits/parser/issues/54#issuecomment-5036344466"
+      }
+     ]
+    }
+   }
+  },
+  "i4": {
+   "issueOrPullRequest": {
+    "__typename": "PullRequest",
+    "number": 56,
+    "url": "https://github.com/conventional-commits/parser/pull/56",
+    "title": "fix(parser): reject whitespace-only scope",
+    "state": "OPEN",
+    "isDraft": false,
+    "createdAt": "2026-07-22T09:47:11Z",
+    "updatedAt": "2026-07-22T09:47:11Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "author": {
+     "login": "svyatov"
+    },
+    "mergeable": "MERGEABLE",
+    "mergeStateStatus": "BLOCKED",
+    "reviewDecision": "REVIEW_REQUIRED",
+    "comments": {
+     "totalCount": 0,
+     "nodes": []
+    },
+    "reviewRequests": {
+     "totalCount": 0,
+     "nodes": []
+    },
+    "latestReviews": {
+     "nodes": []
+    },
+    "reviews": {
+     "nodes": []
+    },
+    "commits": {
+     "nodes": [
+      {
+       "commit": {
+        "committedDate": "2026-07-22T09:44:03Z"
+       }
+      }
+     ]
+    },
+    "statusCheckRollup": null
+   }
+  },
+  "i5": {
+   "issueOrPullRequest": {
+    "__typename": "PullRequest",
+    "number": 57,
+    "url": "https://github.com/conventional-commits/parser/pull/57",
+    "title": "fix(parser): require whitespace after the \":\" footer separator",
+    "state": "OPEN",
+    "isDraft": false,
+    "createdAt": "2026-07-22T09:47:34Z",
+    "updatedAt": "2026-07-22T09:54:00Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "author": {
+     "login": "svyatov"
+    },
+    "mergeable": "MERGEABLE",
+    "mergeStateStatus": "BLOCKED",
+    "reviewDecision": "REVIEW_REQUIRED",
+    "comments": {
+     "totalCount": 0,
+     "nodes": []
+    },
+    "reviewRequests": {
+     "totalCount": 0,
+     "nodes": []
+    },
+    "latestReviews": {
+     "nodes": []
+    },
+    "reviews": {
+     "nodes": []
+    },
+    "commits": {
+     "nodes": [
+      {
+       "commit": {
+        "committedDate": "2026-07-22T09:46:41Z"
+       }
+      }
+     ]
+    },
+    "statusCheckRollup": null
+   }
+  },
+  "i6": {
+   "issueOrPullRequest": {
+    "__typename": "Issue",
+    "number": 2,
+    "url": "https://github.com/abuisman/tail_merge/issues/2",
+    "title": "Benchmark: the \"uncached\" Ruby row is timing Merger construction, not merging",
+    "state": "OPEN",
+    "stateReason": null,
+    "createdAt": "2026-07-20T15:40:59Z",
+    "updatedAt": "2026-07-20T15:40:59Z",
+    "closedAt": null,
+    "author": {
+     "login": "svyatov"
+    },
+    "comments": {
+     "totalCount": 0,
+     "nodes": []
+    }
+   }
+  },
+  "i7": {
+   "issueOrPullRequest": {
+    "__typename": "Issue",
+    "number": 66,
+    "url": "https://github.com/gjtorikian/tailwind_merge/issues/66",
+    "title": "Add support for prose/tailwindcss-typography",
+    "state": "OPEN",
+    "stateReason": null,
+    "createdAt": "2025-12-14T23:05:28Z",
+    "updatedAt": "2026-07-20T15:33:41Z",
+    "closedAt": null,
+    "author": {
+     "login": "tmaier"
+    },
+    "comments": {
+     "totalCount": 1,
+     "nodes": [
+      {
+       "author": {
+        "login": "svyatov"
+       },
+       "createdAt": "2026-07-20T15:33:41Z",
+       "url": "https://github.com/gjtorikian/tailwind_merge/issues/66#issuecomment-5024057481"
+      }
+     ]
+    }
+   }
+  },
+  "i8": {
+   "issueOrPullRequest": {
+    "__typename": "PullRequest",
+    "number": 55000,
+    "url": "https://github.com/rails/rails/pull/55000",
+    "title": "Fix mem_cache_store connection pool exhaustion",
+    "state": "OPEN",
+    "isDraft": false,
+    "createdAt": "2026-07-30T10:00:00Z",
+    "updatedAt": "2026-08-05T00:00:00Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "author": {
+     "login": "byroot"
+    },
+    "mergeable": "MERGEABLE",
+    "mergeStateStatus": "CLEAN",
+    "reviewDecision": null,
+    "comments": {
+     "totalCount": 4,
+     "nodes": [
+      {
+       "author": {
+        "login": "byroot"
+       },
+       "createdAt": "2026-08-05T18:44:18Z",
+       "url": "https://github.com/rails/rails/pull/55000#issuecomment-9000001"
+      }
+     ]
+    },
+    "reviewRequests": {
+     "totalCount": 1,
+     "nodes": [
+      {
+       "requestedReviewer": {
+        "__typename": "User",
+        "login": "svyatov"
+       }
+      }
+     ]
+    },
+    "latestReviews": {
+     "nodes": []
+    },
+    "reviews": {
+     "nodes": []
+    },
+    "commits": {
+     "nodes": []
+    },
+    "statusCheckRollup": null
+   }
+  },
+  "i9": {
+   "issueOrPullRequest": {
+    "__typename": "PullRequest",
+    "number": 55001,
+    "url": "https://github.com/rails/rails/pull/55001",
+    "title": "Speed up ActiveSupport::Cache key normalisation",
+    "state": "OPEN",
+    "isDraft": false,
+    "createdAt": "2026-07-28T09:00:00Z",
+    "updatedAt": "2026-08-05T00:00:00Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "author": {
+     "login": "svyatov"
+    },
+    "mergeable": "CONFLICTING",
+    "mergeStateStatus": "CLEAN",
+    "reviewDecision": "CHANGES_REQUESTED",
+    "comments": {
+     "totalCount": 2,
+     "nodes": [
+      {
+       "author": {
+        "login": "byroot"
+       },
+       "createdAt": "2026-08-04T08:15:00Z",
+       "url": "https://github.com/rails/rails/pull/55001#issuecomment-9000002"
+      }
+     ]
+    },
+    "reviewRequests": {
+     "totalCount": 0,
+     "nodes": []
+    },
+    "latestReviews": {
+     "nodes": []
+    },
+    "reviews": {
+     "nodes": [
+      {
+       "author": {
+        "login": "byroot"
+       },
+       "state": "CHANGES_REQUESTED",
+       "submittedAt": "2026-08-04T08:20:00Z",
+       "url": "https://github.com/rails/rails/pull/55001#pullrequestreview-9000003"
+      }
+     ]
+    },
+    "commits": {
+     "nodes": [
+      {
+       "commit": {
+        "committedDate": "2026-07-28T09:00:00Z"
+       }
+      }
+     ]
+    },
+    "statusCheckRollup": {
+     "state": "FAILURE"
+    }
+   }
+  },
+  "i10": {
+   "issueOrPullRequest": {
+    "__typename": "PullRequest",
+    "number": 55002,
+    "url": "https://github.com/rails/rails/pull/55002",
+    "title": "Document the cache key size limit",
+    "state": "OPEN",
+    "isDraft": false,
+    "createdAt": "2026-08-01T07:00:00Z",
+    "updatedAt": "2026-08-05T00:00:00Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "author": {
+     "login": "svyatov"
+    },
+    "mergeable": "MERGEABLE",
+    "mergeStateStatus": "CLEAN",
+    "reviewDecision": "APPROVED",
+    "comments": {
+     "totalCount": 0,
+     "nodes": []
+    },
+    "reviewRequests": {
+     "totalCount": 0,
+     "nodes": []
+    },
+    "latestReviews": {
+     "nodes": []
+    },
+    "reviews": {
+     "nodes": []
+    },
+    "commits": {
+     "nodes": [
+      {
+       "commit": {
+        "committedDate": "2026-08-01T07:00:00Z"
+       }
+      }
+     ]
+    },
+    "statusCheckRollup": null
+   }
+  },
+  "i11": {
+   "issueOrPullRequest": {
+    "__typename": "PullRequest",
+    "number": 80,
+    "url": "https://github.com/gjtorikian/tailwind_merge/pull/80",
+    "title": "Add support for prose/tailwindcss-typography",
+    "state": "MERGED",
+    "isDraft": false,
+    "createdAt": "2026-07-10T12:00:00Z",
+    "updatedAt": "2026-08-05T00:00:00Z",
+    "closedAt": "2026-08-06T09:00:00Z",
+    "mergedAt": "2026-08-06T09:00:00Z",
+    "author": {
+     "login": "svyatov"
+    },
+    "mergeable": "MERGEABLE",
+    "mergeStateStatus": "CLEAN",
+    "reviewDecision": null,
+    "comments": {
+     "totalCount": 3,
+     "nodes": [
+      {
+       "author": {
+        "login": "gjtorikian"
+       },
+       "createdAt": "2026-08-06T08:30:00Z",
+       "url": "https://github.com/gjtorikian/tailwind_merge/pull/80#issuecomment-9000004"
+      }
+     ]
+    },
+    "reviewRequests": {
+     "totalCount": 0,
+     "nodes": []
+    },
+    "latestReviews": {
+     "nodes": []
+    },
+    "reviews": {
+     "nodes": []
+    },
+    "commits": {
+     "nodes": [
+      {
+       "commit": {
+        "committedDate": "2026-07-10T12:00:00Z"
+       }
+      }
+     ]
+    },
+    "statusCheckRollup": null
+   }
+  },
+  "i12": {
+   "issueOrPullRequest": {
+    "__typename": "Issue",
+    "number": 9002,
+    "url": "https://github.com/ruby/ruby/issues/9002",
+    "title": "Deprecate Object#taint",
+    "state": "CLOSED",
+    "stateReason": "NOT_PLANNED",
+    "createdAt": "2026-06-01T10:00:00Z",
+    "updatedAt": "2026-08-02T10:00:00Z",
+    "closedAt": "2026-08-02T10:00:00Z",
+    "author": {
+     "login": "svyatov"
+    },
+    "comments": {
+     "totalCount": 1,
+     "nodes": [
+      {
+       "author": {
+        "login": "matz"
+       },
+       "createdAt": "2026-08-02T09:55:00Z",
+       "url": "https://github.com/ruby/ruby/issues/9002#issuecomment-9000005"
+      }
+     ]
+    }
+   }
+  },
+  "i13": null,
+  "i14": {
+   "issueOrPullRequest": {
+    "__typename": "Issue",
+    "number": 9001,
+    "url": "https://github.com/ruby/ruby/issues/9001",
+    "title": "Proposal: frozen string literals by default",
+    "state": "OPEN",
+    "stateReason": null,
+    "createdAt": "2026-05-01T10:00:00Z",
+    "updatedAt": "2026-08-01T11:00:00Z",
+    "closedAt": null,
+    "author": {
+     "login": "matz"
+    },
+    "comments": {
+     "totalCount": 7,
+     "nodes": [
+      {
+       "author": {
+        "login": "matz"
+       },
+       "createdAt": "2026-08-01T11:00:00Z",
+       "url": "https://github.com/ruby/ruby/issues/9001#issuecomment-9000006"
+      }
+     ]
+    }
+   }
+  }
+ },
+ "errors": [
+  {
+   "type": "NOT_FOUND",
+   "path": [
+    "i13"
+   ],
+   "message": "Could not resolve to a Repository with the name 'deadorg/vanished-repo'."
+  }
+ ]
+}
