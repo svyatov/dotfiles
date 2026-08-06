@@ -1,9 +1,10 @@
 {
   "agentPushNotifEnabled": false,
-  "attribution": {
-    "commit": "",
-    "pr": ""
-  },
+  "cleanupPeriodDays": 90,
+  "disableArtifact": true,
+  "disableBundledSkills": true,
+  "disableClaudeAiConnectors": true,
+  "disableRemoteControl": true,
   "effortLevel": "high",
   "enabledPlugins": {
     "chrome-devtools-mcp@claude-plugins-official": false,
@@ -17,8 +18,9 @@
     "hookify@claude-plugins-official": true,
     "humanizer@leo-toolkit": true,
     "layered-rails@palkan-skills": true,
+    "mattpocock-skills@claude-plugins-official": true,
     "oss-kit@oss-kit": true,
-    "plugin-dev@claude-plugins-official": true,
+    "plugin-dev@claude-plugins-official": false,
     "ponytail@ponytail": true,
     "pr-review-toolkit@claude-plugins-official": false,
     "pyright-lsp@claude-plugins-official": false,
@@ -27,12 +29,16 @@
     "ruby-lsp@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
     "sentry@claude-plugins-official": false,
-    "skill-creator@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": false,
     "superpowers@claude-plugins-official": false,
     "typescript-lsp@claude-plugins-official": true,
     "writing-clearly-and-concisely@leo-toolkit": false
   },
   "env": {
+    "CLAUDE_CODE_DISABLE_CRON": "1",
+    "DISABLE_ERROR_REPORTING": "1",
+    "DISABLE_NON_ESSENTIAL_MODEL_CALLS": "1",
+    "DISABLE_TELEMETRY": "1",
     "ENABLE_LSP_TOOL": "1"
   },
   "extraKnownMarketplaces": {
@@ -72,6 +78,7 @@
       }
     }
   },
+  "feedbackSurveyRate": 0,
   "hooks": {
     "PostToolUse": [
       {
@@ -98,6 +105,7 @@
       }
     ]
   },
+  "includeCoAuthoredBy": false,
   "model": "opus[1m]",
   "permissions": {
     "allow": [
@@ -166,7 +174,46 @@
       "Read(~/.cargo/credentials.toml)",
       "Read(~/.kube/config)",
       "Read(~/.terraform.d/credentials.tfrc.json)",
-      "Read(~/.claude/.credentials.json)"
+      "Read(~/.claude/.credentials.json)",
+      "Bash(*.env)",
+      "Bash(*.env *)",
+      "Bash(*.env.local)",
+      "Bash(*.env.development)",
+      "Bash(*.env.production)",
+      "Bash(*.env.staging)",
+      "Bash(*.env.test)",
+      "Bash(*.env.*.local)",
+      "Bash(*.npmrc)",
+      "Bash(*.netrc)",
+      "Bash(*.pypirc)",
+      "Bash(*.git-credentials)",
+      "Bash(*secrets/*)",
+      "Bash(*id_rsa)",
+      "Bash(*id_rsa *)",
+      "Bash(*id_ed25519)",
+      "Bash(*id_ed25519 *)",
+      "Bash(*.pem)",
+      "Bash(*.pem *)",
+      "Bash(*.ssh/*)",
+      "Bash(*.secrets)",
+      "Bash(*.aws/credentials)",
+      "Bash(*gh/hosts.yml)",
+      "Bash(*gcloud/*)",
+      "Bash(*.docker/config.json)",
+      "Bash(*.gem/credentials)",
+      "Bash(*.cargo/credentials.toml)",
+      "Bash(*.kube/config)",
+      "Bash(*credentials.tfrc.json)",
+      "Bash(*.claude/.credentials.json)",
+      "DesignSync",
+      "NotebookEdit",
+      "PushNotification",
+      "RemoteTrigger",
+      "ReportFindings",
+      "ScheduleWakeup",
+      "CronCreate",
+      "CronDelete",
+      "CronList"
     ]
   },
   "preferredNotifChannel": "ghostty",
@@ -174,7 +221,7 @@
   "remoteControlAtStartup": false,
   "skillOverrides": {
     "agent-browser": "user-invocable-only",
-    "ast-grep": "user-invocable-only",
+    "ast-grep": "off",
     "claude-code-setup:claude-automation-recommender": "user-invocable-only",
     "claude-md-management:claude-md-improver": "user-invocable-only",
     "claude-md-management:revise-claude-md": "user-invocable-only",
@@ -247,7 +294,8 @@
     "ponytail:ponytail-review": "user-invocable-only",
     "skill-creator:skill-creator": "user-invocable-only",
     "style-profile": "user-invocable-only",
-    "supacode-cli": "off"
+    "supacode-cli": "off",
+    "supacode-deeplinks": "off"
   },
   "skipAutoPermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
