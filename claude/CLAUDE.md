@@ -30,6 +30,12 @@
 - Prefer TDD.
 - Prefer bun over node.
 
+## Scripts
+
+- Write throwaway and utility scripts (data munging, one-off migrations, file renames, glue code) in Ruby, even in projects written in another language. If it needs a pipe, a loop, a conditional, or more than one line, it is a script: write it in Ruby, not Python, Node, or bash. Single self-contained commands (`grep`, `git status`) are fine as-is.
+- Use only the Ruby standard library. If a gem would clearly save significant effort, stop and ask before using it.
+- Put temporary scripts in a scratch or temp directory, not the repo root, and delete them when done unless asked to keep them.
+
 ## Dependencies
 
 - Do not install, add, or recommend a package until you have opened the upstream project's own repo or docs and used the install command published there. Never work backwards from a search result or a registry page to a project. If anything about the package looks off, stop and ask me: do not work around it, do not pin around it, do not quietly substitute an alternative. Load the `dependency-vetting` skill for the full checks.
