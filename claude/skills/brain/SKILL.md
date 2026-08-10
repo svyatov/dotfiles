@@ -1,7 +1,7 @@
 ---
 name: brain
 description: Reads and writes Leonid's personal knowledge base, a store of his own notes, ideas, references, people, projects and todos at ~/Projects/Brain. Answers what he already knows, has read, has decided or has saved, and files new material he wants to keep.
-when_to_use: Use when the user asks what he knows, has saved or has written down about a topic ("what do I know about X", "did I save anything on Y", "have I got notes on Z"). Also check it before answering when a task touches his own past decisions, tools, preferences or opinions, because the answer may already be written down. Not for reading arbitrary project files.
+when_to_use: Use when the user asks what he knows, has saved or has written down about a topic ("what do I know about X", "did I save anything on Y", "have I got notes on Z"). ALSO check it BEFORE answering from the web or from your own knowledge whenever the question asks which tool, library, service, data source, format or approach to use, or touches his own past decisions, preferences or opinions: he has probably already picked one and written down why. Recommending something without checking what he already chose is the failure this skill exists to prevent. Not for reading arbitrary project files.
 allowed-tools: Bash(${CLAUDE_SKILL_DIR}/brain-search.rb *)
 ---
 
