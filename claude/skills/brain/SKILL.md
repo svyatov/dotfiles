@@ -1,0 +1,87 @@
+---
+name: brain
+description: Reads and writes Leonid's personal knowledge base, a store of his own notes, ideas, references, people, projects and todos at ~/Projects/Brain. Answers what he already knows, has read, has decided or has saved, and files new material he wants to keep.
+when_to_use: Use when the user asks what he knows, has saved or has written down about a topic ("what do I know about X", "did I save anything on Y", "have I got notes on Z"), and when he asks to remember or keep something ("remember this", "note that", "save this for later"). Also check it before answering when a task touches his own past decisions, tools, preferences or opinions, because the answer may already be written down. Not for reading arbitrary project files.
+allowed-tools: Bash(${CLAUDE_SKILL_DIR}/brain-search.rb *)
+---
+
+# brain
+
+A second brain in Open Knowledge Format: markdown with YAML frontmatter at `~/Projects/Brain`
+(`$BRAIN_DIR` overrides the location).
+
+**The rules live in `~/Projects/Brain/CLAUDE.md`.** You MUST read that file in full before any
+write. It is the only authority on the ingest and query procedure, the type vocabulary and the
+commit conventions. Nothing here restates it.
+
+## Which mode applies
+
+- **Working directory is inside the brain repo**: its own `CLAUDE.md` governs completely, and
+  its Stop hook guards the commit. Follow it. Ignore the foreign-session policy below.
+- **Anywhere else**: this is a foreign session. Query is read-only and capture is inbox-only,
+  per the policy below.
+
+## Query
+
+Same in both modes, except for the last line.
+
+1. Read `~/Projects/Brain/index.md` and pick out the notes that look relevant. Titles and
+   one-line descriptions are the whole triage surface, and you are the relevance judge. There is
+   no score threshold anywhere in this system.
+2. Read the notes you picked.
+3. Only if `index.md` was not enough, run this to search note bodies:
+
+   ```
+   ${CLAUDE_SKILL_DIR}/brain-search.rb "query words"
+   ```
+
+   One ranked hit per line, `score<TAB>path<TAB>title<TAB>description`. Expand the query with
+   synonyms and aliases first: it is BM25 with no stemming, so "gems" misses "gem".
+4. Answer. In a foreign session that is the end of it: do not offer to file the answer back as a
+   note. If Leonid explicitly asks to save it, that takes the capture path below.
+
+## Capture in a foreign session: inbox only
+
+No grep for duplicates, no classification, no cross-links, no enrichment. That work is deferred
+to the brain's own lint pass on purpose, because this session does not hold the brain's context.
+An explicit "save that" about an answer takes this same path.
+
+Write exactly three files.
+
+**1. `inbox/<kebab-slug>.md`**
+
+```markdown
+---
+type: inbox
+title: <short title>
+description: <one sentence>
+timestamp: <ISO 8601, today>
+---
+
+<the raw text, verbatim>
+
+Captured from `<repo name>` while <what this session was doing>.
+```
+
+**2. `inbox/index.md`**: add `* [<Title>](/inbox/<slug>.md) - <description>`. If the file does
+not exist yet, create it with an `# Inbox` heading and no frontmatter.
+
+**3. `log.md`**: insert `## [YYYY-MM-DD] ingest | Captured to inbox: <slug>` directly below the
+`# Log` heading. The file is append-at-top, newest first.
+
+Inbox items get **no** line in the root `index.md`. They earn one when they graduate into a real
+type.
+
+Then commit immediately, staged by path only:
+
+```
+git -C ~/Projects/Brain add inbox/<slug>.md inbox/index.md log.md \
+  && git -C ~/Projects/Brain commit -m "chore(inbox): capture <slug>"
+```
+
+Immediately, because the brain's Stop hook does not protect this session, and a dirty brain repo
+blocks the next real brain session.
+
+**One attempt only.** If anything fails, stop, report the file path and the git error, and
+change nothing else. No retry, no `--no-verify`, and never `git stash`, `checkout` or `reset`:
+other sessions may be working in that repo at the same time.
