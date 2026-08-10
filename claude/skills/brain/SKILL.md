@@ -84,17 +84,34 @@ Then commit immediately, staged by path only:
 
 ```
 git -C ~/Projects/Brain add inbox/<slug>.md inbox/index.md log.md \
-  && git -C ~/Projects/Brain commit -m "chore(inbox): capture <slug>"
+  && git -C ~/Projects/Brain commit -m "chore(inbox): capture <slug>" \
+  && git -C ~/Projects/Brain log -1 --format="CAPTURE_OK %h %s"
 ```
 
 Immediately, because the brain's Stop hook does not protect this session, and a dirty brain repo
 blocks the next real brain session.
 
-**One attempt only.** If anything fails, stop, report the file path and the git error, and
-change nothing else. No retry, no `--no-verify`, and never `git stash`, `checkout` or `reset`:
-other sessions may be working in that repo at the same time.
+**Report the capture as saved only if `CAPTURE_OK` is in that output, and quote the whole
+`CAPTURE_OK` line back.** A failed commit and a quiet successful one are the same empty result,
+so the last clause reads the new commit back out of the repo: the short sha and subject are proof
+you cannot write in advance, and Leonid can check them later. The subject must be the message you
+just wrote, because `git log -1` prints whatever commit is on top and another session may own it.
 
-**Never report a capture as saved unless that commit exited clean.** The commit is the proof: it
-stages three paths, so a write that silently did nothing makes it fail. Leonid's zsh sets
-`noclobber`, and a bare `>` onto an existing path writes nothing while the next command still
-exits 0, so "I wrote the file" is not evidence of anything.
+**A file or line count is never evidence about the commit.** A tool hook on this machine compacts
+git output, so a failed chain can print `ok 3 files changed, 15 insertions(+)` directly under
+`Exit code 1`. That stat comes from the `add` half and describes what was staged. Report no
+counts, and treat the word `ok` on any other line as noise. `CAPTURE_OK` is the only line that
+settles it.
+
+The chain also catches a write that did nothing. It stages three paths, so an empty change makes
+the commit exit 1. Leonid's zsh sets `noclobber`, and a bare `>` onto an existing path writes
+nothing while the next command still exits 0, so "I wrote the file" is not evidence of anything.
+
+**One commit attempt.** Never run the commit a second time. A retry after a rejected commit is a
+second write into a repo another session may be holding, and the rejection is usually a hook that
+means it. No `--no-verify`, and never `git stash`, `checkout` or `reset`.
+
+**On failure, leave the files exactly as they are.** Report the git output, and name all three
+paths as staged and uncommitted. Do not unstage, delete or revert them: that is the destructive
+act this mode forbids, and it throws away the capture. A dirty brain is the signal that a human
+is needed, and the next brain session will see it.
