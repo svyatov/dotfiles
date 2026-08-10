@@ -7,8 +7,9 @@ allowed-tools: Bash(${CLAUDE_SKILL_DIR}/brain-search.rb *)
 
 # brain
 
-A second brain in Open Knowledge Format: markdown with YAML frontmatter at `~/Projects/Brain`
-(`$BRAIN_DIR` overrides the location).
+A second brain in Open Knowledge Format: markdown with YAML frontmatter at `~/Projects/Brain`.
+That path is fixed here. `$BRAIN_DIR` overrides the location for `brain-search.rb` only: a
+session does not inherit it, so it is not a way to point this skill at a test copy.
 
 **The rules live in `~/Projects/Brain/CLAUDE.md`.** You MUST read that file in full before any
 write. It is the only authority on the ingest and query procedure, the type vocabulary and the
