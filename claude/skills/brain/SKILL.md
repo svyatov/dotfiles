@@ -11,10 +11,6 @@ A second brain in Open Knowledge Format: markdown with YAML frontmatter at `~/Pr
 That path is fixed here. `$BRAIN_DIR` overrides the location for `brain-search.rb` only: a
 session does not inherit it, so it is not a way to point this skill at a test copy.
 
-**The rules live in `~/Projects/Brain/CLAUDE.md`.** You MUST read that file in full before any
-write. It is the only authority on the ingest and query procedure, the type vocabulary and the
-commit conventions. Nothing here restates it.
-
 **Capture runs only when Leonid types `/brain`.** Claude Code's auto memory owns "remember this"
 and its neighbours from the system prompt, and it is a separate store that stays separate: never
 migrate memory files into the brain, and never point `autoMemoryDirectory` at it. Auto memory
@@ -23,10 +19,15 @@ them.
 
 ## Which mode applies
 
-- **Working directory is inside the brain repo**: its own `CLAUDE.md` governs completely, and
-  its Stop hook guards the commit. Follow it. Ignore the foreign-session policy below.
-- **Anywhere else**: this is a foreign session. Query is read-only and capture is inbox-only,
-  per the policy below.
+- **Working directory is inside the brain repo**: `~/Projects/Brain/CLAUDE.md` governs
+  completely. Read it in full before any write. It is the only authority on the ingest and query
+  procedure, the type vocabulary and the commit conventions, and its Stop hook guards the commit.
+  Ignore the foreign-session policy below.
+- **Anywhere else**: this is a foreign session. Query is read-only and capture is inbox-only.
+  The policy below is the complete procedure. **Do not read `~/Projects/Brain/CLAUDE.md` for
+  it.** That file is the in-repo ingest procedure, which you must not perform here: a session
+  that reads it classifies the input to a permanent type and mints a concept, instead of writing
+  the one inbox item this mode allows.
 
 ## Query
 
