@@ -1,7 +1,7 @@
 ---
 name: brain
 description: Reads and writes Leonid's personal knowledge base, a store of his own notes, ideas, references, people, projects and todos at ~/Projects/Brain. Answers what he already knows, has read, has decided or has saved, and files new material he wants to keep.
-when_to_use: Use when the user asks what he knows, has saved or has written down about a topic ("what do I know about X", "did I save anything on Y", "have I got notes on Z"), and when he asks to remember or keep something ("remember this", "note that", "save this for later"). Also check it before answering when a task touches his own past decisions, tools, preferences or opinions, because the answer may already be written down. Not for reading arbitrary project files.
+when_to_use: Use when the user asks what he knows, has saved or has written down about a topic ("what do I know about X", "did I save anything on Y", "have I got notes on Z"). Also check it before answering when a task touches his own past decisions, tools, preferences or opinions, because the answer may already be written down. Not for reading arbitrary project files.
 allowed-tools: Bash(${CLAUDE_SKILL_DIR}/brain-search.rb *)
 ---
 
@@ -13,6 +13,12 @@ A second brain in Open Knowledge Format: markdown with YAML frontmatter at `~/Pr
 **The rules live in `~/Projects/Brain/CLAUDE.md`.** You MUST read that file in full before any
 write. It is the only authority on the ingest and query procedure, the type vocabulary and the
 commit conventions. Nothing here restates it.
+
+**Capture runs only when Leonid types `/brain`.** Claude Code's auto memory owns "remember this"
+and its neighbours from the system prompt, and it is a separate store that stays separate: never
+migrate memory files into the brain, and never point `autoMemoryDirectory` at it. Auto memory
+holds how the agent should behave in one repo. The brain holds what Leonid knows, across all of
+them.
 
 ## Which mode applies
 
@@ -85,3 +91,8 @@ blocks the next real brain session.
 **One attempt only.** If anything fails, stop, report the file path and the git error, and
 change nothing else. No retry, no `--no-verify`, and never `git stash`, `checkout` or `reset`:
 other sessions may be working in that repo at the same time.
+
+**Never report a capture as saved unless that commit exited clean.** The commit is the proof: it
+stages three paths, so a write that silently did nothing makes it fail. Leonid's zsh sets
+`noclobber`, and a bare `>` onto an existing path writes nothing while the next command still
+exits 0, so "I wrote the file" is not evidence of anything.
