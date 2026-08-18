@@ -7,24 +7,32 @@ description: Track and review open-source contributions. Use with no argument to
 
 This skill routes. All the logic is in the script beside it.
 
-**No argument** — run and show the output unchanged:
+To see every tracked thread, run this:
 
 ```
-~/.claude/skills/track-contrib/track-contrib check
+~/.claude/skills/track-contrib/track-contrib check --md
 ```
 
-**With an argument** — pass everything through verbatim:
+To track a new thread, pass everything through verbatim:
 
 ```
-~/.claude/skills/track-contrib/track-contrib add "$@"
+~/.claude/skills/track-contrib/track-contrib add --md "$@"
 ```
 
-The reference is a GitHub URL, `owner/repo#number`, a bare number resolved against the
-repository the shell is standing in, or `.` for the current branch's pull request.
-Everything after the reference is stored as a note. Adding prints the table too.
+The reference is a GitHub URL, `owner/repo#number`, a bare number, or `.`. A bare number
+resolves against the repository the shell is standing in. `.` resolves to the current
+branch's pull request. Everything after the reference becomes a note. Adding prints the
+table too.
 
-Do not reformat, summarise, or re-sort the output. The script renders the finished table,
-so it is byte-identical on every run.
+## Show the output in your reply
 
-The store is `items.jsonl` in the tracker directory. Removing an item or fixing a note is a
-hand edit of that file. There is no command for it.
+Copy the script's output into your reply, character for character. Do not reformat it. Do
+not summarise it. Do not re-sort it.
+
+The `--md` flag exists for this. Tool output does not reliably reach the user in Claude
+Code, so your reply is the only channel that works. The script emits markdown, so the
+links and the emphasis survive the copy. Without `--md` the script emits ANSI colour and
+OSC 8 links, and both die on the way to the screen.
+
+The store is `items.jsonl` in the tracker directory. To remove an item or fix a note, edit
+that file by hand. There is no command for it.

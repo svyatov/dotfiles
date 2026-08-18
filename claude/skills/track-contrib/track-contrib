@@ -6,9 +6,13 @@ Store is items.jsonl at the tracker root, one JSON object per line, hand-editabl
 
     track-contrib check                    print every tracked thread
     track-contrib add <ref> [note...]      track a thread, then print the table
+    track-contrib ... --md                 render markdown instead of ANSI
 
 <ref> is a GitHub URL, owner/repo#number, a bare number resolved against the
 repository you are standing in, or "." for the current branch's pull request.
+
+Ticket 12: there are two readers. A terminal gets colour and OSC 8 links. A
+Claude Code session gets --md, because ANSI never reaches the eye there.
 """
 import json, os, pathlib, re, subprocess, sys
 from datetime import datetime, timezone
@@ -26,17 +30,40 @@ def ts(s):
 
 NOW = ts(os.environ["CONTRIB_NOW"]) if os.environ.get("CONTRIB_NOW") else datetime.now(timezone.utc)
 
-if os.environ.get("NO_COLOR"):
-    B = DIM = RESET = ""
+MD = "--md" in sys.argv
+
+# Ticket 13. Escapes go out only when a terminal is actually watching; piping to
+# a file or a pager used to leak them. NO_COLOR wins over FORCE_COLOR, per
+# no-color.org. FORCE_COLOR exists so the ANSI rendering can have a golden file:
+# without it that path is untestable, because a test's stdout is never a tty.
+PLAIN = bool(os.environ.get("NO_COLOR")) or not (os.environ.get("FORCE_COLOR") or sys.stdout.isatty())
+
+if PLAIN:
+    B = DIM = RED = GRN = RESET = ""
 else:
     B, DIM, RESET = "\033[1m", "\033[2m", "\033[0m"
+    # 91 and 32, not 31 and 32. Measured against the Deep palette on #090909:
+    # normal red #d70005 is 3.7:1 and misses the 4.5:1 floor, while bright green
+    # #22ff18 glares for the tier that means "nothing to do". The mismatch is the
+    # point, do not make these symmetrical.
+    RED, GRN = "\033[91m", "\033[32m"
 
 
 def link(text, url):
     """OSC 8 terminal hyperlink. A terminal without it prints the text unchanged."""
-    if not url or os.environ.get("NO_COLOR"):
+    if not url or PLAIN:
         return text
     return f"\033]8;;{url}\033\\{text}\033]8;;\033\\"
+
+
+def md_link(text, url):
+    return f"[{text}]({url})" if url else text
+
+
+def md_escape(s):
+    """A GitHub title is untrusted text going into a markup context. Backticks are
+    left alone: a code span in a title is worth having, and a lone one is harmless."""
+    return re.sub(r"([\\*_\[\]<])", r"\\\1", s)
 
 
 # --- store ----------------------------------------------------------------
@@ -180,6 +207,13 @@ def activity(d):
 
 
 ACTIONABLE = {"review requested", "changes requested", "ci red", "conflict", "they replied"}
+RESOLVED = {"approved", "merged"}
+
+
+def hue(state):
+    """Ticket 13. Three tiers, and ACTIONABLE stays the one place that says what
+    needs you: a state added to it inherits the right colour for free."""
+    return RED if state in ACTIONABLE else GRN if state in RESOLVED else ""
 
 
 def row(rec, d):
@@ -214,11 +248,40 @@ def when_text(r):
 
 
 def status(r):
-    return "unreachable" if r["unreachable"] else ", ".join(r["states"])
+    """Ticket 13. The hue comes from states[0]: classify() already returns the list
+    in priority order, so the first state is the one that decides. "unreachable" is
+    a fetch gap rather than a state of your work, so it stays uncoloured."""
+    if r["unreachable"]:
+        return "unreachable"
+    c = "" if MD else hue(r["states"][0])
+    return f'{c}{", ".join(r["states"])}{RESET if c else ""}'
 
 
 def tail(r):
     return status(r) + ("" if r["idle"] is None else f'  ·  idle {r["idle"]}d')
+
+
+def group_line(text):
+    print(f"\n**{text}**\n" if MD else f"\n{B}{text}{RESET}")
+
+
+def item_lines(r, label):
+    """Ticket 07's two lines per item, in whichever alphabet is in play. Markdown
+    cannot use the ANSI layout: four leading spaces is a code block, and a leading
+    * is a bullet, so the indent becomes nesting and the gutter becomes a tag."""
+    title = r["title"] or "(cannot be reached)"
+    detail = f"{tail(r)}  ·  {when_text(r)}"
+    watch = r["states"] == ["watching"]
+    if MD:
+        i = "*" if watch else ""  # italic stands in for DIM
+        new = "**NEW** " if r["unread"] else ""
+        print(f'- {new}{md_link(label, r["url"])} {i}{md_escape(title)}{i}')
+        print(f"  - {i}{detail}{i}")
+    else:
+        d = DIM if watch else ""
+        print(f'{"*" if r["unread"] else " "} {d}{"" if watch else B}'
+              f'{link(label, r["url"])}{RESET}{d} {title}{RESET}')
+        print(f"    {d}{detail}{RESET}")
 
 
 def render(rows):
@@ -237,22 +300,15 @@ def render(rows):
         return (0 if act else 1, -newest)
 
     for repo in sorted(repos, key=key):
-        print(f"\n{B}{repo}{RESET}")
+        group_line(repo)
         for r in sorted(repos[repo], key=lambda r: -(r["when"].timestamp() if r["when"] else 0)):
-            watch = r["states"] == ["watching"]
-            d = DIM if watch else ""
-            m = "*" if r["unread"] else " "
-            num = link("#" + r["item"].split("#")[1], r["url"])
-            title = r["title"] or "(cannot be reached)"
-            print(f'{m} {d}{"" if watch else B}{num}{RESET}{d} {title}{RESET}')
-            print(f"    {d}{tail(r)}  ·  {when_text(r)}{RESET}")
+            item_lines(r, "#" + r["item"].split("#")[1])
     if going:
-        print(f"\n{B}LEAVING THE TRACKER{RESET}")
+        group_line("LEAVING THE TRACKER")
         for r in going:
-            m = "*" if r["unread"] else " "
-            print(f'{m} {B}{link(r["item"], r["url"])}{RESET} {r["title"]}')
-            print(f"    {tail(r)}  ·  {when_text(r)}")
-    print(f"\n{DIM}* new since you last looked{RESET}")
+            item_lines(r, r["item"])
+    print("\n**NEW** = new since you last looked" if MD
+          else f"\n{DIM}* new since you last looked{RESET}")
 
 
 # --- commands -------------------------------------------------------------
@@ -330,7 +386,8 @@ def add(args):
 
 
 if __name__ == "__main__":
-    cmd, rest = (sys.argv[1] if len(sys.argv) > 1 else "check"), sys.argv[2:]
+    argv = [a for a in sys.argv[1:] if a != "--md"]  # stripped, or it lands in the note
+    cmd, rest = (argv[0] if argv else "check"), argv[1:]
     if cmd == "check":
         check()
     elif cmd == "add" and rest:
