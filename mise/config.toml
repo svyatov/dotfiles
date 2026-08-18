@@ -5,6 +5,7 @@ node = "latest"
 python = "latest"
 ruby = "latest"
 elixir = "latest"
+golangci-lint = "latest"
 
 [settings]
 # Ignore tool versions published less than 3 days ago, so a compromised
