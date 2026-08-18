@@ -12,9 +12,8 @@ tags
 .sass-cache
 .generators
 .rakeTasks
+*.local.*
 **/.claude/scheduled_tasks.lock
-**/.claude/**/*.local.*
-**/CLAUDE.local.md
 **/.claude/history.jsonl
 **/.claude/stats-cache.json
 **/.claude/ide/
@@ -32,4 +31,4 @@ tags
 **/.claude/cache/
 **/.claude/plugins/cache/
 **/.claude/security_warnings_state_*.json
-
+/.scratch/
