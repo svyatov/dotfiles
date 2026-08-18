@@ -108,6 +108,7 @@
     ]
   },
   "model": "opus[1m]",
+  "outputStyle": "Simple",
   "permissions": {
     "allow": [
       "Read",

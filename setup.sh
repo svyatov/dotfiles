@@ -89,8 +89,12 @@ Files that will be symlinked:
     ~/.claude/statusline-command.sh <- claude/statusline-command.sh
     ~/.claude/CLAUDE.md <- claude/CLAUDE.md
     ~/.claude/RTK.md <- claude/RTK.md
+    ~/.claude/commands <- claude/commands
+    ~/.claude/output-styles <- claude/output-styles
+    ~/.claude/skills/brain <- claude/skills/brain
     ~/.claude/skills/dependency-vetting <- claude/skills/dependency-vetting
     ~/.claude/skills/track-contrib <- claude/skills/track-contrib
+    ~/.local/bin/track-contrib <- claude/skills/track-contrib/track-contrib
     ~/Library/Application Support/Cursor/User/settings.json <- cursor/settings.json
     ~/Library/Application Support/Cursor/User/keybindings.json <- cursor/keybindings.json
     ~/.cursor/mcp.json <- cursor/mcp.json
@@ -329,10 +333,39 @@ symlink_from_dotfiles "claude/CLAUDE.md" "${CLAUDE_CONFIG_DIR}/CLAUDE.md"
 backup_file "${CLAUDE_CONFIG_DIR}/RTK.md"
 symlink_from_dotfiles "claude/RTK.md" "${CLAUDE_CONFIG_DIR}/RTK.md"
 
+# Unlike ~/.claude/skills, ~/.claude/commands holds nothing from other tools, so
+# it can be one whole-directory symlink. A real directory has to go first: ln -h
+# refuses to replace one, and rmdir only succeeds while it is empty
+CLAUDE_COMMANDS_DIR="${CLAUDE_CONFIG_DIR}/commands"
+if [[ "$DRY_RUN" != true && -d "$CLAUDE_COMMANDS_DIR" && ! -L "$CLAUDE_COMMANDS_DIR" ]]; then
+    rmdir "$CLAUDE_COMMANDS_DIR" 2>/dev/null || \
+        echo "Warning: ${CLAUDE_COMMANDS_DIR} is a non-empty directory, move its contents into the repo"
+fi
+symlink_from_dotfiles "claude/commands" "$CLAUDE_COMMANDS_DIR"
+
+# ~/.claude/output-styles is exclusively ours too, so it gets the same
+# whole-directory treatment, including the rmdir dance: Claude Code
+# pre-creates it as a real empty directory
+CLAUDE_OUTPUT_STYLES_DIR="${CLAUDE_CONFIG_DIR}/output-styles"
+if [[ "$DRY_RUN" != true && -d "$CLAUDE_OUTPUT_STYLES_DIR" && ! -L "$CLAUDE_OUTPUT_STYLES_DIR" ]]; then
+    rmdir "$CLAUDE_OUTPUT_STYLES_DIR" 2>/dev/null || \
+        echo "Warning: ${CLAUDE_OUTPUT_STYLES_DIR} is a non-empty directory, move its contents into the repo"
+fi
+symlink_from_dotfiles "claude/output-styles" "$CLAUDE_OUTPUT_STYLES_DIR"
+
 # Repo-hosted skills are linked individually: ~/.claude/skills also holds
 # skills installed by other tools, so it can't be a whole-directory symlink
+symlink_from_dotfiles "claude/skills/brain" "${CLAUDE_SKILLS_DIR}/brain"
 symlink_from_dotfiles "claude/skills/dependency-vetting" "${CLAUDE_SKILLS_DIR}/dependency-vetting"
 symlink_from_dotfiles "claude/skills/track-contrib" "${CLAUDE_SKILLS_DIR}/track-contrib"
+
+# track-contrib has two readers: this skill, and the shell. A terminal gets colour
+# and OSC 8 links, which Claude Code never passes through. See ticket 12.
+LOCAL_BIN_DIR="${HOME}/.local/bin"
+if [[ "$DRY_RUN" != true ]]; then
+    mkdir -p "${LOCAL_BIN_DIR}"
+fi
+symlink_from_dotfiles "claude/skills/track-contrib/track-contrib" "${LOCAL_BIN_DIR}/track-contrib"
 
 # Drop symlinks left behind by skills that no longer exist in the repo
 if [[ "$DRY_RUN" != true ]]; then
@@ -364,8 +397,12 @@ if [[ "$DRY_RUN" != true ]]; then
     verify_symlink "${CLAUDE_CONFIG_DIR}/statusline-command.sh" "${DOTFILES_DIR}/claude/statusline-command.sh" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_CONFIG_DIR}/CLAUDE.md" "${DOTFILES_DIR}/claude/CLAUDE.md" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_CONFIG_DIR}/RTK.md" "${DOTFILES_DIR}/claude/RTK.md" || VERIFY_FAILED=1
+    verify_symlink "${CLAUDE_COMMANDS_DIR}" "${DOTFILES_DIR}/claude/commands" || VERIFY_FAILED=1
+    verify_symlink "${CLAUDE_OUTPUT_STYLES_DIR}" "${DOTFILES_DIR}/claude/output-styles" || VERIFY_FAILED=1
+    verify_symlink "${CLAUDE_SKILLS_DIR}/brain" "${DOTFILES_DIR}/claude/skills/brain" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_SKILLS_DIR}/dependency-vetting" "${DOTFILES_DIR}/claude/skills/dependency-vetting" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_SKILLS_DIR}/track-contrib" "${DOTFILES_DIR}/claude/skills/track-contrib" || VERIFY_FAILED=1
+    verify_symlink "${LOCAL_BIN_DIR}/track-contrib" "${DOTFILES_DIR}/claude/skills/track-contrib/track-contrib" || VERIFY_FAILED=1
     verify_symlink "${CURSOR_CONFIG_DIR}/settings.json" "${DOTFILES_DIR}/cursor/settings.json" || VERIFY_FAILED=1
     verify_symlink "${CURSOR_CONFIG_DIR}/keybindings.json" "${DOTFILES_DIR}/cursor/keybindings.json" || VERIFY_FAILED=1
     verify_symlink "${CURSOR_DOT_DIR}/mcp.json" "${DOTFILES_DIR}/cursor/mcp.json" || VERIFY_FAILED=1

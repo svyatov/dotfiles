@@ -1,14 +1,5 @@
 # Global Preferences
 
-## Tone and length
-
-- CRITICAL: Always talk in ASD-STE100 Simplified Technical English!
-- Keep responses focused, brief, and concise. Keep caveats short and spend most of the response on the main answer. When asked to explain something, give a high-level summary unless I ask for depth.
-- Match written deliverables (files, reports, docs) to what the task needs. Cover the substance; do not pad with filler sections, redundant summaries, or boilerplate.
-- During long agentic work: one sentence before the first tool call, brief updates only on a real finding or a change of direction, and lead the final message with the outcome.
-- Say when you do not know. If a check is cheap, run it or look it up; if it is still uncertain after that, tell me plainly. A confident wrong answer costs me more than "I don't know".
-- CRITICAL: Never invent a contrast to make a plain statement sound weightier. "Two facts I verified rather than trusted" is a phantom: nothing trusted them, so the comparison is fabricated. Write "I verified two facts" and stop. This covers the whole family of "X, not Y", "more X than Y", and "rather than Y" phrasings where Y never happened, was never considered, or is a strawman.
-
 ## Delegation
 
 - I am requesting subagent dispatch in advance, for these occasions: parallel search across unknown scope, code review and doc review passes, and any skill or plan-mode flow whose own procedure fans out. Treat this file as that request; you do not need me to repeat it per task.
@@ -18,7 +9,6 @@
 ## Writing
 
 - Never write an em-dash (U+2014) or en-dash (U+2013) in prose you author. Use a comma, a colon, or a rewritten sentence instead, and a plain hyphen for ranges (3-5). Reproduce code, file contents, quotes, and command output exactly as they are.
-- Use the /oss-writing skill for any prose that lands in a repo or on a forge.
 
 ## Documentation
 
@@ -46,6 +36,12 @@
 
 ## Git
 
+Use conventions below unless the project's standards demand otherwise. In that case use project's conventions.
+
 - Squash merge is the default strategy for pull requests.
+- Commits use Conventional Commits: `type(scope): description`.
+- Branches use the same types: `type/kebab-description`, as in `feat/forge-detection-controls` or `fix/site-omit-unreleased`.
+- A release branch is `chore/release-X.Y.Z`.
+- No `Generated with`, `Co-Authored-By: Claude`, or tool attribution footers.
 
 @RTK.md

@@ -34,7 +34,7 @@ A curated collection of shell configurations, aliases, and functions optimized f
 ├── git/                        # Git config and global gitignore
 ├── ruby/                       # Ruby, Rails, IRB configuration
 ├── nvim/                       # Neovim configuration with cheatsheet
-├── claude/                     # Claude Code settings, plugins, skills
+├── claude/                     # Claude Code settings, plugins, skills, commands, output styles
 ├── cursor/                     # Cursor editor settings, keybindings, MCP
 ├── ghostty/                    # Ghostty terminal configuration
 ├── mise/                       # mise global tool versions
@@ -123,8 +123,12 @@ sees.
 | `claude/statusline-command.sh` | `~/.claude/statusline-command.sh` | Claude Code status line |
 | `claude/CLAUDE.md` | `~/.claude/CLAUDE.md` | Global Claude Code preferences |
 | `claude/RTK.md` | `~/.claude/RTK.md` | RTK reference, imported by `CLAUDE.md` via `@RTK.md` |
+| `claude/commands` | `~/.claude/commands` | Repo-hosted Claude Code slash commands |
+| `claude/output-styles` | `~/.claude/output-styles` | Repo-hosted Claude Code output styles |
+| `claude/skills/brain` | `~/.claude/skills/brain` | Repo-hosted Claude Code skill |
 | `claude/skills/dependency-vetting` | `~/.claude/skills/dependency-vetting` | Repo-hosted Claude Code skill |
 | `claude/skills/track-contrib` | `~/.claude/skills/track-contrib` | Repo-hosted Claude Code skill |
+| `claude/skills/track-contrib/track-contrib` | `~/.local/bin/track-contrib` | The same script on `PATH`, behind the `contrib` alias |
 | `cursor/settings.json` | `~/Library/.../Cursor/User/settings.json` | Cursor editor settings |
 | `cursor/keybindings.json` | `~/Library/.../Cursor/User/keybindings.json` | Cursor keybindings |
 | `cursor/mcp.json` | `~/.cursor/mcp.json` | Cursor MCP server config |
@@ -167,6 +171,31 @@ hand on a new machine:
 
 RubyGems itself has no equivalent, so `gem install` always takes the newest
 version. Prefer `bundle add` and `bundle install`, which do honour the floor.
+
+## 🤖 Claude Code Slash Commands
+
+`claude/commands/` holds the shipping flow as slash commands, symlinked as a whole
+directory into `~/.claude/commands`. Every `.md` file there becomes a command named
+after the file, so nothing else belongs in that directory: a `README.md` would
+register as `/README`. `claude/output-styles/` is symlinked the same way onto
+`~/.claude/output-styles`; the `outputStyle` key in `claude/settings.json` selects
+the style.
+
+| Command | What it does |
+|---------|--------------|
+| `/c` | Commit everything on the current branch, main included |
+| `/cp` | `/c` + push |
+| `/cm` | Commit, branching off first when on the default branch |
+| `/cmp` | `/cm` + push |
+| `/cmpr` | `/cmp` + open a pull request |
+| `/cmprw` | `/cmpr` + wait for green CI + squash merge |
+| `/wm` | Wait for green CI on this branch's PR, then squash merge |
+| `/ci` | Report CI status for the branch or its PR, read-only |
+| `/fa` | Apply every finding from the review earlier in the session |
+
+Each takes an optional argument: a hint at what the change is about for the commit
+ladder, a subset like `2-4` for `/fa`. All of them set
+`disable-model-invocation: true`, so they run only when typed.
 
 ## ⚡ Jump Shortcuts
 
