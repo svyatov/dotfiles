@@ -35,8 +35,12 @@ safe_alias aiy 'claude --dangerously-skip-permissions'
 safe_alias ain 'claude --name "CC ($(shorten_path))"'
 safe_alias ainy 'claude --dangerously-skip-permissions --name "CC ($(shorten_path))"'
 safe_alias astats 'alias_stats'
+safe_alias contrib 'track-contrib'
 safe_alias syu 'ewu mise rtk && mup && npm i -g npm@latest && bun upgrade && uv self update && npm i -g @colbymchenry/codegraph'
 safe_alias lg 'lazygit'
+safe_alias t 'tuicr'
+safe_alias tw 'tuicr -w'
+safe_alias tpr 'tuicr pr'
 
 # Update ZPrezto
 safe_alias zpu 'pushd ~/.zprezto && git pull && git submodule update --init --recursive && popd'
