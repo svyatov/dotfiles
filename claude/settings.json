@@ -104,6 +104,46 @@
           }
         ],
         "matcher": "Bash"
+      },
+      {
+        "hooks": [
+          {
+            "command": "serena-hooks remind --client=claude-code",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      },
+      {
+        "hooks": [
+          {
+            "command": "serena-hooks auto-approve --client=claude-code",
+            "type": "command"
+          }
+        ],
+        "matcher": "mcp__serena__*"
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "command": "serena-hooks cleanup --client=claude-code",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "serena-hooks activate --client=claude-code",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
       }
     ]
   },
