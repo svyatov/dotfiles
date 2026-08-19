@@ -103,7 +103,8 @@ Files that will be symlinked:
     ~/.bunfig.toml   <- bun/bunfig.toml
 
 Synced rather than symlinked:
-    ~/.claude/settings.json <- claude/settings.json (see claude/settings-sync.sh)
+    ~/.claude/settings.json <- claude/settings.json, installed only when absent.
+    Reconcile an existing one with claude/settings-sync.rb (alias: csync).
 EOF
     exit 0
 fi
@@ -321,10 +322,19 @@ if [[ "$DRY_RUN" != true ]]; then
 fi
 
 # settings.json is synced, not symlinked: Claude Code and supacode both write
-# to it, and supacode's atomic write replaces a symlink with a regular file
-SYNC_ARGS=(--push)
-[[ "$DRY_RUN" == true ]] && SYNC_ARGS+=(--dry-run)
-"${DOTFILES_DIR}/claude/settings-sync.sh" "${SYNC_ARGS[@]}"
+# to it, and supacode's atomic write replaces a symlink with a regular file.
+# Install it only when there is nothing to lose. Overwriting a live file would
+# discard settings changed via /config, so reconciling is a separate, answered
+# step: claude/settings-sync.rb, aliased to csync.
+CLAUDE_SETTINGS_FILE="${CLAUDE_CONFIG_DIR}/settings.json"
+if [[ -f "$CLAUDE_SETTINGS_FILE" ]]; then
+    echo "Skipped ${CLAUDE_SETTINGS_FILE}: already exists, run 'csync' to reconcile it"
+elif [[ "$DRY_RUN" == true ]]; then
+    echo "[DRY RUN] Would create: ${CLAUDE_SETTINGS_FILE}"
+else
+    cp "${DOTFILES_DIR}/claude/settings.json" "$CLAUDE_SETTINGS_FILE"
+    echo "Created: ${CLAUDE_SETTINGS_FILE}"
+fi
 
 symlink_from_dotfiles "claude/statusline-command.sh" "${CLAUDE_CONFIG_DIR}/statusline-command.sh"
 backup_file "${CLAUDE_CONFIG_DIR}/CLAUDE.md"
@@ -422,6 +432,6 @@ else
     echo "Setup complete."
     echo ""
     echo "To install Claude Code plugins, run 'claude plugin install <plugin>@<marketplace>'"
-    echo "for each true entry in enabledPlugins in claude/settings.json, then 'csync --push'."
+    echo "for each true entry in enabledPlugins in claude/settings.json, then 'csync'."
     echo "To install Cursor extensions, run: ~/.dotfiles/cursor/install-extensions.sh"
 fi

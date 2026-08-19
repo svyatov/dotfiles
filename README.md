@@ -82,9 +82,9 @@ brew bundle --file=~/.dotfiles/Brewfile  # Install dependencies
 
 Claude Code plugins are not installed by a script. `claude/settings.json` is the
 manifest: install each `true` entry of `enabledPlugins` with
-`claude plugin install <plugin>@<marketplace>`, then run `csync --push` to apply the
-settings, including the `skillOverrides` map that controls which skills the model
-sees.
+`claude plugin install <plugin>@<marketplace>`, then run `csync` and answer `R` to take
+the repo side, including the `skillOverrides` map that controls which skills the
+model sees.
 
 **Setup script options:**
 
@@ -142,7 +142,9 @@ sees.
 |--------|------------|---------|
 | `claude/settings.json` | `~/.claude/settings.json` | Claude Code settings |
 
-Claude Code rewrites `~/.claude/settings.json` at runtime (`/config`, `/model`, plugin toggles) and supacode injects its own hooks into it. supacode writes atomically, which replaces a symlink with a regular file, so this one file is reconciled by `claude/settings-sync.sh` instead. Run `csync --pull` before committing.
+Claude Code rewrites `~/.claude/settings.json` at runtime (`/config`, `/model`, plugin toggles) and supacode injects its own hooks into it. supacode writes atomically, which replaces a symlink with a regular file, so this one file is reconciled by `claude/settings-sync.rb` instead.
+
+Both copies drift, in both directions, and neither is authoritative. Run `csync` before committing: it lists every difference, shows both values, and asks which side wins. Nothing is added or removed without an answer. Two cases resolve on their own and are reported when they do: hooks belonging to other tools stay live and out of the repo, and `enabledPlugins` entries the runtime pruned keep their repo value. `setup.sh` installs `claude/settings.json` only when no live file exists, so it can never overwrite a setting you changed with `/config`.
 
 **Tooling scripts (not symlinked):**
 
@@ -151,7 +153,7 @@ Claude Code rewrites `~/.claude/settings.json` at runtime (`/config`, `/model`, 
 | `setup.sh` | Install dotfiles (with `--help`, `--dry-run`, `--confirm`) |
 | `uninstall.sh` | Remove dotfiles (with `--help`, `--dry-run`) |
 | `Brewfile` | Homebrew dependencies (`brew bundle`) |
-| `claude/settings-sync.sh` | Reconcile Claude settings (`--status`, `--pull`, `--push`, `--dry-run`) |
+| `claude/settings-sync.rb` | Reconcile Claude settings, asking which side wins (`--status`, `--dry-run`) |
 | `cursor/install-extensions.sh` | Install Cursor extensions from list |
 | `bin/alias_stats` | Alias usage stats with colorful grouped output |
 
@@ -258,7 +260,7 @@ Bookmarks persist across sessions (stored as symlinks in `~/.jump_shortcuts`) an
 | `ai` | `claude --name "CC ($(shorten_path))"` | Launch Claude Code (titled by cwd) |
 | `aiy` | `claude --dangerously-skip-permissions --name ...` | Launch Claude Code, skip permission prompts |
 | `ailocal` | _(function)_ | Scaffold `.claude/settings.local.json` with all plugins disabled, for per-repo opt-in |
-| `csync` | `claude/settings-sync.sh` | Reconcile Claude settings; `--pull` before committing, `--push` to apply |
+| `csync` | `claude/settings-sync.rb` | Reconcile Claude settings, asking which side wins; run before committing |
 | `astats` | `alias_stats` | Alias usage statistics |
 | `cx` | `codex` | Launch Codex CLI |
 | `syu` | `ewu mise rtk && mup && npm install -g npm@latest && bun upgrade && uv self update` | System tool updates |
