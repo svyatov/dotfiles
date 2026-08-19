@@ -4,6 +4,7 @@
     "pr": "",
     "sessionUrl": false
   },
+  "autoCompactWindow": 200000,
   "cleanupPeriodDays": 90,
   "disableArtifact": true,
   "disableBundledSkills": true,
