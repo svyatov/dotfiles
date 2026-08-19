@@ -261,7 +261,7 @@ Bookmarks persist across sessions (stored as symlinks in `~/.jump_shortcuts`) an
 | `csync` | `claude/settings-sync.sh` | Reconcile Claude settings; `--pull` before committing, `--push` to apply |
 | `astats` | `alias_stats` | Alias usage statistics |
 | `cx` | `codex` | Launch Codex CLI |
-| `syu` | `ewu mise rtk && mup && npm install -g npm@latest && bun upgrade && uv self update && npm install -g codegraph@latest` | System tool updates |
+| `syu` | `ewu mise rtk && mup && npm install -g npm@latest && bun upgrade && uv self update` | System tool updates |
 
 ### Git Aliases (from `.gitconfig`)
 
