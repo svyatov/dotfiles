@@ -5,6 +5,7 @@
     "sessionUrl": false
   },
   "autoCompactWindow": 200000,
+  "autoMemoryEnabled": false,
   "cleanupPeriodDays": 90,
   "disableArtifact": true,
   "disableBundledSkills": true,
@@ -22,6 +23,7 @@
     "grill-me@leo-toolkit": true,
     "hookify@claude-plugins-official": true,
     "humanizer@leo-toolkit": true,
+    "improve-architecture@leo-toolkit": true,
     "layered-rails@palkan-skills": true,
     "mattpocock-skills@claude-plugins-official": true,
     "oss-kit@oss-kit": true,
@@ -29,6 +31,7 @@
     "ponytail@ponytail": true,
     "pr-review-toolkit@claude-plugins-official": false,
     "pyright-lsp@claude-plugins-official": false,
+    "refactor@leo-toolkit": true,
     "remember@claude-plugins-official": false,
     "repo-prose@leo-toolkit": false,
     "ruby-lsp@claude-plugins-official": true,
