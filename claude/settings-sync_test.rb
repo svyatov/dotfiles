@@ -80,7 +80,7 @@ end
 # Rebuilding hooks from a flat list silently merged two groups that happened to
 # share a matcher, and moved foreign hooks around inside them.
 check 'groups sharing a matcher stay separate, foreign hooks keep their place' do
-  own = { 'type' => 'command', 'command' => 'serena-hooks remind' }
+  own = { 'type' => 'command', 'command' => 'own-hook remind' }
   live_hooks = { 'PreToolUse' => [
     { 'matcher' => '', 'hooks' => [own] },
     { 'matcher' => '', 'hooks' => [SUPACODE] }
