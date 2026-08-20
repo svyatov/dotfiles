@@ -31,4 +31,5 @@ tags
 **/.claude/cache/
 **/.claude/plugins/cache/
 **/.claude/security_warnings_state_*.json
+**/.claude/worktrees/
 /.scratch/
