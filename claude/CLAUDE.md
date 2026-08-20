@@ -22,8 +22,10 @@
 
 ## Scripts
 
-- Write throwaway and utility scripts (data munging, one-off migrations, file renames, glue code) in Ruby, even in projects written in another language. If it needs a pipe, a loop, a conditional, or more than one line, it is a script: write it in Ruby, not Python, Node, or bash. Single self-contained commands (`grep`, `git status`) are fine as-is.
-- Use only the Ruby standard library. If a gem would clearly save significant effort, stop and ask before using it.
+- If it needs a pipe, a loop, a conditional, or more than one line, it is a script. Single self-contained commands (`grep`, `git status`) are fine as-is.
+- A script that stays in the repository is written in that repository's own language, following its conventions. If the repo has no code, only documents and config, use Ruby.
+- A throwaway script (data munging, one-off migration, file renames, glue code) is written in Ruby, whatever the repo's language.
+- In Ruby, use only the standard library. If a gem would clearly save significant effort, stop and ask before using it.
 - Put temporary scripts in a scratch or temp directory, not the repo root, and delete them when done unless asked to keep them.
 
 ## Dependencies
