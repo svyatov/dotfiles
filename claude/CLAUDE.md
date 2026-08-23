@@ -45,5 +45,6 @@ Use conventions below unless the project's standards demand otherwise. In that c
 - Branches use the same types: `type/kebab-description`, as in `feat/forge-detection-controls` or `fix/site-omit-unreleased`.
 - A release branch is `chore/release-X.Y.Z`.
 - No `Generated with`, `Co-Authored-By: Claude`, or tool attribution footers.
+- Never hard-wrap commit messages or pull request descriptions. One paragraph is one line; let the renderer wrap it.
 
 @RTK.md
