@@ -35,6 +35,7 @@ A curated collection of shell configurations, aliases, and functions optimized f
 ├── ruby/                       # Ruby, Rails, IRB configuration
 ├── nvim/                       # Neovim configuration with cheatsheet
 ├── claude/                     # Claude Code settings, plugins, skills, commands, output styles
+├── codex/                      # Codex instructions and stable configuration
 ├── cursor/                     # Cursor editor settings, keybindings, MCP
 ├── ghostty/                    # Ghostty terminal configuration
 ├── mise/                       # mise global tool versions
@@ -129,6 +130,8 @@ model sees.
 | `claude/skills/dependency-vetting` | `~/.claude/skills/dependency-vetting` | Repo-hosted Claude Code skill |
 | `claude/skills/track-contrib` | `~/.claude/skills/track-contrib` | Repo-hosted Claude Code skill |
 | `claude/skills/track-contrib/track-contrib` | `~/.local/bin/track-contrib` | The same script on `PATH`, behind the `contrib` alias |
+| `codex/AGENTS.md` | `~/.codex/AGENTS.md` | Global Codex preferences |
+| `claude/skills/dependency-vetting` | `~/.codex/skills/dependency-vetting` | Shared dependency verification skill |
 | `cursor/settings.json` | `~/Library/.../Cursor/User/settings.json` | Cursor editor settings |
 | `cursor/keybindings.json` | `~/Library/.../Cursor/User/keybindings.json` | Cursor keybindings |
 | `cursor/mcp.json` | `~/.cursor/mcp.json` | Cursor MCP server config |
@@ -141,10 +144,15 @@ model sees.
 | Source | Syncs with | Purpose |
 |--------|------------|---------|
 | `claude/settings.json` | `~/.claude/settings.json` | Claude Code settings |
+| `codex/config.toml` | stable keys in `~/.codex/config.toml` | Codex communication defaults |
 
 Claude Code rewrites `~/.claude/settings.json` at runtime (`/config`, `/model`, plugin toggles) and supacode injects its own hooks into it. supacode writes atomically, which replaces a symlink with a regular file, so this one file is reconciled by `claude/settings-sync.rb` instead.
 
 Both copies drift, in both directions, and neither is authoritative. Run `csync` before committing: it lists every difference, shows both values, and asks which side wins. Nothing is added or removed without an answer. Two cases resolve on their own and are reported when they do: hooks belonging to other tools stay live and out of the repo, and `enabledPlugins` entries the runtime pruned keep their repo value. `setup.sh` installs `claude/settings.json` only when no live file exists, so it can never overwrite a setting you changed with `/config`.
+
+Codex also writes runtime state to `~/.codex/config.toml`, so the repository owns
+only the stable keys in `codex/config.toml`. Run `codex/config-sync.rb` to apply
+them without changing projects, plugins, hooks, or other live settings.
 
 **Tooling scripts (not symlinked):**
 
@@ -154,6 +162,7 @@ Both copies drift, in both directions, and neither is authoritative. Run `csync`
 | `uninstall.sh` | Remove dotfiles (with `--help`, `--dry-run`) |
 | `Brewfile` | Homebrew dependencies (`brew bundle`) |
 | `claude/settings-sync.rb` | Reconcile Claude settings, asking which side wins (`--status`, `--dry-run`) |
+| `codex/config-sync.rb` | Apply stable Codex settings (`--status`, `--dry-run`) |
 | `cursor/install-extensions.sh` | Install Cursor extensions from list |
 | `bin/alias_stats` | Alias usage stats with colorful grouped output |
 

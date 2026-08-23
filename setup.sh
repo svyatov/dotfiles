@@ -95,6 +95,8 @@ Files that will be symlinked:
     ~/.claude/skills/dependency-vetting <- claude/skills/dependency-vetting
     ~/.claude/skills/track-contrib <- claude/skills/track-contrib
     ~/.local/bin/track-contrib <- claude/skills/track-contrib/track-contrib
+    ~/.codex/AGENTS.md <- codex/AGENTS.md
+    ~/.codex/skills/dependency-vetting <- claude/skills/dependency-vetting
     ~/Library/Application Support/Cursor/User/settings.json <- cursor/settings.json
     ~/Library/Application Support/Cursor/User/keybindings.json <- cursor/keybindings.json
     ~/.cursor/mcp.json <- cursor/mcp.json
@@ -105,6 +107,8 @@ Files that will be symlinked:
 Synced rather than symlinked:
     ~/.claude/settings.json <- claude/settings.json, installed only when absent.
     Reconcile an existing one with claude/settings-sync.rb (alias: csync).
+    ~/.codex/config.toml <- stable keys from codex/config.toml.
+    Apply them with codex/config-sync.rb.
 EOF
     exit 0
 fi
@@ -387,6 +391,26 @@ if [[ "$DRY_RUN" != true ]]; then
     done
 fi
 
+### Setting up Codex
+####################
+echo ""
+echo "Setting up Codex..."
+CODEX_CONFIG_DIR="${HOME}/.codex"
+CODEX_SKILLS_DIR="${CODEX_CONFIG_DIR}/skills"
+if [[ "$DRY_RUN" != true ]]; then
+    mkdir -p "${CODEX_SKILLS_DIR}"
+fi
+
+if [[ "$DRY_RUN" == true ]]; then
+    "${DOTFILES_DIR}/codex/config-sync.rb" --dry-run
+else
+    "${DOTFILES_DIR}/codex/config-sync.rb"
+fi
+
+backup_file "${CODEX_CONFIG_DIR}/AGENTS.md"
+symlink_from_dotfiles "codex/AGENTS.md" "${CODEX_CONFIG_DIR}/AGENTS.md"
+symlink_from_dotfiles "claude/skills/dependency-vetting" "${CODEX_SKILLS_DIR}/dependency-vetting"
+
 ### Verification
 ################
 if [[ "$DRY_RUN" != true ]]; then
@@ -413,6 +437,8 @@ if [[ "$DRY_RUN" != true ]]; then
     verify_symlink "${CLAUDE_SKILLS_DIR}/dependency-vetting" "${DOTFILES_DIR}/claude/skills/dependency-vetting" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_SKILLS_DIR}/track-contrib" "${DOTFILES_DIR}/claude/skills/track-contrib" || VERIFY_FAILED=1
     verify_symlink "${LOCAL_BIN_DIR}/track-contrib" "${DOTFILES_DIR}/claude/skills/track-contrib/track-contrib" || VERIFY_FAILED=1
+    verify_symlink "${CODEX_CONFIG_DIR}/AGENTS.md" "${DOTFILES_DIR}/codex/AGENTS.md" || VERIFY_FAILED=1
+    verify_symlink "${CODEX_SKILLS_DIR}/dependency-vetting" "${DOTFILES_DIR}/claude/skills/dependency-vetting" || VERIFY_FAILED=1
     verify_symlink "${CURSOR_CONFIG_DIR}/settings.json" "${DOTFILES_DIR}/cursor/settings.json" || VERIFY_FAILED=1
     verify_symlink "${CURSOR_CONFIG_DIR}/keybindings.json" "${DOTFILES_DIR}/cursor/keybindings.json" || VERIFY_FAILED=1
     verify_symlink "${CURSOR_DOT_DIR}/mcp.json" "${DOTFILES_DIR}/cursor/mcp.json" || VERIFY_FAILED=1

@@ -26,6 +26,8 @@ SYMLINKS=(
     "${HOME}/.claude/skills/dependency-vetting"
     "${HOME}/.claude/skills/track-contrib"
     "${HOME}/.local/bin/track-contrib"
+    "${HOME}/.codex/AGENTS.md"
+    "${HOME}/.codex/skills/dependency-vetting"
     "${HOME}/Library/Application Support/Cursor/User/settings.json"
     "${HOME}/Library/Application Support/Cursor/User/keybindings.json"
     "${HOME}/.cursor/mcp.json"
