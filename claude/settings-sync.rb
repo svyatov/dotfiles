@@ -21,7 +21,7 @@ LIVE_SETTINGS = ENV.fetch('SETTINGS_SYNC_LIVE', File.join(Dir.home, '.claude', '
 # Hooks owned by other tools. They are guarded no-ops when their app is absent,
 # but they churn on every app update, so the repo copy stays clean. Add a
 # marker here when another tool starts injecting.
-FOREIGN_HOOK = /supacode-managed-hook|orca/i
+FOREIGN_HOOK = /supacode-managed-hook|orca|handrail/i
 
 ABSENT = Object.new
 def ABSENT.inspect = '(absent)'
