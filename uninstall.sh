@@ -32,6 +32,7 @@ SYMLINKS=(
     "${HOME}/Library/Application Support/Cursor/User/keybindings.json"
     "${HOME}/.cursor/mcp.json"
     "${HOME}/.config/ghostty/config"
+    "${HOME}/.config/herdr/config.toml"
     "${HOME}/.config/mise/config.toml"
     "${HOME}/.bunfig.toml"
 )

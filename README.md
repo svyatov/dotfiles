@@ -38,6 +38,7 @@ A curated collection of shell configurations, aliases, and functions optimized f
 ├── codex/                      # Codex instructions and stable configuration
 ├── cursor/                     # Cursor editor settings, keybindings, MCP
 ├── ghostty/                    # Ghostty terminal configuration
+├── herdr/                      # herdr terminal workspace manager configuration
 ├── mise/                       # mise global tool versions
 ├── bun/                        # bun install settings
 ├── bin/                        # Helper scripts (alias_stats)
@@ -136,6 +137,7 @@ model sees.
 | `cursor/keybindings.json` | `~/Library/.../Cursor/User/keybindings.json` | Cursor keybindings |
 | `cursor/mcp.json` | `~/.cursor/mcp.json` | Cursor MCP server config |
 | `ghostty/config` | `~/.config/ghostty/config` | Ghostty terminal config |
+| `herdr/config.toml` | `~/.config/herdr/config.toml` | herdr terminal workspace manager config |
 | `mise/config.toml` | `~/.config/mise/config.toml` | mise global tool versions |
 | `bun/bunfig.toml` | `~/.bunfig.toml` | bun install settings |
 

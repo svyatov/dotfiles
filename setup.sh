@@ -20,6 +20,9 @@ ZPREZTO_RC_FILE="${HOME}/.zpreztorc"
 # Ghostty
 GHOSTTY_CONFIG_DIR="${HOME}/.config/ghostty"
 GHOSTTY_CONFIG_FILE="${GHOSTTY_CONFIG_DIR}/config"
+# herdr
+HERDR_CONFIG_DIR="${HOME}/.config/herdr"
+HERDR_CONFIG_FILE="${HERDR_CONFIG_DIR}/config.toml"
 # mise
 MISE_CONFIG_DIR="${HOME}/.config/mise"
 MISE_CONFIG_FILE="${MISE_CONFIG_DIR}/config.toml"
@@ -101,6 +104,7 @@ Files that will be symlinked:
     ~/Library/Application Support/Cursor/User/keybindings.json <- cursor/keybindings.json
     ~/.cursor/mcp.json <- cursor/mcp.json
     ~/.config/ghostty/config <- ghostty/config
+    ~/.config/herdr/config.toml <- herdr/config.toml
     ~/.config/mise/config.toml <- mise/config.toml
     ~/.bunfig.toml   <- bun/bunfig.toml
 
@@ -290,6 +294,16 @@ fi
 backup_file "${GHOSTTY_CONFIG_FILE}"
 symlink_from_dotfiles "ghostty/config" "${GHOSTTY_CONFIG_FILE}"
 
+### Setting up herdr
+####################
+echo ""
+echo "Setting up herdr..."
+if [[ "$DRY_RUN" != true ]]; then
+    mkdir -p "${HERDR_CONFIG_DIR}"
+fi
+backup_file "${HERDR_CONFIG_FILE}"
+symlink_from_dotfiles "herdr/config.toml" "${HERDR_CONFIG_FILE}"
+
 ### Setting up mise
 ###################
 echo ""
@@ -443,6 +457,7 @@ if [[ "$DRY_RUN" != true ]]; then
     verify_symlink "${CURSOR_CONFIG_DIR}/keybindings.json" "${DOTFILES_DIR}/cursor/keybindings.json" || VERIFY_FAILED=1
     verify_symlink "${CURSOR_DOT_DIR}/mcp.json" "${DOTFILES_DIR}/cursor/mcp.json" || VERIFY_FAILED=1
     verify_symlink "${GHOSTTY_CONFIG_FILE}" "${DOTFILES_DIR}/ghostty/config" || VERIFY_FAILED=1
+    verify_symlink "${HERDR_CONFIG_FILE}" "${DOTFILES_DIR}/herdr/config.toml" || VERIFY_FAILED=1
     verify_symlink "${MISE_CONFIG_FILE}" "${DOTFILES_DIR}/mise/config.toml" || VERIFY_FAILED=1
     verify_symlink "${BUN_CONFIG_FILE}" "${DOTFILES_DIR}/bun/bunfig.toml" || VERIFY_FAILED=1
     if [[ $VERIFY_FAILED -eq 1 ]]; then
