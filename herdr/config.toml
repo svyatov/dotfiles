@@ -87,7 +87,7 @@ prefix = "ctrl+a"
 # next_workspace = ""     # optional, unset by default
 # previous_agent = ""     # optional, unset by default
 # next_agent = ""         # optional, unset by default
-# focus_agent = ""        # optional indexed binding, e.g. "prefix+alt+1..9"
+focus_agent = "prefix+shift+1..9"        # optional indexed binding, e.g. "prefix+alt+1..9"
 # remote_image_paste = "ctrl+v" # only active in herdr --remote; empty disables raw-key image paste
 # new_tab = "prefix+c"
 # rename_tab = "prefix+shift+t"
@@ -96,7 +96,7 @@ prefix = "ctrl+a"
 # move_tab_previous = ""   # optional, e.g. "alt+shift+left" moves the tab toward the front
 # move_tab_next = ""       # optional, e.g. "alt+shift+right" moves the tab toward the back
 # switch_tab = "prefix+1..9"
-switch_workspace = "prefix+shift+1..9"   # optional indexed binding, e.g. "prefix+shift+1..9"
+switch_workspace = "prefix+alt+1..9"   # optional indexed binding, e.g. "prefix+shift+1..9"
 # close_tab = "prefix+shift+x"
 # rename_pane = "prefix+shift+p"
 # edit_scrollback = "prefix+e"
@@ -120,8 +120,8 @@ switch_workspace = "prefix+shift+1..9"   # optional indexed binding, e.g. "prefi
 
 # Navigate-mode movement. These local shortcuts win while navigate mode is open.
 # They are independent from focus_pane_*. Do not include prefix+, esc, enter, tab, or 1..9 here.
-# navigate_workspace_up = "up"
-# navigate_workspace_down = "down"
+navigate_workspace_up = "k"
+navigate_workspace_down = "j"
 # navigate_pane_left = "h"      # left arrow always focuses the pane to the left
 # navigate_pane_down = "j"
 # navigate_pane_up = "k"
@@ -136,7 +136,7 @@ switch_workspace = "prefix+shift+1..9"   # optional indexed binding, e.g. "prefi
 # [[keys.command]]
 # key = "prefix+alt+g"
 # type = "popup"
-# command = "lazygit"
+# command = "tuicr -w"
 # width = "80%"
 # height = "80%"
 
@@ -158,7 +158,7 @@ switch_workspace = "prefix+shift+1..9"   # optional indexed binding, e.g. "prefi
 
 [ui]
 # Sidebar width (auto-scaled based on workspace names, this sets the default)
-# sidebar_width = 26
+sidebar_width = 32
 
 # Minimum sidebar width when expanded (columns)
 # sidebar_min_width = 18
@@ -208,7 +208,7 @@ switch_workspace = "prefix+shift+1..9"   # optional indexed binding, e.g. "prefi
 
 # Ask for a tab name before creating a new tab.
 # Set false to create tabs immediately with generated names.
-# prompt_new_tab_name = true
+prompt_new_tab_name = false
 
 # Ask for a workspace name before interactive creation.
 # prompt_new_workspace_name = false
@@ -249,7 +249,7 @@ switch_workspace = "prefix+shift+1..9"   # optional indexed binding, e.g. "prefi
 # The title renders on the Herdr server, so {hostname} names the host the panes
 # run on even when attaching from a remote client.
 # Set to "" to leave the outer terminal title alone.
-# window_title = "{hostname}: {workspace}"
+window_title = "{workspace}: {terminal_title}"
 
 # Agent panel ordering: "spaces" (grouped by space) or "priority" (attention queue).
 # "workspaces" is accepted as an alias for "spaces".
@@ -257,7 +257,7 @@ switch_workspace = "prefix+shift+1..9"   # optional indexed binding, e.g. "prefi
 
 # Agent status indicators: "dots" preserves the compact color marks; "symbols" uses
 # distinct static glyphs for blocked, working, done, idle, and unknown states.
-# status_indicators = "dots"
+status_indicators = "symbols"
 
 # Expanded agent rows. Built-ins are state_icon, state_text, workspace, tab, pane, agent,
 # terminal_title, and terminal_title_stripped.
@@ -285,8 +285,7 @@ switch_workspace = "prefix+shift+1..9"   # optional indexed binding, e.g. "prefi
 # accent = "cyan"
 
 # Background notification popup delivery
-status_indicators = "symbols"
-show_agent_labels_on_pane_borders = false
+agent_panel_sort = "spaces"
 [ui.toast]
 # off = disable pop-up notifications
 # herdr = show in-app toasts
@@ -295,7 +294,6 @@ show_agent_labels_on_pane_borders = false
 # delivery = "off"
 # delay_seconds = 1
 
-delivery = "off"
 [ui.toast.herdr]
 # position = "bottom-right"
 
