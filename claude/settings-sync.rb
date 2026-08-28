@@ -5,8 +5,8 @@
 #
 # This file can't be symlinked like the rest of the dotfiles: it has several
 # writers. Claude Code rewrites it (/config, /model, plugin toggles), and
-# supacode injects its own hooks into it. supacode is a native app, so it
-# writes atomically, which replaces a symlink with a regular file.
+# tools such as handrail inject their own hooks into it. Those writes are
+# atomic, which replaces a symlink with a regular file.
 #
 # So both copies drift, in both directions, and neither one is authoritative.
 # This script diffs them and asks which side wins for every difference it
@@ -21,7 +21,7 @@ LIVE_SETTINGS = ENV.fetch('SETTINGS_SYNC_LIVE', File.join(Dir.home, '.claude', '
 # Hooks owned by other tools. They are guarded no-ops when their app is absent,
 # but they churn on every app update, so the repo copy stays clean. Add a
 # marker here when another tool starts injecting.
-FOREIGN_HOOK = /supacode-managed-hook|orca|handrail/i
+FOREIGN_HOOK = /orca|handrail/i
 
 ABSENT = Object.new
 def ABSENT.inspect = '(absent)'

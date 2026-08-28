@@ -146,7 +146,7 @@ model sees.
 | `claude/settings.json` | `~/.claude/settings.json` | Claude Code settings |
 | `codex/config.toml` | stable keys in `~/.codex/config.toml` | Codex communication defaults |
 
-Claude Code rewrites `~/.claude/settings.json` at runtime (`/config`, `/model`, plugin toggles) and supacode injects its own hooks into it. supacode writes atomically, which replaces a symlink with a regular file, so this one file is reconciled by `claude/settings-sync.rb` instead.
+Claude Code rewrites `~/.claude/settings.json` at runtime (`/config`, `/model`, plugin toggles) and tools such as handrail inject their own hooks into it. Those writes are atomic, which replaces a symlink with a regular file, so this one file is reconciled by `claude/settings-sync.rb` instead.
 
 Both copies drift, in both directions, and neither is authoritative. Run `csync` before committing: it lists every difference, shows both values, and asks which side wins. Nothing is added or removed without an answer. Two cases resolve on their own and are reported when they do: hooks belonging to other tools stay live and out of the repo, and `enabledPlugins` entries the runtime pruned keep their repo value. `setup.sh` installs `claude/settings.json` only when no live file exists, so it can never overwrite a setting you changed with `/config`.
 

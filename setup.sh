@@ -325,8 +325,8 @@ if [[ "$DRY_RUN" != true ]]; then
     mkdir -p "${CLAUDE_SKILLS_DIR}"
 fi
 
-# settings.json is synced, not symlinked: Claude Code and supacode both write
-# to it, and supacode's atomic write replaces a symlink with a regular file.
+# settings.json is synced, not symlinked: Claude Code and hook-injecting tools
+# both write to it, and an atomic write replaces a symlink with a regular file.
 # Install it only when there is nothing to lose. Overwriting a live file would
 # discard settings changed via /config, so reconciling is a separate, answered
 # step: claude/settings-sync.rb, aliased to csync.

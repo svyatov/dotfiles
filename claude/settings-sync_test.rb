@@ -18,7 +18,7 @@ def eq(actual, expected, what)
   raise "#{what}: expected #{expected.inspect}, got #{actual.inspect}" unless actual == expected
 end
 
-SUPACODE = { 'type' => 'command', 'command' => 'printf x # supacode-managed-hook' }.freeze
+FOREIGN = { 'type' => 'command', 'command' => 'printf x # handrail' }.freeze
 MARKDOWN = { 'type' => 'command', 'command' => 'markdownlint-cli2', 'timeout' => 15 }.freeze
 
 def hooks_of(event, *hooks) = { event => [{ 'matcher' => '', 'hooks' => hooks }] }
@@ -70,11 +70,11 @@ end
 
 check 'foreign hooks stay live and never reach the repo' do
   repo = { 'hooks' => hooks_of('PostToolUse', MARKDOWN) }
-  live = { 'hooks' => hooks_of('PostToolUse', MARKDOWN, SUPACODE) }
+  live = { 'hooks' => hooks_of('PostToolUse', MARKDOWN, FOREIGN) }
   plan = reconcile(repo, live, &answer_all(:repo))
   eq plan.asked.length, 0, 'a foreign hook is never a difference'
   eq plan.repo_out['hooks']['PostToolUse'][0]['hooks'], [MARKDOWN], 'repo keeps only its own'
-  eq plan.live_out['hooks']['PostToolUse'][0]['hooks'].include?(SUPACODE), true, 'live keeps the foreign hook'
+  eq plan.live_out['hooks']['PostToolUse'][0]['hooks'].include?(FOREIGN), true, 'live keeps the foreign hook'
 end
 
 # Rebuilding hooks from a flat list silently merged two groups that happened to
@@ -83,7 +83,7 @@ check 'groups sharing a matcher stay separate, foreign hooks keep their place' d
   own = { 'type' => 'command', 'command' => 'own-hook remind' }
   live_hooks = { 'PreToolUse' => [
     { 'matcher' => '', 'hooks' => [own] },
-    { 'matcher' => '', 'hooks' => [SUPACODE] }
+    { 'matcher' => '', 'hooks' => [FOREIGN] }
   ] }
   plan = reconcile({ 'hooks' => { 'PreToolUse' => [{ 'matcher' => '', 'hooks' => [own] }] } },
                    { 'hooks' => live_hooks },

@@ -228,9 +228,7 @@
     "impeccable": "user-invocable-only",
     "orchestration": "off",
     "pishi": "off",
-    "style-profile": "user-invocable-only",
-    "supacode-cli": "off",
-    "supacode-deeplinks": "off"
+    "style-profile": "user-invocable-only"
   },
   "skipAutoPermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
