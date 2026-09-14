@@ -7,9 +7,6 @@ export ERL_AFLAGS="-kernel shell_history enabled" # Enables history for Elixir i
 
 # export no_proxy="localhost,127.0.0.0/8,*.local"
 
-# Set PATH, MANPATH, etc., for Homebrew.
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
 # Home bin
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
