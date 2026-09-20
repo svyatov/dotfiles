@@ -4,7 +4,7 @@
     "pr": "",
     "sessionUrl": false
   },
-  "autoCompactWindow": 200000,
+  "autoCompactWindow": 500000,
   "autoMemoryEnabled": false,
   "cleanupPeriodDays": 90,
   "disableArtifact": true,
@@ -13,18 +13,17 @@
   "disableRemoteControl": true,
   "effortLevel": "high",
   "enabledPlugins": {
-    "chrome-devtools-mcp@claude-plugins-official": false,
+    "chrome-devtools-mcp@claude-plugins-official": true,
     "claude-code-setup@claude-plugins-official": false,
     "claude-md-management@claude-plugins-official": true,
     "compound-engineering@compound-engineering-plugin": true,
     "feature-dev@claude-plugins-official": false,
+    "generate-favicon@leo-toolkit": true,
     "gopls-lsp@claude-plugins-official": false,
     "grill-me@leo-toolkit": true,
     "handrail@handrail": true,
-    "hookify@claude-plugins-official": true,
     "humanizer@leo-toolkit": true,
     "improve-architecture@leo-toolkit": true,
-    "layered-rails@palkan-skills": true,
     "mattpocock-skills@claude-plugins-official": true,
     "oss-kit@oss-kit": true,
     "plugin-dev@claude-plugins-official": false,
@@ -73,13 +72,6 @@
         "source": "github"
       }
     },
-    "palkan-skills": {
-      "autoUpdate": true,
-      "source": {
-        "repo": "palkan/skills",
-        "source": "github"
-      }
-    },
     "ponytail": {
       "autoUpdate": true,
       "source": {
@@ -111,6 +103,28 @@
           }
         ],
         "matcher": "Bash"
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "bash '/Users/leonid/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "command": "codegraph prompt-hook",
+            "type": "command"
+          }
+        ]
       }
     ]
   },
@@ -150,7 +164,8 @@
       "Bash(mkdir:*)",
       "Bash(touch:*)",
       "Bash(docker:*)",
-      "Bash(golangci-lint:*)"
+      "Bash(golangci-lint:*)",
+      "mcp__codegraph__*"
     ],
     "ask": [
       "Bash(git push:*)",
@@ -237,6 +252,8 @@
     "command": "bash ~/.claude/statusline-command.sh",
     "type": "command"
   },
+  "syncClaudeAiPlugins": false,
+  "syncClaudeAiSkills": false,
   "tui": "fullscreen",
   "voiceEnabled": true
 }
