@@ -1,21 +1,21 @@
 {
   "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[markdown]": {
-    "editor.wordWrap": "on",
+    "editor.wordWrap": "on"
   },
   "cursor.composer.collapsePaneInputBoxPills": true,
   "cursor.general.enableShadowWorkspace": true,
@@ -33,8 +33,8 @@
   "gitlens.codeLens.recentChange.enabled": false,
   "rubyLsp.addonSettings": {
     "Ruby LSP RSpec": {
-      "rspecCommand": "bin/pspec",
-    },
+      "rspecCommand": "bin/pspec"
+    }
   },
   "rubyLsp.enabledFeatures": {
     "codeActions": true,
@@ -54,14 +54,14 @@
     "semanticHighlighting": true,
     "signatureHelp": true,
     "typeHierarchy": true,
-    "workspaceSymbol": true,
+    "workspaceSymbol": true
   },
   "rubyLsp.rubyExecutablePath": "/Users/leonid/.local/share/mise/shims/ruby",
   "search.exclude": {
     ".idea": true,
     ".rake_tasks": true,
     "**/sorbet/rbi": true,
-    "log": true,
+    "log": true
   },
   "vim.foldfix": true,
   "vim.handleKeys": {
@@ -70,21 +70,21 @@
     "<C-s>": false,
     "<C-v>": false,
     "<C-z>": false,
-    "<C-g>": false,
+    "<C-g>": false
   },
   "vim.normalModeKeyBindings": [
     {
       "before": ["u"],
-      "commands": ["undo"],
+      "commands": ["undo"]
     },
     {
       "before": ["<C-r>"],
-      "commands": ["redo"],
-    },
+      "commands": ["redo"]
+    }
   ],
   "window.commandCenter": true,
   "workbench.colorCustomizations": {
-    "editorRuler.foreground": "#333",
+    "editorRuler.foreground": "#333"
   },
   "workbench.editor.scrollToSwitchTabs": true,
   "workbench.editor.wrapTabs": true,
@@ -100,11 +100,11 @@
   "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
   "git.confirmSync": false,
   "[yaml]": {
-    "editor.defaultFormatter": "redhat.vscode-yaml",
+    "editor.defaultFormatter": "redhat.vscode-yaml"
   },
   "window.autoDetectColorScheme": false,
   "yaml.disableSchemaDetection": [],
   "rubyLsp.rubyVersionManager": {
-    "identifier": "mise",
-  },
+    "identifier": "mise"
+  }
 }
