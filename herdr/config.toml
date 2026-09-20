@@ -1,3 +1,4 @@
+onboarding = false
 # herdr configuration
 # Place this file at ~/.config/herdr/config.toml
 
@@ -67,7 +68,7 @@ version_check = false
 # Named punctuation such as minus, comma, ampersand, plus, and backtick is also accepted.
 # Most reliable direct bindings are ctrl+letter, function keys, and explicit modified chords.
 # alt+..., cmd/super, and punctuation-with-modifiers may depend on your terminal/tmux setup.
-prefix = "ctrl+a"
+# prefix = "ctrl+a"
 
 # Prefix-mode actions
 # help = "prefix+?"
@@ -133,12 +134,21 @@ navigate_workspace_down = "j"
 # type = "popup" opens a session-modal terminal without changing the tab layout.
 # Popup width and height accept terminal cells or percentages such as "80%".
 # On Windows, command strings run through cmd.exe /d /c.
-# [[keys.command]]
-# key = "prefix+alt+g"
-# type = "popup"
-# command = "tuicr -w"
-# width = "80%"
-# height = "80%"
+[[keys.command]]
+key = "prefix+t"
+type = "popup"
+command = "tuicr -w"
+description = "tuicr (include uncommited)"
+width = "80%"
+height = "80%"
+
+[[keys.command]]
+key = "prefix+alt+t"
+type = "popup"
+command = "exec \"${SHELL:-sh}\""
+description = "open scratch terminal"
+width = "80%"
+height = "80%"
 
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
@@ -285,14 +295,13 @@ status_indicators = "symbols"
 # accent = "cyan"
 
 # Background notification popup delivery
-agent_panel_sort = "spaces"
 [ui.toast]
 # off = disable pop-up notifications
 # herdr = show in-app toasts
 # terminal = ask the outer terminal to show a desktop notification
 # system = ask the OS notification service directly
-# delivery = "off"
-# delay_seconds = 1
+delivery = "herdr"
+delay_seconds = 3
 
 [ui.toast.herdr]
 # position = "bottom-right"
