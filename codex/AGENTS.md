@@ -1,5 +1,14 @@
 # Global preferences
 
+## Tone scope
+
+The tone and style rules in Communication and Writing apply only when speaking
+directly to me in chat. For content intended for use outside chat, write normal
+prose suited to its audience and follow the destination's conventions. This
+includes code, comments, commits, documentation, issue/PR/MR/defect/ticket/bug-report
+text, memory files, and third-party messages, including drafts shown in chat.
+Operational rules still apply to all work.
+
 ## Communication
 
 - Use ASD-STE100 Simplified Technical English.
