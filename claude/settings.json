@@ -5,37 +5,53 @@
     "sessionUrl": false
   },
   "autoCompactWindow": 500000,
-  "autoMemoryEnabled": false,
+  "autoMemoryEnabled": true,
   "cleanupPeriodDays": 90,
   "disableArtifact": true,
   "disableBundledSkills": true,
   "disableClaudeAiConnectors": true,
   "disableRemoteControl": true,
+  "editorMode": "normal",
   "effortLevel": "high",
   "enabledPlugins": {
+    "adopt-release@leo-toolkit": true,
+    "atomic-commits@leo-toolkit": true,
+    "browser-compat@leo-toolkit": true,
+    "browser-qa@leo-toolkit": true,
     "chrome-devtools-mcp@claude-plugins-official": true,
     "claude-code-setup@claude-plugins-official": false,
     "claude-md-management@claude-plugins-official": true,
     "compound-engineering@compound-engineering-plugin": true,
+    "cut-release@leo-toolkit": true,
+    "dependabot-review@leo-toolkit": true,
+    "dependency-vetting@leo-toolkit": true,
     "feature-dev@claude-plugins-official": false,
+    "generate-dockerfile@leo-toolkit": true,
     "generate-favicon@leo-toolkit": true,
     "gopls-lsp@claude-plugins-official": false,
     "grill-me@leo-toolkit": true,
     "handrail@handrail": true,
     "humanizer@leo-toolkit": true,
+    "import-skill@leo-toolkit": true,
     "improve-architecture@leo-toolkit": true,
+    "llms-visibility@leo-toolkit": true,
     "mattpocock-skills@claude-plugins-official": true,
     "oss-kit@oss-kit": true,
     "plugin-dev@claude-plugins-official": false,
     "ponytail@ponytail": true,
     "pr-review-toolkit@claude-plugins-official": false,
+    "prior-art@leo-toolkit": true,
     "pyright-lsp@claude-plugins-official": true,
     "refactor@leo-toolkit": true,
+    "report-upstream@leo-toolkit": true,
     "ruby-lsp@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
+    "shortcuts@leo-toolkit": true,
     "skill-creator@claude-plugins-official": false,
     "superpowers@claude-plugins-official": false,
-    "typescript-lsp@claude-plugins-official": true
+    "typescript-lsp@claude-plugins-official": true,
+    "verify-marketplace@leo-toolkit": true,
+    "verify-skill@leo-toolkit": true
   },
   "env": {
     "CLAUDE_CODE_DISABLE_CRON": "1",
@@ -129,6 +145,11 @@
     ]
   },
   "model": "opus[1m]",
+  "modelSettings": {
+    "claude-opus-5-5": {
+      "effortLevel": "high"
+    }
+  },
   "outputStyle": "Simple",
   "permissions": {
     "allow": [
@@ -254,6 +275,7 @@
   },
   "syncClaudeAiPlugins": false,
   "syncClaudeAiSkills": false,
+  "timeFormat": "24-hour",
   "tui": "fullscreen",
   "voiceEnabled": true
 }
