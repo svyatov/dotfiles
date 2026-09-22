@@ -127,11 +127,9 @@ model sees.
 | `claude/RTK.md` | `~/.claude/RTK.md` | RTK reference, imported by `CLAUDE.md` via `@RTK.md` |
 | `claude/output-styles` | `~/.claude/output-styles` | Repo-hosted Claude Code output styles |
 | `claude/skills/brain` | `~/.claude/skills/brain` | Repo-hosted Claude Code skill |
-| `claude/skills/dependency-vetting` | `~/.claude/skills/dependency-vetting` | Repo-hosted Claude Code skill |
 | `claude/skills/track-contrib` | `~/.claude/skills/track-contrib` | Repo-hosted Claude Code skill |
 | `claude/skills/track-contrib/track-contrib` | `~/.local/bin/track-contrib` | The same script on `PATH`, behind the `contrib` alias |
 | `codex/AGENTS.md` | `~/.codex/AGENTS.md` | Global Codex preferences |
-| `claude/skills/dependency-vetting` | `~/.codex/skills/dependency-vetting` | Shared dependency verification skill |
 | `cursor/settings.json` | `~/Library/.../Cursor/User/settings.json` | Cursor editor settings |
 | `cursor/keybindings.json` | `~/Library/.../Cursor/User/keybindings.json` | Cursor keybindings |
 | `cursor/mcp.json` | `~/.cursor/mcp.json` | Cursor MCP server config |

@@ -94,11 +94,9 @@ Files that will be symlinked:
     ~/.claude/RTK.md <- claude/RTK.md
     ~/.claude/output-styles <- claude/output-styles
     ~/.claude/skills/brain <- claude/skills/brain
-    ~/.claude/skills/dependency-vetting <- claude/skills/dependency-vetting
     ~/.claude/skills/track-contrib <- claude/skills/track-contrib
     ~/.local/bin/track-contrib <- claude/skills/track-contrib/track-contrib
     ~/.codex/AGENTS.md <- codex/AGENTS.md
-    ~/.codex/skills/dependency-vetting <- claude/skills/dependency-vetting
     ~/Library/Application Support/Cursor/User/settings.json <- cursor/settings.json
     ~/Library/Application Support/Cursor/User/keybindings.json <- cursor/keybindings.json
     ~/.cursor/mcp.json <- cursor/mcp.json
@@ -374,7 +372,6 @@ symlink_from_dotfiles "claude/output-styles" "$CLAUDE_OUTPUT_STYLES_DIR"
 # Repo-hosted skills are linked individually: ~/.claude/skills also holds
 # skills installed by other tools, so it can't be a whole-directory symlink
 symlink_from_dotfiles "claude/skills/brain" "${CLAUDE_SKILLS_DIR}/brain"
-symlink_from_dotfiles "claude/skills/dependency-vetting" "${CLAUDE_SKILLS_DIR}/dependency-vetting"
 symlink_from_dotfiles "claude/skills/track-contrib" "${CLAUDE_SKILLS_DIR}/track-contrib"
 
 # track-contrib has two readers: this skill, and the shell. A terminal gets colour
@@ -413,7 +410,6 @@ fi
 
 backup_file "${CODEX_CONFIG_DIR}/AGENTS.md"
 symlink_from_dotfiles "codex/AGENTS.md" "${CODEX_CONFIG_DIR}/AGENTS.md"
-symlink_from_dotfiles "claude/skills/dependency-vetting" "${CODEX_SKILLS_DIR}/dependency-vetting"
 
 ### Verification
 ################
@@ -437,11 +433,9 @@ if [[ "$DRY_RUN" != true ]]; then
     verify_symlink "${CLAUDE_CONFIG_DIR}/RTK.md" "${DOTFILES_DIR}/claude/RTK.md" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_OUTPUT_STYLES_DIR}" "${DOTFILES_DIR}/claude/output-styles" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_SKILLS_DIR}/brain" "${DOTFILES_DIR}/claude/skills/brain" || VERIFY_FAILED=1
-    verify_symlink "${CLAUDE_SKILLS_DIR}/dependency-vetting" "${DOTFILES_DIR}/claude/skills/dependency-vetting" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_SKILLS_DIR}/track-contrib" "${DOTFILES_DIR}/claude/skills/track-contrib" || VERIFY_FAILED=1
     verify_symlink "${LOCAL_BIN_DIR}/track-contrib" "${DOTFILES_DIR}/claude/skills/track-contrib/track-contrib" || VERIFY_FAILED=1
     verify_symlink "${CODEX_CONFIG_DIR}/AGENTS.md" "${DOTFILES_DIR}/codex/AGENTS.md" || VERIFY_FAILED=1
-    verify_symlink "${CODEX_SKILLS_DIR}/dependency-vetting" "${DOTFILES_DIR}/claude/skills/dependency-vetting" || VERIFY_FAILED=1
     verify_symlink "${CURSOR_CONFIG_DIR}/settings.json" "${DOTFILES_DIR}/cursor/settings.json" || VERIFY_FAILED=1
     verify_symlink "${CURSOR_CONFIG_DIR}/keybindings.json" "${DOTFILES_DIR}/cursor/keybindings.json" || VERIFY_FAILED=1
     verify_symlink "${CURSOR_DOT_DIR}/mcp.json" "${DOTFILES_DIR}/cursor/mcp.json" || VERIFY_FAILED=1
