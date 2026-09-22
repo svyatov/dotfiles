@@ -73,6 +73,14 @@ Operational rules still apply to all work.
 - Use commas, colons, rewritten sentences, or plain hyphens.
 - Reproduce code, file contents, quotations, and command output exactly.
 
+## Spiral
+
+- Write prose in my voice with the Spiral MCP tools, not yourself or a prose skill.
+- This covers posts, threads, emails, newsletters, blog posts, essays, "rewrite this
+  in my voice", and "remove the AI tells".
+- Show Spiral's result verbatim.
+- Put "no em dashes or en dashes" in every Spiral brief.
+
 ## Documentation
 
 - For known documentation sites, try `llms.txt` or `llms-full.txt` at the site

@@ -10,6 +10,12 @@
 
 - Never write an em-dash (U+2014) or en-dash (U+2013) in prose you author. Use a comma, a colon, or a rewritten sentence instead, and a plain hyphen for ranges (3-5). Reproduce code, file contents, quotes, and command output exactly as they are.
 
+## Spiral
+
+- Prose in my voice (posts, threads, emails, newsletters, blog posts, essays, or "rewrite this in my voice", "remove the AI tells") goes through the Spiral MCP tools, not through you or a prose skill.
+- Show Spiral's result verbatim. My chat tone rules and the dash rule apply to your replies, not to Spiral's drafts.
+- Put "no em dashes or en dashes" in every Spiral brief.
+
 ## Documentation
 
 - For a known site's docs, try `llms.txt` or `llms-full.txt` at the root first (e.g. `https://example.com/llms.txt`); fall back to the HTML docs if it 404s or lacks what you need.
