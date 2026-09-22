@@ -20,7 +20,6 @@ SYMLINKS=(
     "${HOME}/.claude/statusline-command.sh"
     "${HOME}/.claude/CLAUDE.md"
     "${HOME}/.claude/RTK.md"
-    "${HOME}/.claude/commands"
     "${HOME}/.claude/output-styles"
     "${HOME}/.claude/skills/brain"
     "${HOME}/.claude/skills/dependency-vetting"

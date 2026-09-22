@@ -92,7 +92,6 @@ Files that will be symlinked:
     ~/.claude/statusline-command.sh <- claude/statusline-command.sh
     ~/.claude/CLAUDE.md <- claude/CLAUDE.md
     ~/.claude/RTK.md <- claude/RTK.md
-    ~/.claude/commands <- claude/commands
     ~/.claude/output-styles <- claude/output-styles
     ~/.claude/skills/brain <- claude/skills/brain
     ~/.claude/skills/dependency-vetting <- claude/skills/dependency-vetting
@@ -361,19 +360,10 @@ symlink_from_dotfiles "claude/CLAUDE.md" "${CLAUDE_CONFIG_DIR}/CLAUDE.md"
 backup_file "${CLAUDE_CONFIG_DIR}/RTK.md"
 symlink_from_dotfiles "claude/RTK.md" "${CLAUDE_CONFIG_DIR}/RTK.md"
 
-# Unlike ~/.claude/skills, ~/.claude/commands holds nothing from other tools, so
-# it can be one whole-directory symlink. A real directory has to go first: ln -h
-# refuses to replace one, and rmdir only succeeds while it is empty
-CLAUDE_COMMANDS_DIR="${CLAUDE_CONFIG_DIR}/commands"
-if [[ "$DRY_RUN" != true && -d "$CLAUDE_COMMANDS_DIR" && ! -L "$CLAUDE_COMMANDS_DIR" ]]; then
-    rmdir "$CLAUDE_COMMANDS_DIR" 2>/dev/null || \
-        echo "Warning: ${CLAUDE_COMMANDS_DIR} is a non-empty directory, move its contents into the repo"
-fi
-symlink_from_dotfiles "claude/commands" "$CLAUDE_COMMANDS_DIR"
-
-# ~/.claude/output-styles is exclusively ours too, so it gets the same
-# whole-directory treatment, including the rmdir dance: Claude Code
-# pre-creates it as a real empty directory
+# Unlike ~/.claude/skills, ~/.claude/output-styles holds nothing from other
+# tools, so it can be one whole-directory symlink. A real directory has to go
+# first: Claude Code pre-creates it empty, ln -h refuses to replace one, and
+# rmdir only succeeds while it is empty
 CLAUDE_OUTPUT_STYLES_DIR="${CLAUDE_CONFIG_DIR}/output-styles"
 if [[ "$DRY_RUN" != true && -d "$CLAUDE_OUTPUT_STYLES_DIR" && ! -L "$CLAUDE_OUTPUT_STYLES_DIR" ]]; then
     rmdir "$CLAUDE_OUTPUT_STYLES_DIR" 2>/dev/null || \
@@ -445,7 +435,6 @@ if [[ "$DRY_RUN" != true ]]; then
     verify_symlink "${CLAUDE_CONFIG_DIR}/statusline-command.sh" "${DOTFILES_DIR}/claude/statusline-command.sh" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_CONFIG_DIR}/CLAUDE.md" "${DOTFILES_DIR}/claude/CLAUDE.md" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_CONFIG_DIR}/RTK.md" "${DOTFILES_DIR}/claude/RTK.md" || VERIFY_FAILED=1
-    verify_symlink "${CLAUDE_COMMANDS_DIR}" "${DOTFILES_DIR}/claude/commands" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_OUTPUT_STYLES_DIR}" "${DOTFILES_DIR}/claude/output-styles" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_SKILLS_DIR}/brain" "${DOTFILES_DIR}/claude/skills/brain" || VERIFY_FAILED=1
     verify_symlink "${CLAUDE_SKILLS_DIR}/dependency-vetting" "${DOTFILES_DIR}/claude/skills/dependency-vetting" || VERIFY_FAILED=1
