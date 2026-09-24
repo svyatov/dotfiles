@@ -30,7 +30,7 @@
 
 - If it needs a pipe, a loop, a conditional, or more than one line, it is a script. Single self-contained commands (`grep`, `git status`) are fine as-is.
 - A script that stays in the repository is written in that repository's own language, following its conventions. If the repo has no code, only documents and config, use Ruby.
-- A throwaway script (data munging, one-off migration, file renames, glue code) is written in Ruby, whatever the repo's language.
+- A throwaway script (data munging, one-off migration, file renames, glue code) is written in Ruby, whatever the repo's language. Edits to source files go through the Edit tool, not a script.
 - In Ruby, use only the standard library. If a gem would clearly save significant effort, stop and ask before using it.
 - Put temporary scripts in a scratch or temp directory, not the repo root, and delete them when done unless asked to keep them.
 
