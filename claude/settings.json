@@ -44,6 +44,7 @@
     "security-guidance@claude-plugins-official": true,
     "shortcuts@leo-toolkit": true,
     "skill-creator@claude-plugins-official": false,
+    "supermatt@supermatt": true,
     "superpowers@claude-plugins-official": false,
     "typescript-lsp@claude-plugins-official": true,
     "verify-marketplace@leo-toolkit": true,
@@ -88,6 +89,12 @@
       "autoUpdate": true,
       "source": {
         "repo": "DietrichGebert/ponytail",
+        "source": "github"
+      }
+    },
+    "supermatt": {
+      "source": {
+        "repo": "svyatov/supermatt",
         "source": "github"
       }
     }
