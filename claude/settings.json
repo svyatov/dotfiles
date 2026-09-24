@@ -31,7 +31,6 @@
     "import-skill@leo-toolkit": true,
     "improve-architecture@leo-toolkit": true,
     "llms-visibility@leo-toolkit": true,
-    "mattpocock-skills@claude-plugins-official": true,
     "oss-kit@oss-kit": true,
     "plugin-dev@claude-plugins-official": false,
     "ponytail@ponytail": true,
