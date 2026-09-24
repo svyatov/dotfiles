@@ -10,44 +10,45 @@
   "editorMode": "normal",
   "effortLevel": "high",
   "enabledPlugins": {
-    "adopt-release@leo-toolkit": true,
-    "atomic-commits@leo-toolkit": true,
-    "browser-compat@leo-toolkit": true,
-    "browser-qa@leo-toolkit": true,
+    "adopt-release@svyatov-agent-toolkit": true,
+    "atomic-commits@svyatov-agent-toolkit": true,
+    "browser-compat@svyatov-agent-toolkit": true,
+    "browser-qa@svyatov-agent-toolkit": true,
     "chrome-devtools-mcp@claude-plugins-official": true,
     "claude-code-setup@claude-plugins-official": false,
     "claude-md-management@claude-plugins-official": true,
     "compound-engineering@compound-engineering-plugin": true,
-    "cut-release@leo-toolkit": true,
-    "dependabot-review@leo-toolkit": true,
-    "dependency-vetting@leo-toolkit": true,
+    "cut-release@svyatov-agent-toolkit": true,
+    "debrief-skill@svyatov-agent-toolkit": true,
+    "dependabot-review@svyatov-agent-toolkit": true,
+    "dependency-vetting@svyatov-agent-toolkit": true,
     "feature-dev@claude-plugins-official": false,
-    "generate-dockerfile@leo-toolkit": true,
-    "generate-favicon@leo-toolkit": true,
+    "generate-dockerfile@svyatov-agent-toolkit": true,
+    "generate-favicon@svyatov-agent-toolkit": true,
     "gopls-lsp@claude-plugins-official": false,
-    "grill-me@leo-toolkit": true,
+    "grill-me@svyatov-agent-toolkit": true,
     "handrail@handrail": true,
-    "humanizer@leo-toolkit": true,
-    "import-skill@leo-toolkit": true,
-    "improve-architecture@leo-toolkit": true,
-    "llms-visibility@leo-toolkit": true,
+    "humanizer@svyatov-agent-toolkit": true,
+    "import-skill@svyatov-agent-toolkit": true,
+    "improve-architecture@svyatov-agent-toolkit": true,
+    "jury@svyatov-agent-toolkit": true,
+    "llms-visibility@svyatov-agent-toolkit": true,
     "oss-kit@oss-kit": true,
     "plugin-dev@claude-plugins-official": false,
     "ponytail@ponytail": true,
     "pr-review-toolkit@claude-plugins-official": false,
-    "prior-art@leo-toolkit": true,
+    "prior-art@svyatov-agent-toolkit": true,
     "pyright-lsp@claude-plugins-official": true,
-    "refactor@leo-toolkit": true,
-    "report-upstream@leo-toolkit": true,
+    "refactor@svyatov-agent-toolkit": true,
+    "report-upstream@svyatov-agent-toolkit": true,
     "ruby-lsp@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
-    "shortcuts@leo-toolkit": true,
+    "shortcuts@svyatov-agent-toolkit": true,
     "skill-creator@claude-plugins-official": false,
-    "supermatt@supermatt": true,
     "superpowers@claude-plugins-official": false,
     "typescript-lsp@claude-plugins-official": true,
-    "verify-marketplace@leo-toolkit": true,
-    "verify-skill@leo-toolkit": true
+    "verify-marketplace@svyatov-agent-toolkit": true,
+    "verify-skill@svyatov-agent-toolkit": true
   },
   "env": {
     "CLAUDE_CODE_DISABLE_CRON": "1",
@@ -70,13 +71,6 @@
         "source": "github"
       }
     },
-    "leo-toolkit": {
-      "autoUpdate": true,
-      "source": {
-        "repo": "svyatov/agent-toolkit",
-        "source": "github"
-      }
-    },
     "oss-kit": {
       "autoUpdate": true,
       "source": {
@@ -91,9 +85,10 @@
         "source": "github"
       }
     },
-    "supermatt": {
+    "svyatov-agent-toolkit": {
+      "autoUpdate": true,
       "source": {
-        "repo": "svyatov/supermatt",
+        "repo": "svyatov/agent-toolkit",
         "source": "github"
       }
     }
