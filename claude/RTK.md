@@ -25,3 +25,5 @@ which rtk             # Verify correct binary
 
 All other commands are automatically rewritten by the Claude Code hook.
 Example: `git status` → `rtk git status` (transparent, 0 tokens overhead)
+
+A failing test or lint run comes back as a count with the failure text cut. Read the failure by rerunning it as `rtk proxy <cmd>`, or through the repo's own task target.
