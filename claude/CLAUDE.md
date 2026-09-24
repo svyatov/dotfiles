@@ -41,12 +41,14 @@
 ## Shell
 
 - My zsh sets `noclobber`, so a plain `>` fails when the file exists. Use `>|` to overwrite, and `>>` only when you actually intend to append.
+- zsh expands a word that starts with `=` to a command path, so quote it: `echo '====='`.
 
 ## Git
 
 Use conventions below unless the project's standards demand otherwise. In that case use project's conventions.
 
 - Squash merge is the default strategy for pull requests.
+- Close an issue only once its code is merged into the default branch. Until then, leave it open and say the close waits on the merge.
 - Commits use Conventional Commits: `type(scope): description`.
 - Branches use the same types: `type/kebab-description`, as in `feat/forge-detection-controls` or `fix/site-omit-unreleased`.
 - A release branch is `chore/release-X.Y.Z`.
