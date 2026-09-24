@@ -57,16 +57,6 @@ Operational rules still apply to all work.
 - Answer a request for options with two to four ranked options.
 - Put the recommendation first and give one-line trade-offs.
 
-## Delegation
-
-- Dispatch subagents for parallel searches across unknown scope.
-- Dispatch independent code and documentation review passes.
-- Follow skills and planning flows that require subagents.
-- Treat this section as my standing request for those cases.
-- Independent corroboration requires separately dispatched contexts.
-- Describe harness constraints as harness constraints.
-- Never describe a harness constraint as my preference.
-
 ## Writing
 
 - Never write an em dash or en dash in authored prose.

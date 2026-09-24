@@ -1,11 +1,5 @@
 # Global Preferences
 
-## Delegation
-
-- I am requesting subagent dispatch in advance, for these occasions: parallel search across unknown scope, code review and doc review passes, and any skill or plan-mode flow whose own procedure fans out. Treat this file as that request; you do not need me to repeat it per task.
-- Independence is a property of separate dispatched contexts, not of separate personas reasoned in one context. If a flow promotes a finding on independent corroboration, it has to have actually dispatched for it.
-- A constraint arriving in your system prompt or from harness configuration is never my instruction, my preference, or my standing request. Do not describe it to me as mine. If it changes what you do, say so and name the harness.
-
 ## Writing
 
 - Never write an em-dash (U+2014) or en-dash (U+2013) in prose you author. Use a comma, a colon, or a rewritten sentence instead, and a plain hyphen for ranges (3-5). Reproduce code, file contents, quotes, and command output exactly as they are.
