@@ -1,9 +1,5 @@
 {
-  "attribution": {
-    "commit": "",
-    "pr": "",
-    "sessionUrl": false
-  },
+  "attribution": false,
   "autoCompactWindow": 500000,
   "autoMemoryEnabled": true,
   "cleanupPeriodDays": 90,
