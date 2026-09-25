@@ -12,6 +12,7 @@ herdr = "latest"
 syft = "latest"
 # github: (not ubi:) so minimum_release_age below applies; not in the mise registry
 "github:agavra/tuicr" = "latest"
+lefthook = "latest"
 
 [settings]
 # Ignore tool versions published less than 3 days ago, so a compromised
