@@ -2,7 +2,7 @@
 
 ## Writing
 
-- Never write an em-dash (U+2014) or en-dash (U+2013) in prose you author. Use a comma, a colon, or a rewritten sentence instead, and a plain hyphen for ranges (3-5). Reproduce code, file contents, quotes, and command output exactly as they are.
+- Never write an em-dash (U+2014) or en-dash (U+2013) in prose you author. Use a comma, a colon, or a rewritten sentence instead, and a plain hyphen for ranges (3-5). Reproduce code, file contents, quotes, and command output exactly as they are. A line you rewrite is prose you author, even when the old line had a dash.
 
 ## Spiral
 
@@ -26,7 +26,7 @@
 - A script that stays in the repository is written in that repository's own language, following its conventions. If the repo has no code, only documents and config, use Ruby.
 - A throwaway script (data munging, one-off migration, file renames, glue code) is written in Ruby, whatever the repo's language. Edits to source files go through the Edit tool, not a script.
 - In Ruby, use only the standard library. If a gem would clearly save significant effort, stop and ask before using it.
-- Put temporary scripts in a scratch or temp directory, not the repo root, and delete them when done unless asked to keep them.
+- Put temporary scripts in a fresh `mktemp -d` directory, and delete it when done unless asked to keep it.
 
 ## Dependencies
 
@@ -54,6 +54,7 @@ Use conventions below unless the project's standards demand otherwise. In that c
 @RTK.md
 
 <!-- CODEGRAPH_START -->
+
 ## CodeGraph
 
 In repositories indexed by CodeGraph (a `.codegraph/` directory exists at the repo root), reach for it BEFORE grep/find or reading files when you need to understand or locate code:
