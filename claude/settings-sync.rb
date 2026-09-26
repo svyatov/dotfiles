@@ -407,7 +407,10 @@ def prompt(differences)
     loop do
       print '  [r]epo  [l]ive  [s]kip  [R]epo-all  [L]ive-all  [q]uit > '
       answer = $stdin.gets
-      abort 'No answer, nothing written.' if answer.nil?
+      if answer.nil?
+        abort 'No answer on stdin, nothing written. Pipe one of r/l/s per difference, ' \
+              'in --status order, or R/L for all: printf "r\nl\n" | ruby claude/settings-sync.rb'
+      end
 
       case answer.strip
       when 'r' then resolutions[diff] = :repo
