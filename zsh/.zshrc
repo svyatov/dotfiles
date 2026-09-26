@@ -8,6 +8,9 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+# Claude Code: bash-like overwrite, unmatched globs, and `=` words, so agents don't trip on them
+[[ -n $CLAUDECODE ]] && setopt clobber no_nomatch no_equals
+
 # My stuff
 source $HOME/.dotfiles/zsh/set_terminal_titles.sh
 source $HOME/.dotfiles/zsh/unalias_prezto.sh
