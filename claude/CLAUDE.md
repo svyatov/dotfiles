@@ -37,6 +37,7 @@
 - My zsh sets `noclobber`, so a plain `>` fails when the file exists. Use `>|` to overwrite, and `>>` only when you actually intend to append.
 - zsh expands a word that starts with `=` to a command path, so quote it: `echo '====='`.
 - zsh stops on a glob with no match, flags included, so quote it: `--include='*.go'`.
+- `m` is an alias for `mise`, so give shell functions longer names.
 - macOS grep has no `-P`. Use `rg` for Unicode or Perl-style patterns.
 
 ## Git
