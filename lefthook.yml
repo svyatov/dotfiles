@@ -1,0 +1,21 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - name: secrets
+      run: gitleaks git --pre-commit --staged --redact --no-banner
+
+    - name: bash syntax
+      glob: "{setup,uninstall}.sh"
+      run: for f in {staged_files}; do bash -n "$f" || exit 1; done
+
+    - name: zsh syntax
+      glob: "zsh/{*.sh,.z*}"
+      run: for f in {staged_files}; do zsh -n "$f" || exit 1; done
+
+    - name: json
+      glob: "claude/*.json"
+      run: jq -e . {staged_files} > /dev/null
+
+    - name: settings-sync tests
+      glob: "claude/settings-sync*.rb"
+      run: ruby claude/settings-sync_test.rb

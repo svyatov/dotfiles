@@ -44,8 +44,8 @@ Installation steps, setup script options, the full symlink table, the alias/func
 
 ## Verifying a Change
 
-- Edited a `zsh/*.sh` file: `zsh -n <file>` to syntax check, then `sca` (aliases) or `scf` (functions) to reload, then run the affected alias or function.
-- Edited `setup.sh` or `uninstall.sh`: `bash -n <file>` (both are bash, not zsh, so zsh glob qualifiers will not work), then `./setup.sh --dry-run` and `./uninstall.sh --dry-run`. Read the output and confirm only the intended lines changed.
+- The lefthook pre-commit hook (`lefthook.yml`) runs gitleaks, `bash -n`, `zsh -n`, `jq`, and the `settings-sync` tests on staged files. Run it before committing with `lefthook run pre-commit`.
+- Edited a `zsh/*.sh` file: `sca` (aliases) or `scf` (functions) to reload, then run the affected alias or function.
+- Edited `setup.sh` or `uninstall.sh`: both are bash, not zsh, so zsh glob qualifiers will not work. Run `./setup.sh --dry-run` and `./uninstall.sh --dry-run`, read the output, and confirm only the intended lines changed.
 - Edited a symlinked config: check the live target picked it up, e.g. `readlink ~/.claude/CLAUDE.md`.
 - Broad shell changes: `shrl` for a full login-shell reload.
-- Before committing: `git diff --cached`, per the secrets rule above.

@@ -80,6 +80,7 @@ Or install individually:
 git clone git://github.com/svyatov/dotfiles.git ~/.dotfiles
 brew bundle --file=~/.dotfiles/Brewfile  # Install dependencies
 ~/.dotfiles/setup.sh
+cd ~/.dotfiles && lefthook install        # Pre-commit checks: secrets, shell syntax, JSON
 ```
 
 Claude Code plugins are not installed by a script. `claude/settings.json` is the

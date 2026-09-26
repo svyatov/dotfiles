@@ -6,6 +6,7 @@ brew "fd"           # Simple, fast find alternative (used with fzf)
 brew "git-extras"   # Git utilities
 brew "neovim"       # Text editor
 brew "mise"         # Version manager
+brew "gitleaks"     # Secret scan in the pre-commit hook
 
 # Optional tools
 brew "yt-dlp"       # Video downloader
