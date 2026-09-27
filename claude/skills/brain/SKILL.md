@@ -33,9 +33,11 @@ them.
 
 Same in both modes, except for the last line.
 
-1. Read `~/Projects/Brain/index.md` and pick out the notes that look relevant. Titles and
-   one-line descriptions are the whole triage surface, and you are the relevance judge. There is
-   no score threshold anywhere in this system.
+1. Read `~/Projects/Brain/index.md` and `~/Projects/Brain/inbox/index.md` whole, with the Read
+   tool, and pick out the notes that look relevant. The inbox needs its own read because inbox
+   items get no line in the root index. Both files are a few dozen lines, so never grep them: a
+   keyword match misses a note whose title uses other words, and you are the relevance judge.
+   There is no score threshold anywhere in this system.
 2. Read the notes you picked.
 3. Only if `index.md` was not enough, run this to search note bodies:
 
