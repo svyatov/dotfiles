@@ -44,7 +44,7 @@ Installation steps, setup script options, the full symlink table, the alias/func
 
 ## Verifying a Change
 
-- The lefthook pre-commit hook (`lefthook.yml`) runs gitleaks, `bash -n`, `zsh -n`, `jq`, and the `settings-sync` tests on staged files. Run it before committing with `lefthook run pre-commit`.
+- The lefthook pre-commit hook (`lefthook.yml`) runs gitleaks, `git diff --cached --check`, `bash -n`, `zsh -n`, `ruby -wc`, `jq`, and the `settings-sync`, `config-sync`, and `track-contrib` tests on staged files. Run it before committing with `lefthook run pre-commit`. The commit-msg hook rejects a subject that is not a Conventional Commit with a type from `chore`, `feat`, `docs`, `fix`, `refactor`, or `style`.
 - Edited a `zsh/*.sh` file: `sca` (aliases) or `scf` (functions) to reload, then run the affected alias or function.
 - Edited `setup.sh` or `uninstall.sh`: both are bash, not zsh, so zsh glob qualifiers will not work. Run `./setup.sh --dry-run` and `./uninstall.sh --dry-run`, read the output, and confirm only the intended lines changed.
 - Edited a symlinked config: check the live target picked it up, e.g. `readlink ~/.claude/CLAUDE.md`.

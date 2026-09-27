@@ -4,13 +4,20 @@ pre-commit:
     - name: secrets
       run: gitleaks git --pre-commit --staged --redact --no-banner
 
+    - name: whitespace
+      run: git diff --cached --check
+
     - name: bash syntax
-      glob: "{setup,uninstall}.sh"
+      glob: "{setup,uninstall,servers/*,cursor/*}.sh"
       run: for f in {staged_files}; do bash -n "$f" || exit 1; done
 
     - name: zsh syntax
       glob: "zsh/{*.sh,.z*}"
       run: for f in {staged_files}; do zsh -n "$f" || exit 1; done
+
+    - name: ruby syntax
+      glob: "{*.rb,bin/alias_stats}"
+      run: for f in {staged_files}; do ruby -wc "$f" > /dev/null || exit 1; done
 
     - name: json
       glob: "claude/*.json"
@@ -19,3 +26,17 @@ pre-commit:
     - name: settings-sync tests
       glob: "claude/settings-sync*.rb"
       run: ruby claude/settings-sync_test.rb
+
+    - name: codex config-sync tests
+      glob: "codex/config-sync*.rb"
+      run: ruby codex/config-sync_test.rb
+
+    - name: track-contrib tests
+      glob: "claude/skills/track-contrib/*"
+      run: python3 claude/skills/track-contrib/test_check.py
+
+commit-msg:
+  jobs:
+    - name: conventional
+      run: |
+        head -1 {1} | grep -qE '^(chore|feat|docs|fix|refactor|style)(\(.+\))?!?: .+' || { echo "Use Conventional Commits: type(scope): description"; exit 1; }
