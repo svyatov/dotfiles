@@ -44,8 +44,13 @@ else
   echo "dotfiles: fzf not found. Install with 'brew install fzf' for fuzzy finding." >&2
 fi
 
-# mise version manager
-eval "$(mise activate zsh)"
+# mise version manager. An agent's shell shows no prompt, so the prompt hook
+# never updates PATH per project there; shims pick each project's pin.
+if [[ -n $CLAUDECODE ]]; then
+  eval "$(mise activate zsh --shims)"
+else
+  eval "$(mise activate zsh)"
+fi
 
 # Elixir
 # export PATH=$PATH:~/.mix/escripts
