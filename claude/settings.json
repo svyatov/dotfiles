@@ -105,7 +105,7 @@
       {
         "hooks": [
           {
-            "command": "filepath=$(jq -r '.tool_input.file_path // empty'); if [ -n \"$filepath\" ] && echo \"$filepath\" | grep -qE '\\.md$'; then markdownlint-cli2 \"$filepath\" 2>&1 | tail -20; fi",
+            "command": "filepath=$(jq -r '.tool_input.file_path // empty'); case \"$filepath\" in \"$CLAUDE_PROJECT_DIR\"/*.md) markdownlint-cli2 \"$filepath\" 2>&1 | grep -v MD013 | tail -20;; esac",
             "statusMessage": "Markdown lint...",
             "timeout": 15,
             "type": "command"
@@ -141,7 +141,7 @@
       {
         "hooks": [
           {
-            "command": "codegraph prompt-hook",
+            "command": "p=$(cat); printf '%s' \"$p\" | jq -e '.prompt | startswith(\"<task-notification>\")' >/dev/null || printf '%s' \"$p\" | codegraph prompt-hook",
             "type": "command"
           }
         ]
@@ -193,8 +193,7 @@
       "mcp__codegraph__*"
     ],
     "ask": [
-      "Bash(git push:*)",
-      "Bash(rm:*)"
+      "Bash(git push:*)"
     ],
     "defaultMode": "auto",
     "deny": [
