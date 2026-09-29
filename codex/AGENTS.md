@@ -110,6 +110,10 @@ Operational rules still apply to all work.
 - My Z shell uses `noclobber`.
 - Use `>|` to overwrite a file.
 - Use `>>` only to append.
+- Do not pipe a check (`mise run`, `go test`, `gh pr checks`, or `git push` and
+  `git commit`, whose hooks run checks) into `tail`, `head`, `grep`, or `rg`.
+- A pipe returns the exit status of the filter, so a failed check reads as a pass.
+- Run the check without the filter. Command output is already condensed.
 
 ## Git
 

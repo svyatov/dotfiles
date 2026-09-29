@@ -34,8 +34,9 @@
 
 ## Shell
 
-- `m` is an alias for `mise`, so give shell functions longer names.
-- macOS grep has no `-P`. Use `rg` for Unicode or Perl-style patterns.
+- The shell is zsh: an unquoted `$var` stays one word. Split it with `${=var}`.
+- Run a check (`go test`, `mise run lint`, `mise run cover`) bare, its output unfiltered: RTK already condenses it and keeps the failing lines.
+- macOS ships BSD tools: `grep` has no `-P`, `cat` has no `-A`, and `cut`/`sed` stop with `Illegal byte sequence` on multibyte glyphs. Use `rg` for Unicode or Perl-style patterns, and prefix `LC_ALL=C` for byte-level `cut`/`sed`.
 
 ## Git
 
