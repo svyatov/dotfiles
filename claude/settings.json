@@ -195,7 +195,6 @@
     "ask": [
       "Bash(git push:*)"
     ],
-    "defaultMode": "auto",
     "deny": [
       "Read(//**/.env)",
       "Read(//**/.env.local)",
