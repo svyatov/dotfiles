@@ -19,6 +19,7 @@
 - Write the minimum code that does the job, and bias toward deletion: dead code, unused imports, unnecessary abstractions.
 - Prefer TDD.
 - Prefer bun over node.
+- Change a file with the Edit tool, one hunk at a time, in auto mode too, and do the same for a temporary change such as a mutation test or a scratch file in a `mktemp -d` directory.
 
 ## Scripts
 
