@@ -36,8 +36,8 @@
 ## Shell
 
 - The shell is zsh: an unquoted `$var` stays one word. Split it with `${=var}`.
-- Run a check (`go test`, `mise run lint`, `mise run cover`) bare, its output unfiltered: RTK already condenses it and keeps the failing lines.
-- macOS ships BSD tools: `grep` has no `-P`, `cat` has no `-A`, and `cut`/`sed` stop with `Illegal byte sequence` on multibyte glyphs. Use `rg` for Unicode or Perl-style patterns, and prefix `LC_ALL=C` for byte-level `cut`/`sed`.
+- Run a check bare, its output unfiltered: any test, lint, typecheck, build, or coverage command (`bun run test`, `go test`, `mise run lint`), a script that asserts (`bun qa.ts`), and `git commit` or `git push`, whose hooks run checks. RTK already condenses the output and keeps the failing lines; a pipe makes the exit status the filter's.
+- macOS ships BSD tools: `grep` has no `-P`, `cat` has no `-A`, `wc -l` pads its count with spaces, `awk` `substr`/`length` count bytes and split a multibyte glyph (crop a screen by column with `cut -c`, which counts characters), and `cut`/`sed` stop with `Illegal byte sequence` on bytes that are not UTF-8 (prefix `LC_ALL=C` there). Use `rg` for Unicode or Perl-style patterns. Strip the `wc` padding (`| tr -d ' '`) before a count goes into a name or a comparison.
 
 ## Git
 
