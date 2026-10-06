@@ -75,7 +75,7 @@ version_check = false
 # settings = "prefix+s"
 # detach = "prefix+q"
 # reload_config = "prefix+shift+r"
-# open_notification_target = "prefix+o"
+open_notification_target = "prefix+shift+o"
 # workspace_picker = "prefix+w"
 # goto = "prefix+g"
 # new_workspace = "prefix+shift+n"
@@ -111,7 +111,7 @@ switch_workspace = "prefix+alt+1..9"   # optional indexed binding, e.g. "prefix+
 # split_vertical = "prefix+v"
 # split_horizontal = "prefix+minus"
 # close_pane = "prefix+x"
-# zoom = "prefix+z"       # legacy alias: fullscreen
+zoom = "prefix+shift+z"  # legacy alias: fullscreen
 # resize_mode = "prefix+r"
 # resize_pane_left = ""   # optional, e.g. "ctrl+shift+alt+left" resizes without entering resize mode
 # resize_pane_down = ""   # optional, e.g. "ctrl+shift+alt+down"
@@ -134,6 +134,18 @@ navigate_workspace_down = "j"
 # type = "popup" opens a session-modal terminal without changing the tab layout.
 # Popup width and height accept terminal cells or percentages such as "80%".
 # On Windows, command strings run through cmd.exe /d /c.
+[[keys.command]]
+key = "prefix+o"
+type = "shell"
+command = "gh browse"
+description = "open repository in browser"
+
+[[keys.command]]
+key = "prefix+z"
+type = "shell"
+command = "zed ."
+description = "open current folder in Zed"
+
 [[keys.command]]
 key = "prefix+t"
 type = "popup"
