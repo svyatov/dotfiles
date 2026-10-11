@@ -14,7 +14,7 @@ Lightweight shell configurations for remote and server environments. Two tiers: 
 ## Quick Start
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/svyatov/dotfiles/master/servers/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/svyatov/dotfiles/main/servers/install.sh | bash
 ```
 
 The installer will:
@@ -243,6 +243,13 @@ update_svyatov_config
 ```
 
 This command auto-detects whether you have admin access and downloads the appropriate files.
+
+If your installed updater still uses the former `master` branch, run this once,
+then start a new shell to load the updated function:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/svyatov/dotfiles/main/servers/update.sh | bash
+```
 
 ## Troubleshooting
 

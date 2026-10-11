@@ -2,7 +2,7 @@
 set -e
 
 INSTALL_DIR="$HOME/.config/svyatov"
-BASE_URL="https://raw.githubusercontent.com/svyatov/dotfiles/master/servers/.config"
+BASE_URL="https://raw.githubusercontent.com/svyatov/dotfiles/main/servers/.config"
 
 echo "Installing Svyatov's server shell configuration..."
 

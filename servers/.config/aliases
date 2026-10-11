@@ -105,7 +105,7 @@ function hgrep() {
 }
 
 function update_svyatov_config() {
-    curl -fsSL https://raw.githubusercontent.com/svyatov/dotfiles/master/servers/update.sh | bash
+    curl -fsSL https://raw.githubusercontent.com/svyatov/dotfiles/main/servers/update.sh | bash
 }
 
 # Wraps a completion function
