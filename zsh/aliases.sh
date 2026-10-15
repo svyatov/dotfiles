@@ -38,6 +38,7 @@ safe_alias lg 'lazygit'
 safe_alias t 'tuicr'
 safe_alias tw 'tuicr -w'
 safe_alias tpr 'tuicr pr'
+safe_alias diz 'j diz && pnpm tools-dev run web'
 
 # Update ZPrezto
 safe_alias zpu 'pushd ~/.zprezto && git pull && git submodule update --init --recursive && popd'
