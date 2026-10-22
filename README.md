@@ -170,13 +170,13 @@ them without changing projects, plugins, hooks, or other live settings.
 
 A release-age floor gives time for compromised releases to be detected. The
 package managers below ignore releases newer than 3 days, except for trusted
-Go, Python, Node.js, and Ruby runtime releases managed by mise. Two of these configs
-can hold registry credentials, so they stay out of the repo and must be set by
-hand on a new machine:
+Go, Python, Node.js, Ruby, Erlang, Elixir, and gopls releases managed by mise.
+Two of these configs can hold registry credentials, so they stay out of the repo
+and must be set by hand on a new machine:
 
 | Tool | Where | Setting |
 |------|-------|---------|
-| mise | `mise/config.toml` (symlinked) | `minimum_release_age = "3d"`, with `go`, `python`, `node`, and `ruby` in `minimum_release_age_excludes` |
+| mise | `mise/config.toml` (symlinked) | `minimum_release_age = "3d"`, with `go`, `python`, `node`, `ruby`, `erlang`, `elixir`, and `go:golang.org/x/tools/gopls` in `minimum_release_age_excludes` |
 | bun | `bun/bunfig.toml` (symlinked) | `minimumReleaseAge = 259200` |
 | npm | `~/.npmrc` (local only) | `min-release-age=3` |
 | Bundler | `~/.bundle/config` (local only) | `bundle config set --global cooldown 3` |
