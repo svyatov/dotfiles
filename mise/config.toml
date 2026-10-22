@@ -20,6 +20,8 @@ betterleaks = "latest"
 # Ignore tool versions published less than 3 days ago, so a compromised
 # release has time to be caught before mise will install it
 minimum_release_age = "3d"
+# Trusted runtimes can update immediately; other tools retain the delay.
+minimum_release_age_excludes = ["go", "python", "node", "ruby"]
 
 [settings.ruby]
 compile = false
