@@ -30,7 +30,8 @@ safe_alias wh 'which'
 safe_alias ws 'whois'
 safe_alias n 'ngrok'
 safe_alias cx 'codex'
-safe_alias ai 'omp'
+safe_alias ai 'omp' # oh-my-pi
+safe_alias ag 'agent' # cursor cli
 safe_alias astats 'alias_stats'
 safe_alias contrib 'track-contrib'
 safe_alias syu 'ewu mise rtk lazygit && mup && npm i -g npm@latest && bun upgrade && uv self update'
