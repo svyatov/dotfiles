@@ -263,7 +263,9 @@ Bookmarks persist across sessions (stored as symlinks in `~/.jump_shortcuts`) an
 | `csync` | `claude/settings-sync.rb` | Reconcile Claude settings, asking which side wins; run before committing |
 | `astats` | `alias_stats` | Alias usage statistics |
 | `cx` | `codex` | Launch Codex CLI |
-| `cxup` | `codex plugin marketplace upgrade` | Upgrade Codex plugin marketplaces |
+| `cxrs` | `codex app-server daemon restart` | Restart the Codex app server daemon |
+| `cxup` | `codex plugin marketplace upgrade && codex app-server daemon restart` | Upgrade Codex plugin marketplaces, then restart the daemon |
+| `cxadd` | `codex plugin marketplace add` | Add a Codex plugin marketplace |
 | `syu` | `ewu mise rtk lazygit && mup && npm i -g npm@latest && bun upgrade && uv self update` | System tool updates |
 
 ### Git Aliases (from `.gitconfig`)
