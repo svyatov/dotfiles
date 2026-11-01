@@ -77,7 +77,7 @@ version_check = false
 # reload_config = "prefix+shift+r"
 open_notification_target = "prefix+shift+o"
 # workspace_picker = "prefix+w"
-# goto = "prefix+g"
+goto = "" # prefix+g opens the repository in the browser
 # new_workspace = "prefix+shift+n"
 # new_worktree = "prefix+shift+g"
 # open_worktree = ""    # optional, unset by default
@@ -135,9 +135,9 @@ navigate_workspace_down = "j"
 # Popup width and height accept terminal cells or percentages such as "80%".
 # On Windows, command strings run through cmd.exe /d /c.
 [[keys.command]]
-key = "prefix+o"
+key = "prefix+g"
 type = "shell"
-command = "gh browse"
+command = "git rev-parse --is-inside-work-tree >/dev/null 2>&1 && gh browse"
 description = "open repository in browser"
 
 [[keys.command]]
