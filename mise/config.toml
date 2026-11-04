@@ -25,7 +25,7 @@ java = "temurin-25"
 minimum_release_age = "3d"
 # Trusted runtimes and gopls can update immediately; other tools retain the delay.
 minimum_release_age_excludes = [
-  "go", "python", "node", "ruby", "erlang", "elixir",
+  "go", "python", "node", "ruby", "erlang", "elixir", "zig", "clojure", "java",
   "go:golang.org/x/tools/gopls",
 ]
 
