@@ -18,6 +18,7 @@ safe_alias brkt 'bundle exec rake -T'
 # Bundler
 safe_alias be 'bundle exec'
 safe_alias bu 'bundle update'
+safe_alias bua 'bundle update --all'
 safe_alias bub 'bundle update --bundler'
 safe_alias bo 'bundle outdated'
 safe_alias bos 'bundle outdated --strict'
