@@ -15,6 +15,9 @@ syft = "latest"
 lefthook = "latest"
 betterleaks = "latest"
 "github:can1357/oh-my-pi" = "latest"
+zig = "latest"
+clojure = "latest"
+java = "temurin-25"
 
 [settings]
 # Ignore tool versions published less than 3 days ago, so a compromised
