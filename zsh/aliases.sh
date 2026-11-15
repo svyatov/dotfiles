@@ -30,7 +30,7 @@ safe_alias wh 'which'
 safe_alias ws 'whois'
 safe_alias n 'ngrok'
 safe_alias cx 'codex'
-safe_alias cxrs 'codex app-server daemon restart'
+safe_alias cxupd 'codex app-server daemon update && codex app-server daemon restart'
 safe_alias cxup 'codex plugin marketplace upgrade && codex app-server daemon restart'
 safe_alias cxadd 'codex plugin marketplace add'
 safe_alias ai 'omp' # oh-my-pi
