@@ -160,3 +160,6 @@
 	defaultBranch = main
 [tag]
 	gpgSign = true
+[hook "betterleaks"]
+	command = betterleaks git --pre-commit --staged --redact --no-banner
+	event = pre-commit
