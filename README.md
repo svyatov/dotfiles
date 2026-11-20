@@ -209,6 +209,7 @@ One of the most useful features: **persistent directory bookmarks** with tab com
 | `ja name [-f]` | Add bookmark for current directory (`-f` to overwrite) |
 | `jd name` | Delete a bookmark |
 | `jl` | List all bookmarks |
+| `jt` | List bookmark names for the current directory. Return status 1 if none match. |
 | `jb` | Jump back to previous location |
 
 **Example workflow:**

@@ -4,6 +4,7 @@ safe_alias j 'nocorrect jump'
 safe_alias ja 'nocorrect jump-add'
 safe_alias jd 'nocorrect jump-del'
 safe_alias jl 'jump-list'
+safe_alias jt 'jump-test'
 safe_alias jb 'jump-back'
 
 _jumps_usage_help() {
@@ -12,6 +13,7 @@ _jumps_usage_help() {
     echo "ja [shortcut] - add shortcut for current directory (-f to overwrite)"
     echo "jd [shortcut] - delete shortcut"
     echo "jl            - list all available jump shortcuts"
+    echo "jt            - list jump shortcuts for the current directory"
     echo "jb            - return to previous directory (before the last jump)"
 }
 
@@ -103,6 +105,24 @@ jump-list() {
             printf "  ${FG[14]}%-${max_len}s${FX[none]}  -->  ${FG[196]}%s${FX[none]}\n" "${shortcut:t}" "$target"
         fi
     done
+}
+
+jump-test() {
+    local shortcut
+    local -a matches
+
+    for shortcut in "$JUMPS_PATH"/*(@DN); do
+        if [[ "$shortcut" -ef . ]]; then
+            matches+=("${shortcut:t}")
+        fi
+    done
+
+    if (( ! ${#matches} )); then
+        print -ru2 -- 'No jump shortcuts for the current directory.'
+        return 1
+    fi
+
+    print -rl -- "${matches[@]}"
 }
 
 _jump-list() {
