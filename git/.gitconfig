@@ -163,3 +163,5 @@
 [hook "betterleaks"]
 	command = betterleaks git --pre-commit --staged --redact --no-banner
 	event = pre-commit
+[credential "https://git.heroku.com"]
+	helper = !heroku git:credentials
