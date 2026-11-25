@@ -14,8 +14,8 @@ fi
 # My stuff
 source $HOME/.dotfiles/zsh/set_terminal_titles.sh
 source $HOME/.dotfiles/zsh/unalias_prezto.sh
-source $HOME/.dotfiles/zsh/functions.sh
 source $HOME/.dotfiles/zsh/aliases.sh
+source $HOME/.dotfiles/zsh/functions.sh
 
 # Bindings
 # bindkey '^ ' autosuggest-accept

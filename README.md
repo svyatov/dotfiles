@@ -252,7 +252,11 @@ Bookmarks persist across sessions (stored as symlinks in `~/.jump_shortcuts`) an
 | Alias | Command | Description |
 |-------|---------|-------------|
 | `v` | `nvim` | Open Neovim |
-| `l` | `ls -lhAG` | Detailed file listing |
+| `l` | `eza` with long listing options | List files, including hidden files, with directories first |
+| `lm` | `l --sort modified` | Sort by modification time |
+| `lz` | `l --sort size --total-size` | Sort by size, including directory contents |
+| `lt` | `l --tree --level=3 -I .git` | Show three tree levels and skip `.git` |
+| `lc` | `l --code` | Show code statistics by language |
 | `cl` | `clear` | Clear terminal |
 | `q` | `exit` | Exit shell |
 | `edf` | `nvim ~/.dotfiles` | Edit dotfiles |

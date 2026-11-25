@@ -1,6 +1,20 @@
+# Helpers
+safe_alias() {
+    if [[ $3 == 'override' ]]; then
+        alias "$1"="$2"
+    elif ! type "$1" &> /dev/null; then
+        alias "$1"="$2"
+    else
+        echo "Unable to create alias: $(type "$1")"
+    fi
+}
+
 # Common
-safe_alias l 'ls -lhAG'
-safe_alias lm 'l *.mp4'
+safe_alias l 'eza --group-directories-first -loghA --no-permissions --no-quotes --time-style="+%e %b %Y %_H:%M"'
+safe_alias lm 'l --sort modified'
+safe_alias lz 'l --sort size --total-size'
+safe_alias lt 'l --tree --level=3 -I .git'
+safe_alias lc 'l --code'
 safe_alias h 'cd ~'
 safe_alias b 'cd -'
 safe_alias c 'clear'

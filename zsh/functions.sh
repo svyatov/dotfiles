@@ -1,20 +1,3 @@
-# Safe alias
-safe_alias() {
-    if [[ $3 == 'override' ]]; then
-        alias "$1"="$2"
-    elif ! type "$1" &> /dev/null; then
-        alias "$1"="$2"
-    else
-        echo "Unable to create alias: $(type "$1")"
-    fi
-}
-
-source "$HOME/.dotfiles/zsh/shorten_path.sh"
-
-for function_file in $HOME/.dotfiles/zsh/functions_*.sh(N); do
-  source "$function_file"
-done
-
 mkcd() { mkdir -p "$1" && cd "$1" }
 
 _directories_list() { print -l "$1"/*(/N:t) }
@@ -52,3 +35,9 @@ volume() {
 
     osascript -e "set Volume $1"
 }
+
+source "$HOME/.dotfiles/zsh/shorten_path.sh"
+
+for function_file in $HOME/.dotfiles/zsh/functions_*.sh(N); do
+  source "$function_file"
+done

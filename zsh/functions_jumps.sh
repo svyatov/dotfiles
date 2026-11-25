@@ -30,7 +30,8 @@ jump() {
     if [[ -L $JUMPS_PATH/$1 ]]; then
         clear
         JUMPS_BACK=$(pwd)
-        cd -P $JUMPS_PATH/$1 2> /dev/null && ls -lhAG
+        cd -P $JUMPS_PATH/$1 2> /dev/null || return 1
+        l || ls -lhAG
     else
         _jumps_no_such_shortcut $1
     fi
