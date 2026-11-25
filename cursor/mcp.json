@@ -3,6 +3,10 @@
     "context7": {
       "command": "bunx",
       "args": ["-y", "@upstash/context7-mcp@latest"]
+    },
+    "openwiki": {
+      "command": "openwiki",
+      "args": ["mcp", "--host", "cursor"]
     }
   }
 }
