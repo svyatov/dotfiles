@@ -10,9 +10,11 @@ safe_alias() {
 }
 
 # Common
-safe_alias l 'eza --group-directories-first -logA --no-permissions --no-quotes --time-style="+%e %b %Y %_H:%M"'
+safe_alias eza_default 'eza -loA --group-directories-first --no-permissions --no-quotes --time-style="+%e %b %Y %_H:%M"'
+safe_alias l 'eza_default --no-user'
+safe_alias lg 'eza_default -g'
 safe_alias lm 'l --sort modified'
-safe_alias lz 'l --sort size --total-size'
+safe_alias lts 'l --sort size --total-size'
 safe_alias lt 'l --tree --level=3 -I .git'
 safe_alias lc 'l --code'
 safe_alias h 'cd ~'
@@ -52,7 +54,7 @@ safe_alias ag 'agent' # cursor cli
 safe_alias astats 'alias_stats'
 safe_alias contrib 'track-contrib'
 safe_alias syu 'ewu mise rtk lazygit && mup && npm i -g npm@latest && bun upgrade && uv self update'
-safe_alias lg 'lazygit'
+safe_alias lzg 'lazygit'
 safe_alias t 'tuicr'
 safe_alias tw 'tuicr -w'
 safe_alias tpr 'tuicr pr'

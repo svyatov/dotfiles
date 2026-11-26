@@ -252,9 +252,11 @@ Bookmarks persist across sessions (stored as symlinks in `~/.jump_shortcuts`) an
 | Alias | Command | Description |
 |-------|---------|-------------|
 | `v` | `nvim` | Open Neovim |
-| `l` | `eza` with long listing options | List files, including hidden files, with directories first |
+| `l` | `eza_default --no-user` | List files, including hidden files, with directories first |
+| `lg` | `eza_default -g` | Include the owner and group in the listing |
+| `lzg` | `lazygit` | Open Lazygit |
 | `lm` | `l --sort modified` | Sort by modification time |
-| `lz` | `l --sort size --total-size` | Sort by size, including directory contents |
+| `lts` | `l --sort size --total-size` | Sort by size, including directory contents |
 | `lt` | `l --tree --level=3 -I .git` | Show three tree levels and skip `.git` |
 | `lc` | `l --code` | Show code statistics by language |
 | `cl` | `clear` | Clear terminal |
