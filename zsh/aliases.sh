@@ -10,7 +10,7 @@ safe_alias() {
 }
 
 # Common
-safe_alias l 'eza --group-directories-first -loghA --no-permissions --no-quotes --time-style="+%e %b %Y %_H:%M"'
+safe_alias l 'eza --group-directories-first -logA --no-permissions --no-quotes --time-style="+%e %b %Y %_H:%M"'
 safe_alias lm 'l --sort modified'
 safe_alias lz 'l --sort size --total-size'
 safe_alias lt 'l --tree --level=3 -I .git'
